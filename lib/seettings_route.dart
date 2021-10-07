@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class SecondRoute extends StatefulWidget {
-  const SecondRoute({Key? key}) : super(key: key);
+class SettingsRoute extends StatefulWidget {
+  const SettingsRoute({Key? key}) : super(key: key);
 
   @override
-  State<SecondRoute> createState() => _SecondRouteState();
+  State<SettingsRoute> createState() => _SettingsRouteState();
 }
 
-class _SecondRouteState extends State<SecondRoute> {
+class _SettingsRouteState extends State<SettingsRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Second Route"),
+        title: const Text("Settings"),
       ),
       body: Center(
         child: ElevatedButton(

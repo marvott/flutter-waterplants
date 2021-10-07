@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'first_route.dart';
-import 'second_route.dart';
+import 'seettings_route.dart';
 import 'third_route.dart';
 
 void main() => runApp(const MyApp());
@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
               )),
       routes: {
         '/': (context) => const FirstRoute(),
-        '/second': (context) => const SecondRoute(),
-        '/third': (context) => const ThirdRoute(),
+        '/sprossen': (context) => const SprossenRoute(),
+        '/settings': (context) => const SettingsRoute(),
       },
       theme: ThemeData(
         primarySwatch: Colors.red,

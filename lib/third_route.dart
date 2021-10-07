@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ThirdRoute extends StatefulWidget {
-  const ThirdRoute({Key? key}) : super(key: key);
+class SprossenRoute extends StatefulWidget {
+  const SprossenRoute({Key? key}) : super(key: key);
 
   @override
-  State<ThirdRoute> createState() => _ThirdRouteState();
+  State<SprossenRoute> createState() => _SprossenRouteState();
 }
 
-class _ThirdRouteState extends State<ThirdRoute> {
+class _SprossenRouteState extends State<SprossenRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

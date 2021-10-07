@@ -18,15 +18,15 @@ class _FirstRouteState extends State<FirstRoute> {
         child: Column(
           children: [
             ElevatedButton(
-              child: const Text('Open second route'),
+              child: const Text('Open settings route'),
               onPressed: () {
-                Navigator.pushNamed(context, '/second');
+                Navigator.pushNamed(context, '/settings');
               },
             ),
             ElevatedButton(
               child: const Text('Sprossen'),
               onPressed: () {
-                Navigator.pushNamed(context, '/third');
+                Navigator.pushNamed(context, '/sprossen');
               },
             ),
           ],
@@ -43,7 +43,7 @@ class _FirstRouteState extends State<FirstRoute> {
               child: Text('Drawer Header'),
             ),
             ListTile(
-              title: const Text('First Route'),
+              title: const Text('Pflanzen'),
               leading: const Icon(Icons.filter_vintage_rounded),
               onTap: () {
                 //Update the state of the app
@@ -52,20 +52,20 @@ class _FirstRouteState extends State<FirstRoute> {
               },
             ),
             ListTile(
-              title: const Text('Settings'),
-              leading: const Icon(Icons.settings),
-              onTap: () {
-                //Update the state of the app
-                Navigator.popAndPushNamed(context, '/second');
-                //then close the drawer
-              },
-            ),
-            ListTile(
               title: const Text('Sprossen'),
               leading: const Icon(Icons.grass_rounded),
               onTap: () {
                 //Update the state of the app
-                Navigator.popAndPushNamed(context, '/third');
+                Navigator.popAndPushNamed(context, '/sprossen');
+                //then close the drawer
+              },
+            ),
+            ListTile(
+              title: const Text('Settings'),
+              leading: const Icon(Icons.settings),
+              onTap: () {
+                //Update the state of the app
+                Navigator.popAndPushNamed(context, '/settings');
                 //then close the drawer
               },
             ),
