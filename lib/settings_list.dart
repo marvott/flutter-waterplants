@@ -10,7 +10,7 @@ Column settingslist(context) {
           Navigator.pop(context);
           // Navigate back to first route when tapped.
         },
-        child: const Text('Go back!'),
+        child: const Text('Akzeptieren und zurück!'),
       ),
     ],
   );
