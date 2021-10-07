@@ -15,9 +15,7 @@ class _SettingsRouteState extends State<SettingsRoute> {
       appBar: AppBar(
         title: const Text("Settings"),
       ),
-      body: Center(
-        child: SettingsList(context).settings
-      ),
+      body: Center(child: settingslist(context)),
     );
   }
 }
