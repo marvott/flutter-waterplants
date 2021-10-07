@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 Column settingslist(context) {
   var settings = Column(
     children: <Widget>[
-      const Text('Deliver features faster'),
-      const Text('Craft beautiful UIs'),
+      const Text('Alle Privaten Infos an den Entwickler "spenden": Akzeptiert'),
+      const Text('Daten dürfen an die NSA weitergegeben werden: Akzeptiert'),
       ElevatedButton(
         onPressed: () {
           Navigator.pop(context);
