@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       title: 'Route Demo',
       initialRoute: '/',
       onUnknownRoute: (settings) => MaterialPageRoute(
-          builder: (context) => Scaffold(
+          builder: (context) => const Scaffold(
                 body: Center(child: Text('Not found')),
               )),
       routes: {
@@ -44,13 +44,13 @@ class _FirstRouteState extends State<FirstRoute> {
         child: Column(
           children: [
             ElevatedButton(
-              child: Text('Open second route'),
+              child: const Text('Open second route'),
               onPressed: () {
                 Navigator.pushNamed(context, '/second');
               },
             ),
             ElevatedButton(
-              child: Text('Sprossen'),
+              child: const Text('Sprossen'),
               onPressed: () {
                 Navigator.pushNamed(context, '/third');
               },
@@ -70,7 +70,7 @@ class _FirstRouteState extends State<FirstRoute> {
             ),
             ListTile(
               title: const Text('First Route'),
-              leading: Icon(Icons.filter_vintage_rounded),
+              leading: const Icon(Icons.filter_vintage_rounded),
               onTap: () {
                 //Update the state of the app
                 Navigator.popAndPushNamed(context, '/');
@@ -79,7 +79,7 @@ class _FirstRouteState extends State<FirstRoute> {
             ),
             ListTile(
               title: const Text('Settings'),
-              leading: Icon(Icons.settings),
+              leading: const Icon(Icons.settings),
               onTap: () {
                 //Update the state of the app
                 Navigator.popAndPushNamed(context, '/second');
@@ -88,7 +88,7 @@ class _FirstRouteState extends State<FirstRoute> {
             ),
             ListTile(
               title: const Text('Sprossen'),
-              leading: Icon(Icons.grass_rounded),
+              leading: const Icon(Icons.grass_rounded),
               onTap: () {
                 //Update the state of the app
                 Navigator.popAndPushNamed(context, '/third');
@@ -114,7 +114,7 @@ class _SecondRouteState extends State<SecondRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Route"),
+        title: const Text("Second Route"),
       ),
       body: Center(
         child: ElevatedButton(
@@ -122,7 +122,7 @@ class _SecondRouteState extends State<SecondRoute> {
             Navigator.pop(context);
             // Navigate back to first route when tapped.
           },
-          child: Text('Go back!'),
+          child: const Text('Go back!'),
         ),
       ),
     );
@@ -141,8 +141,8 @@ class _ThirdRouteState extends State<ThirdRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Sprossen"),
-          backgroundColor: Color.fromRGBO(18, 185, 24, 0.8),
+          title: const Text("Sprossen"),
+          backgroundColor: const Color.fromRGBO(18, 185, 24, 0.8),
         ),
         body: Center(
           child: Column(
