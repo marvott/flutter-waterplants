@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'settings_list.dart';
 
 class SettingsRoute extends StatefulWidget {
   const SettingsRoute({Key? key}) : super(key: key);
@@ -15,13 +16,7 @@ class _SettingsRouteState extends State<SettingsRoute> {
         title: const Text("Settings"),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.pop(context);
-            // Navigate back to first route when tapped.
-          },
-          child: const Text('Go back!'),
-        ),
+        child: SettingsList(context).settings
       ),
     );
   }
