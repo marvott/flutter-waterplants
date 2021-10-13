@@ -1,3 +1,6 @@
+//to open xcode run this in terminal:
+//open ios/Runner.xcworkspace
+
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
