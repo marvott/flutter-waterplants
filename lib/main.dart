@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
-import 'first_route.dart';
+import 'package:camera/camera.dart';
+
+import 'plant_route.dart';
 import 'settings_route.dart';
 import 'third_route.dart';
 
-void main() => runApp(const MyApp());
+Future<void> main() async {
+  // Ensure that plugin services are initialized so that `availableCameras()`
+  // can be called before `runApp()`
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Obtain a list of the available cameras on the device.
+  final cameras = await availableCameras();
+
+  // Get a specific camera from the list of available cameras.
+  final firstCamera = cameras.first;
+
+  runApp(MyApp(
+    camera: firstCamera,
+  ));
+}
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.camera}) : super(key: key);
+
+  final CameraDescription camera;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +36,7 @@ class MyApp extends StatelessWidget {
                 body: Center(child: Text('Not found')),
               )),
       routes: {
-        '/': (context) => const FirstRoute(),
+        '/': (context) => PlantRoute(camera: camera),
         '/sprossen': (context) => const SprossenRoute(),
         '/settings': (context) => const SettingsRoute(),
       },

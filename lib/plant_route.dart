@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
 
-class FirstRoute extends StatefulWidget {
-  const FirstRoute({Key? key}) : super(key: key);
+class PlantRoute extends StatefulWidget {
+  const PlantRoute({Key? key, required this.camera}) : super(key: key);
+
+  final CameraDescription camera;
 
   @override
-  State<FirstRoute> createState() => _FirstRouteState();
+  State<PlantRoute> createState() => _PlantRouteState();
 }
 
-class _FirstRouteState extends State<FirstRoute> {
+class _PlantRouteState extends State<PlantRoute> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
