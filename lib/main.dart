@@ -4,6 +4,7 @@ import 'package:camera/camera.dart';
 import 'plant_route.dart';
 import 'settings_route.dart';
 import 'third_route.dart';
+import 'camera_route.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -36,9 +37,10 @@ class MyApp extends StatelessWidget {
                 body: Center(child: Text('Not found')),
               )),
       routes: {
-        '/': (context) => PlantRoute(camera: camera),
+        '/': (context) => const PlantRoute(),
         '/sprossen': (context) => const SprossenRoute(),
         '/settings': (context) => const SettingsRoute(),
+        '/camera': (context) => TakePictureScreen(camera: camera),
       },
       theme: ThemeData(
         primarySwatch: Colors.red,

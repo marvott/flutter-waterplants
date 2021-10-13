@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
 
 class PlantRoute extends StatefulWidget {
-  const PlantRoute({Key? key, required this.camera}) : super(key: key);
-
-  final CameraDescription camera;
+  const PlantRoute({Key? key}) : super(key: key);
 
   @override
   State<PlantRoute> createState() => _PlantRouteState();
@@ -27,9 +24,9 @@ class _PlantRouteState extends State<PlantRoute> {
               },
             ),
             ElevatedButton(
-              child: const Text('Sprossen'),
+              child: const Text('Foto machen'),
               onPressed: () {
-                Navigator.pushNamed(context, '/sprossen');
+                Navigator.pushNamed(context, '/camera');
               },
             ),
           ],
