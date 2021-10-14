@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 
 class PlantRoute extends StatefulWidget {
-  const PlantRoute({Key? key}) : super(key: key);
+  final String imagePath;
+
+  const PlantRoute({Key? key, this.imagePath = ""}) : super(key: key);
+
 
   @override
   State<PlantRoute> createState() => _PlantRouteState();
@@ -10,6 +14,17 @@ class PlantRoute extends StatefulWidget {
 class _PlantRouteState extends State<PlantRoute> {
   @override
   Widget build(BuildContext context) {
+    StatefulWidget picOrButton;
+    if (widget.imagePath.isNotEmpty) {
+      picOrButton = Image.file(File(widget.imagePath));
+    } else {
+      picOrButton = ElevatedButton(
+          child: const Text('Foto machen'),
+          onPressed: () {
+            Navigator.pushNamed(context, '/camera');
+          });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('First Route'),
@@ -24,11 +39,11 @@ class _PlantRouteState extends State<PlantRoute> {
               },
             ),
             ElevatedButton(
-              child: const Text('Foto machen'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/camera');
-              },
-            ),
+                child: const Text('Foto machen oder anzeigen'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/camera');
+                }),
+            picOrButton
           ],
         ),
       ),

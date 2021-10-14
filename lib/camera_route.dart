@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'dart:io';
+
+import 'package:flutter_application_1/plant_route.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -77,7 +78,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // If the picture was taken, display it on a new screen.
             await Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
+                builder: (context) => PlantRoute(
                   // Pass the automatically generated path to
                   // the DisplayPictureScreen widget.
                   imagePath: image.path,
@@ -91,24 +92,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         },
         child: const Icon(Icons.camera_alt),
       ),
-    );
-  }
-}
-
-// A widget that displays the picture taken by the user.
-class DisplayPictureScreen extends StatelessWidget {
-  final String imagePath;
-
-  const DisplayPictureScreen({Key? key, required this.imagePath})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
-      // The image is stored as a file on the device. Use the `Image.file`
-      // constructor with the given path to display the image.
-      body: Image.file(File(imagePath)),
     );
   }
 }
