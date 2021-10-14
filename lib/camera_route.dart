@@ -3,7 +3,6 @@ import 'package:camera/camera.dart';
 
 import 'package:flutter_application_1/plant_route.dart';
 
-// A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
     Key? key,
