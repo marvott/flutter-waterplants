@@ -12,7 +12,7 @@ class _SprossenRouteState extends State<SprossenRoute> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Sprossen"),
+          title: const Text("Life of Sprossen"),
           backgroundColor: const Color.fromRGBO(18, 185, 24, 0.8),
         ),
         body: Center(
@@ -38,52 +38,53 @@ class _SprossenRouteState extends State<SprossenRoute> {
                       children: <Widget>[
                         Container(
                           padding: const EdgeInsets.all(8),
-                          child: const Text("He'd have you all unravel at the"),
+                          child: const Text("1. Schritt: Sprossen einweichen"),
+                          color: Colors.green[10],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          child: const Text('Wie lange? 4-12h'),
+                          color: Colors.green[50],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          child: const Text('Dann dunkel lagern'),
                           color: Colors.green[100],
                         ),
                         Container(
                           padding: const EdgeInsets.all(8),
-                          child: const Text('Heed not the rabble'),
+                          child: const Text('Wie lange? 3-4 Tage'),
                           color: Colors.green[200],
                         ),
                         Container(
                           padding: const EdgeInsets.all(8),
-                          child: const Text('Sound of screams but the'),
+                          child: const Text('Jeden Tag...'),
                           color: Colors.green[300],
                         ),
                         Container(
                           padding: const EdgeInsets.all(8),
-                          child: const Text('Who scream'),
+                          child: const Text('...1-2x mit Wasser spülen'),
                           color: Colors.green[400],
                         ),
                         Container(
                           padding: const EdgeInsets.all(8),
-                          child: const Text('Revolution is coming...'),
+                          child: const Text('Dann in indirektes Licht stellen'),
                           color: Colors.green[500],
                         ),
                         Container(
                           padding: const EdgeInsets.all(8),
-                          child: const Text('Revolution, they...'),
+                          child: const Text('Wie lange? 3 Tage '),
                           color: Colors.green[600],
                         ),
                         Container(
                           padding: const EdgeInsets.all(8),
-                          child: const Text('Rsdasda'),
-                          color: Colors.green[40],
+                          child:
+                              const Text('Dann sind die Sprossen 3-4cm lang'),
+                          color: Colors.green[700],
                         ),
                         Container(
                           padding: const EdgeInsets.all(8),
-                          child: const Text('sadsady...'),
-                          color: Colors.green[800],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const Text('test'),
-                          color: Colors.green[100],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          child: const Text('sadsasdasdasd..'),
+                          child: const Text('Guten!'),
                           color: Colors.green[800],
                         ),
                       ],
