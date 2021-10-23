@@ -6,7 +6,6 @@ class PlantRoute extends StatefulWidget {
 
   const PlantRoute({Key? key, this.imagePath = ""}) : super(key: key);
 
-
   @override
   State<PlantRoute> createState() => _PlantRouteState();
 }
@@ -27,19 +26,13 @@ class _PlantRouteState extends State<PlantRoute> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('First Route'),
+        title: const Text('Pflanzen'),
       ),
       body: Center(
         child: Column(
           children: [
             ElevatedButton(
-              child: const Text('Open settings route'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/settings');
-              },
-            ),
-            ElevatedButton(
-                child: const Text('Foto machen oder anzeigen'),
+                child: const Text('Foto machen oder ändern'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/camera');
                 }),
@@ -55,7 +48,7 @@ class _PlantRouteState extends State<PlantRoute> {
               decoration: BoxDecoration(
                 color: Colors.blueGrey,
               ),
-              child: Text('Drawer Header'),
+              child: Text('Pflanzen & Sprossen'),
             ),
             ListTile(
               title: const Text('Pflanzen'),
