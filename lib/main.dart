@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         '/camera': (context) => TakePictureScreen(camera: camera),
       },
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.green,
       ),
     );
   }
