@@ -7,7 +7,7 @@ import 'package:camera/camera.dart';
 import 'plant_route.dart';
 import 'settings_route.dart';
 import 'sprossen_route.dart';
-import 'camera_route.dart';
+import 'camera.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
