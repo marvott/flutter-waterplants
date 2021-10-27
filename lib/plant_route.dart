@@ -3,8 +3,10 @@ import 'dart:io';
 
 class PlantRoute extends StatefulWidget {
   final String imagePath;
+  final String cameraName;
 
-  const PlantRoute({Key? key, this.imagePath = ""}) : super(key: key);
+  const PlantRoute({Key? key, this.imagePath = "", required this.cameraName})
+      : super(key: key);
 
   @override
   State<PlantRoute> createState() => _PlantRouteState();
@@ -22,7 +24,13 @@ class _PlantRouteState extends State<PlantRoute> {
       picOrButton = ElevatedButton(
           child: const Text('Foto machen'),
           onPressed: () {
-            Navigator.pushNamed(context, '/camera');
+            if (widget.cameraName == "fake") {
+              PlantRoute(
+                  cameraName: widget.cameraName,
+                  imagePath: "lib/presetPictures/bild.jpeg");
+            } else {
+              Navigator.pushNamed(context, '/camera');
+            }
           });
     }
 
@@ -38,7 +46,13 @@ class _PlantRouteState extends State<PlantRoute> {
             ElevatedButton(
                 child: const Text('Foto machen oder ändern'),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/camera');
+                  if (widget.cameraName == "fake") {
+                    PlantRoute(
+                        cameraName: widget.cameraName,
+                        imagePath: "lib/presetPictures/bild.jpeg");
+                  } else {
+                    Navigator.pushNamed(context, '/camera');
+                  }
                 }),
             picOrButton // Zeigt einen Knopf oder das Foto
           ],

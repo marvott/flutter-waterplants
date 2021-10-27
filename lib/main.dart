@@ -13,7 +13,7 @@ Future<void> main() async {
   // Kamera initialisieren
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
-  final firstCamera;
+  final CameraDescription firstCamera;
   if (cameras.isNotEmpty) {
     firstCamera = cameras.first;
   } else {
@@ -25,13 +25,16 @@ Future<void> main() async {
 
   runApp(MyApp(
     camera: firstCamera,
+    cameraName: firstCamera.name,
   ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key, required this.camera}) : super(key: key);
+  const MyApp({Key? key, required this.camera, required this.cameraName})
+      : super(key: key);
 
   final CameraDescription camera;
+  final String cameraName;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class MyApp extends StatelessWidget {
               )),
       routes: {
         // Routen für den App-Drawer
-        '/': (context) => const PlantRoute(),
+        '/': (context) => PlantRoute(cameraName: cameraName),
         '/sprossen': (context) => const SprossenRoute(),
         '/settings': (context) => const SettingsRoute(),
         '/camera': (context) => TakePictureScreen(camera: camera),

@@ -60,7 +60,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             await Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => PlantRoute(
-                  imagePath: image.path,
+                  imagePath: image.path, cameraName: widget.camera.name,
                 ),
               ),
             );
