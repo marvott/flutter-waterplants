@@ -6,10 +6,11 @@ import 'package:camera/camera.dart';
 
 import 'plant_route.dart';
 import 'settings_route.dart';
-import 'third_route.dart';
-import 'camera_route.dart';
+import 'sprossen_route.dart';
+import 'camera.dart';
 
 Future<void> main() async {
+  // Kamera initialisieren
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
   final firstCamera = cameras.first;
@@ -34,13 +35,14 @@ class MyApp extends StatelessWidget {
                 body: Center(child: Text('Not found')),
               )),
       routes: {
+        // Routen für den App-Drawer
         '/': (context) => const PlantRoute(),
         '/sprossen': (context) => const SprossenRoute(),
         '/settings': (context) => const SettingsRoute(),
         '/camera': (context) => TakePictureScreen(camera: camera),
       },
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.green,
       ),
     );
   }

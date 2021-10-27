@@ -6,7 +6,6 @@ class PlantRoute extends StatefulWidget {
 
   const PlantRoute({Key? key, this.imagePath = ""}) : super(key: key);
 
-
   @override
   State<PlantRoute> createState() => _PlantRouteState();
 }
@@ -14,7 +13,9 @@ class PlantRoute extends StatefulWidget {
 class _PlantRouteState extends State<PlantRoute> {
   @override
   Widget build(BuildContext context) {
+    // Button an dessen Stelle das aufgenommene Foto angezeigt wird
     StatefulWidget picOrButton;
+
     if (widget.imagePath.isNotEmpty) {
       picOrButton = Image.file(File(widget.imagePath));
     } else {
@@ -27,26 +28,24 @@ class _PlantRouteState extends State<PlantRoute> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('First Route'),
+        title: const Text('Pflanzen'),
       ),
+
+      // Inhalt der Pflanzen-Seite
       body: Center(
         child: Column(
           children: [
             ElevatedButton(
-              child: const Text('Open settings route'),
-              onPressed: () {
-                Navigator.pushNamed(context, '/settings');
-              },
-            ),
-            ElevatedButton(
-                child: const Text('Foto machen oder anzeigen'),
+                child: const Text('Foto machen oder ändern'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/camera');
                 }),
-            picOrButton
+            picOrButton // Zeigt einen Knopf oder das Foto
           ],
         ),
       ),
+
+      // App-Drawer der zu den verschiedenen routen führt
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -55,7 +54,7 @@ class _PlantRouteState extends State<PlantRoute> {
               decoration: BoxDecoration(
                 color: Colors.blueGrey,
               ),
-              child: Text('Drawer Header'),
+              child: Text('Pflanzen & Sprossen'),
             ),
             ListTile(
               title: const Text('Pflanzen'),
@@ -70,18 +69,14 @@ class _PlantRouteState extends State<PlantRoute> {
               title: const Text('Sprossen'),
               leading: const Icon(Icons.grass_rounded),
               onTap: () {
-                //Update the state of the app
                 Navigator.popAndPushNamed(context, '/sprossen');
-                //then close the drawer
               },
             ),
             ListTile(
               title: const Text('Settings'),
               leading: const Icon(Icons.settings),
               onTap: () {
-                //Update the state of the app
                 Navigator.popAndPushNamed(context, '/settings');
-                //then close the drawer
               },
             ),
           ],
