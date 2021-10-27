@@ -13,7 +13,15 @@ Future<void> main() async {
   // Kamera initialisieren
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
-  final firstCamera = cameras.first;
+  final firstCamera;
+  if (cameras.isNotEmpty) {
+    firstCamera = cameras.first;
+  } else {
+    firstCamera = CameraDescription(
+        name: "fake",
+        lensDirection: CameraLensDirection.back,
+        sensorOrientation: 90);
+  }
 
   runApp(MyApp(
     camera: firstCamera,
