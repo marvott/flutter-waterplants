@@ -18,8 +18,10 @@ class _PlantRouteState extends State<PlantRoute> {
     // Button an dessen Stelle das aufgenommene Foto angezeigt wird
     StatefulWidget picOrButton;
 
-    if (widget.imagePath.isNotEmpty) {
+    if (widget.imagePath.isNotEmpty && widget.cameraName != "fake") {
       picOrButton = Image.file(File(widget.imagePath));
+    } else if (widget.imagePath.isNotEmpty && widget.cameraName == "fake") {
+      picOrButton = Image.asset(widget.imagePath);
     } else {
       picOrButton = ElevatedButton(
           child: const Text('Foto machen'),
@@ -27,7 +29,7 @@ class _PlantRouteState extends State<PlantRoute> {
             if (widget.cameraName == "fake") {
               PlantRoute(
                   cameraName: widget.cameraName,
-                  imagePath: "lib/presetPictures/bild.jpeg");
+                  imagePath: "assets/images/plant.jpeg");
             } else {
               Navigator.pushNamed(context, '/camera');
             }
@@ -49,7 +51,7 @@ class _PlantRouteState extends State<PlantRoute> {
                   if (widget.cameraName == "fake") {
                     PlantRoute(
                         cameraName: widget.cameraName,
-                        imagePath: "lib/presetPictures/bild.jpeg");
+                        imagePath: "assets/images/plant.jpeg");
                   } else {
                     Navigator.pushNamed(context, '/camera');
                   }
