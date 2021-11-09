@@ -21,15 +21,22 @@ class _PlantRouteState extends State<PlantRoute> {
     if (widget.imagePath.isNotEmpty && widget.cameraName != "fake") {
       picOrButton = Image.file(File(widget.imagePath));
     } else if (widget.imagePath.isNotEmpty && widget.cameraName == "fake") {
-      picOrButton = Image.asset(widget.imagePath);
+      picOrButton = const Image(image: AssetImage("assets/images/plant.jpeg"));
     } else {
       picOrButton = ElevatedButton(
           child: const Text('Foto machen'),
           onPressed: () {
             if (widget.cameraName == "fake") {
-              PlantRoute(
-                  cameraName: widget.cameraName,
-                  imagePath: "assets/images/plant.jpeg");
+              // PlantRoute(
+              //     imagePath: "assets/images/plant.jpeg",
+              //     cameraName: widget.cameraName);
+              Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => PlantRoute(
+                  imagePath: "assets/images/plant.jpeg", cameraName: widget.cameraName,
+                ),
+              ),
+            );
             } else {
               Navigator.pushNamed(context, '/camera');
             }
@@ -42,7 +49,7 @@ class _PlantRouteState extends State<PlantRoute> {
       ),
 
       // Inhalt der Pflanzen-Seite
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             ElevatedButton(
@@ -56,7 +63,8 @@ class _PlantRouteState extends State<PlantRoute> {
                     Navigator.pushNamed(context, '/camera');
                   }
                 }),
-            picOrButton // Zeigt einen Knopf oder das Foto
+            picOrButton, // Zeigt einen Knopf oder das Foto
+            const Image(image: AssetImage("assets/images/plant.jpeg"))
           ],
         ),
       ),
