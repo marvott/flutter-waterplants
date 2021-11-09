@@ -27,16 +27,14 @@ class _PlantRouteState extends State<PlantRoute> {
           child: const Text('Foto machen'),
           onPressed: () {
             if (widget.cameraName == "fake") {
-              // PlantRoute(
-              //     imagePath: "assets/images/plant.jpeg",
-              //     cameraName: widget.cameraName);
               Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => PlantRoute(
-                  imagePath: "assets/images/plant.jpeg", cameraName: widget.cameraName,
+                MaterialPageRoute(
+                  builder: (context) => PlantRoute(
+                    imagePath: "assets/images/plant.jpeg",
+                    cameraName: widget.cameraName,
+                  ),
                 ),
-              ),
-            );
+              );
             } else {
               Navigator.pushNamed(context, '/camera');
             }
@@ -56,9 +54,14 @@ class _PlantRouteState extends State<PlantRoute> {
                 child: const Text('Foto machen oder ändern'),
                 onPressed: () {
                   if (widget.cameraName == "fake") {
-                    PlantRoute(
-                        cameraName: widget.cameraName,
-                        imagePath: "assets/images/plant.jpeg");
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => PlantRoute(
+                          imagePath: "assets/images/plant.jpeg",
+                          cameraName: widget.cameraName,
+                        ),
+                      ),
+                    );
                   } else {
                     Navigator.pushNamed(context, '/camera');
                   }
