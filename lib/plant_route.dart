@@ -137,7 +137,6 @@ class _PlantRouteState extends State<PlantRoute> {
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        iconSize: 35,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.filter_vintage_rounded),
