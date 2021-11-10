@@ -36,6 +36,8 @@ class MyApp extends StatelessWidget {
   final CameraDescription camera;
   final String cameraName;
 
+  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
