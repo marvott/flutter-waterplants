@@ -18,19 +18,15 @@ class _PlantRouteState extends State<PlantRoute> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
-      'Index 0: Home',
+      'Index 0: Pflanzen',
       style: optionStyle,
     ),
     Text(
-      'Index 1: Business',
+      'Index 1: Sprossen',
       style: optionStyle,
     ),
     Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Settings',
+      'Index 2: Settings',
       style: optionStyle,
     ),
   ];
@@ -139,30 +135,25 @@ class _PlantRouteState extends State<PlantRoute> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        iconSize: 35,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-            backgroundColor: Colors.red,
+            icon: Icon(Icons.filter_vintage_rounded),
+            label: 'Pflanzen',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-            backgroundColor: Colors.green,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-            backgroundColor: Colors.purple,
+            icon: Icon(Icons.grass_rounded),
+            label: 'Sprossen',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'Settings',
-            backgroundColor: Colors.pink,
+            label: 'Einstellungen',
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.green,
         onTap: _onItemTapped,
       ),
     );
