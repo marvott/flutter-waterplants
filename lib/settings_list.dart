@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'main.dart';
 
 Column settingslist(context) {
   var settings = Column(
@@ -7,7 +8,8 @@ Column settingslist(context) {
       const Text('Daten dürfen an die NSA weitergegeben werden: Akzeptiert'),
       ElevatedButton(
         onPressed: () {
-          Navigator.pop(context);
+          Navigator.pushNamed(context, '/');
+          // Navigator.pop(context);
           // Navigate back to first route when tapped.
         },
         child: const Text('Akzeptieren und zurück!'),

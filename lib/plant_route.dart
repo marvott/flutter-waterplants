@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
+import 'package:flutter_application_1/main_screen.dart';
+
 class PlantRoute extends StatefulWidget {
   final String imagePath;
   final String cameraName;
@@ -27,9 +29,9 @@ class _PlantRouteState extends State<PlantRoute> {
           child: const Text('Foto machen'),
           onPressed: () {
             if (widget.cameraName == "fake") {
-              Navigator.of(context).push(
+              Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => PlantRoute(
+                  builder: (context) => MainScreen(
                     imagePath: "assets/images/plant.jpeg",
                     cameraName: widget.cameraName,
                   ),
@@ -54,9 +56,9 @@ class _PlantRouteState extends State<PlantRoute> {
                 child: const Text('Foto machen oder ändern'),
                 onPressed: () {
                   if (widget.cameraName == "fake") {
-                    Navigator.of(context).push(
+                    Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => PlantRoute(
+                        builder: (context) => MainScreen(
                           imagePath: "assets/images/plant.jpeg",
                           cameraName: widget.cameraName,
                         ),

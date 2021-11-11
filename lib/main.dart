@@ -3,12 +3,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter_application_1/main_screen.dart';
+import 'package:flutter_application_1/camera.dart';
 
+import 'main_screen.dart';
 import 'plant_route.dart';
 import 'settings_route.dart';
 import 'sprossen_route.dart';
-import 'camera.dart';
 
 Future<void> main() async {
   // Kamera initialisieren
@@ -31,7 +31,7 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key, required this.camera, required this.cameraName})
+  const MyApp({Key? key, required this.camera, required this.cameraName})
       : super(key: key);
 
   final CameraDescription camera;
@@ -40,11 +40,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Route Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: MainScreen(cameraName: cameraName,),
-    );
+        title: 'Route Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        initialRoute: '/',
+        onUnknownRoute: (settings) => MaterialPageRoute(
+            builder: (context) => const Scaffold(
+                  body: Center(child: Text('Not found')),
+                )),
+        routes: {
+          // Routen
+          '/': (context) => MainScreen(cameraName: cameraName),
+          //TODO: die routen fliegen evtl. raus weil sie im main screen drinne sind
+          '/plants': (context) => PlantRoute(
+                cameraName: cameraName,
+              ),
+          '/sprossen': (context) => const SprossenRoute(),
+          '/settings': (context) => const SettingsRoute(),
+          '/camera': (context) => TakePictureScreen(camera: camera),
+        });
   }
 }

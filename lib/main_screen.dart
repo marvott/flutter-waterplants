@@ -18,14 +18,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  List<Widget> pageList = <Widget>[
-    PlantRoute(
-      cameraName: widget.cameraName,
-    ),
-    const SprossenRoute(),
-    const SettingsRoute(),
-  ];
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -35,7 +27,14 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pageList[_selectedIndex],
+      body: [
+        PlantRoute(
+          cameraName: widget.cameraName,
+          imagePath: widget.imagePath,
+        ),
+        const SprossenRoute(),
+        const SettingsRoute(),
+      ][_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
