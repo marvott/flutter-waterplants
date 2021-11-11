@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:flutter_application_1/main_screen.dart';
 
 import 'plant_route.dart';
 import 'settings_route.dart';
@@ -30,33 +31,20 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key, required this.camera, required this.cameraName})
+  MyApp({Key? key, required this.camera, required this.cameraName})
       : super(key: key);
 
   final CameraDescription camera;
   final String cameraName;
 
-  
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Route Demo',
-      initialRoute: '/',
-      onUnknownRoute: (settings) => MaterialPageRoute(
-          builder: (context) => const Scaffold(
-                body: Center(child: Text('Not found')),
-              )),
-      routes: {
-        // Routen für den App-Drawer
-        '/': (context) => PlantRoute(cameraName: cameraName),
-        '/sprossen': (context) => const SprossenRoute(),
-        '/settings': (context) => const SettingsRoute(),
-        '/camera': (context) => TakePictureScreen(camera: camera),
-      },
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
+      home: MainScreen(cameraName: cameraName,),
     );
   }
 }
