@@ -54,6 +54,11 @@ class _PlantOverviewState extends State<PlantOverview> {
         child: Column(
           children: [
             ElevatedButton(
+                child: const Text('Pflanze XY'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/plant');
+                }),
+            ElevatedButton(
                 child: const Text('Foto machen oder ändern'),
                 onPressed: () {
                   if (GeneralArguments.cameraName == "fake") {
@@ -69,11 +74,6 @@ class _PlantOverviewState extends State<PlantOverview> {
                   }
                 }),
             picOrButton, // Zeigt einen Knopf oder das Foto
-            ElevatedButton(
-                child: const Text('Pflanze XY'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/plant');
-                }),
             const Image(image: AssetImage("assets/images/plant.jpeg"))
           ],
         ),
