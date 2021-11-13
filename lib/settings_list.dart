@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
+import 'main_screen.dart';
 
 Column settingslist(context) {
   var settings = Column(
@@ -8,9 +8,11 @@ Column settingslist(context) {
       const Text('Daten dürfen an die NSA weitergegeben werden: Akzeptiert'),
       ElevatedButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/');
-          // Navigator.pop(context);
-          // Navigate back to first route when tapped.
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const MainScreen(),
+            ),
+          );
         },
         child: const Text('Akzeptieren und zurück!'),
       ),

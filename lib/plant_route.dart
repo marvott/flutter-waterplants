@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:flutter_application_1/main_screen.dart';
+import 'general_arguments.dart';
 
 class PlantRoute extends StatefulWidget {
-  final String imagePath;
-  final String cameraName;
-
-  const PlantRoute({Key? key, this.imagePath = "", required this.cameraName})
-      : super(key: key);
+  const PlantRoute({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<PlantRoute> createState() => _PlantRouteState();
@@ -20,25 +19,27 @@ class _PlantRouteState extends State<PlantRoute> {
     // Button an dessen Stelle das aufgenommene Foto angezeigt wird
     StatefulWidget picOrButton;
 
-    if (widget.imagePath.isNotEmpty && widget.cameraName != "fake") {
-      picOrButton = Image.file(File(widget.imagePath));
-    } else if (widget.imagePath.isNotEmpty && widget.cameraName == "fake") {
+    if (GeneralArguments.imagePath.isNotEmpty &&
+        GeneralArguments.cameraName != "fake") {
+      picOrButton = Image.file(File(GeneralArguments.imagePath));
+    } else if (GeneralArguments.imagePath.isNotEmpty &&
+        GeneralArguments.cameraName == "fake") {
       picOrButton = const Image(image: AssetImage("assets/images/plant.jpeg"));
     } else {
       picOrButton = ElevatedButton(
           child: const Text('Foto machen'),
           onPressed: () {
-            if (widget.cameraName == "fake") {
-              Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => MainScreen(
-                    imagePath: "assets/images/plant.jpeg",
-                    cameraName: widget.cameraName,
-                  ),
-                ),
-              );
+            if (GeneralArguments.cameraName == "fake") {
+              GeneralArguments.imagePath = "assets/images/plant.jpeg";
+              setState(() {});
+              // Navigator.of(context).pushReplacement(
+              //   MaterialPageRoute(
+              //     builder: (context) => const MainScreen(),
+              //   ),
+              // );
             } else {
-              Navigator.pushNamed(context, '/camera');
+              Navigator.pushNamed(context, '/camera')
+                  .then((_) => setState(() {}));
             }
           });
     }
@@ -55,17 +56,16 @@ class _PlantRouteState extends State<PlantRoute> {
             ElevatedButton(
                 child: const Text('Foto machen oder ändern'),
                 onPressed: () {
-                  if (widget.cameraName == "fake") {
+                  if (GeneralArguments.cameraName == "fake") {
+                    GeneralArguments.imagePath = "assets/images/plant.jpeg";
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => MainScreen(
-                          imagePath: "assets/images/plant.jpeg",
-                          cameraName: widget.cameraName,
-                        ),
+                        builder: (context) => const MainScreen(),
                       ),
                     );
                   } else {
-                    Navigator.pushNamed(context, '/camera');
+                    Navigator.pushNamed(context, '/camera')
+                        .then((_) => setState(() {}));
                   }
                 }),
             picOrButton, // Zeigt einen Knopf oder das Foto

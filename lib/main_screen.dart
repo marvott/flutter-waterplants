@@ -6,9 +6,8 @@ import 'sprossen_route.dart';
 
 class MainScreen extends StatefulWidget {
   final String imagePath;
-  final String cameraName;
 
-  const MainScreen({Key? key, this.imagePath = "", required this.cameraName})
+  const MainScreen({Key? key, this.imagePath = ""})
       : super(key: key);
 
   @override
@@ -28,10 +27,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: [
-        PlantRoute(
-          cameraName: widget.cameraName,
-          imagePath: widget.imagePath,
-        ),
+        const PlantRoute(),
         const SprossenRoute(),
         const SettingsRoute(),
       ][_selectedIndex],
