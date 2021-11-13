@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-class PlantRoute extends StatefulWidget {
-  final String imagePath;
+import 'package:flutter_application_1/main_screen.dart';
+import 'general_arguments.dart';
 
-  const PlantRoute({Key? key, this.imagePath = ""}) : super(key: key);
+class PlantRoute extends StatefulWidget {
+  const PlantRoute({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<PlantRoute> createState() => _PlantRouteState();
@@ -16,13 +19,28 @@ class _PlantRouteState extends State<PlantRoute> {
     // Button an dessen Stelle das aufgenommene Foto angezeigt wird
     StatefulWidget picOrButton;
 
-    if (widget.imagePath.isNotEmpty) {
-      picOrButton = Image.file(File(widget.imagePath));
+    if (GeneralArguments.imagePath.isNotEmpty &&
+        GeneralArguments.cameraName != "fake") {
+      picOrButton = Image.file(File(GeneralArguments.imagePath));
+    } else if (GeneralArguments.imagePath.isNotEmpty &&
+        GeneralArguments.cameraName == "fake") {
+      picOrButton = const Image(image: AssetImage("assets/images/plant.jpeg"));
     } else {
       picOrButton = ElevatedButton(
           child: const Text('Foto machen'),
           onPressed: () {
-            Navigator.pushNamed(context, '/camera');
+            if (GeneralArguments.cameraName == "fake") {
+              GeneralArguments.imagePath = "assets/images/plant.jpeg";
+              setState(() {});
+              // Navigator.of(context).pushReplacement(
+              //   MaterialPageRoute(
+              //     builder: (context) => const MainScreen(),
+              //   ),
+              // );
+            } else {
+              Navigator.pushNamed(context, '/camera')
+                  .then((_) => setState(() {}));
+            }
           });
     }
 
@@ -32,53 +50,26 @@ class _PlantRouteState extends State<PlantRoute> {
       ),
 
       // Inhalt der Pflanzen-Seite
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             ElevatedButton(
                 child: const Text('Foto machen oder ändern'),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/camera');
+                  if (GeneralArguments.cameraName == "fake") {
+                    GeneralArguments.imagePath = "assets/images/plant.jpeg";
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => const MainScreen(),
+                      ),
+                    );
+                  } else {
+                    Navigator.pushNamed(context, '/camera')
+                        .then((_) => setState(() {}));
+                  }
                 }),
-            picOrButton // Zeigt einen Knopf oder das Foto
-          ],
-        ),
-      ),
-
-      // App-Drawer der zu den verschiedenen routen führt
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blueGrey,
-              ),
-              child: Text('Pflanzen & Sprossen'),
-            ),
-            ListTile(
-              title: const Text('Pflanzen'),
-              leading: const Icon(Icons.filter_vintage_rounded),
-              onTap: () {
-                //Update the state of the app
-                Navigator.popAndPushNamed(context, '/');
-                //then close the drawer
-              },
-            ),
-            ListTile(
-              title: const Text('Sprossen'),
-              leading: const Icon(Icons.grass_rounded),
-              onTap: () {
-                Navigator.popAndPushNamed(context, '/sprossen');
-              },
-            ),
-            ListTile(
-              title: const Text('Settings'),
-              leading: const Icon(Icons.settings),
-              onTap: () {
-                Navigator.popAndPushNamed(context, '/settings');
-              },
-            ),
+            picOrButton, // Zeigt einen Knopf oder das Foto
+            const Image(image: AssetImage("assets/images/plant.jpeg"))
           ],
         ),
       ),

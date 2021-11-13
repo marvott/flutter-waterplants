@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
-import 'package:flutter_application_1/plant_route.dart';
+import 'general_arguments.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
@@ -57,13 +57,25 @@ class TakePictureScreenState extends State<TakePictureScreen> {
 
             final image = await _controller.takePicture();
 
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => PlantRoute(
-                  imagePath: image.path,
-                ),
-              ),
-            );
+            if (image.path.isNotEmpty) {
+              GeneralArguments.imagePath = image.path;
+              Navigator.pop(context);
+            }
+            // await Navigator.of(context).pop(context);
+            // Navigator.popAndPushNamed(context, '/',
+            //     arguments: MainScreen(
+            //       cameraName: widget.camera.name,
+            //       imagePath: image.path,
+            //     ));
+
+            // Navigator.of(context).pushReplacement(
+            //   MaterialPageRoute(
+            //     builder: (context) => MainScreen(
+            //       imagePath: image.path,
+            //       cameraName: widget.camera.name,
+            //     ),
+            //   ),
+            // );
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
