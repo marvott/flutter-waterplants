@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-import 'package:flutter_application_1/main_screen.dart';
+import 'main_screen.dart';
 import 'general_arguments.dart';
 
-class PlantRoute extends StatefulWidget {
-  const PlantRoute({
+class PlantOverview extends StatefulWidget {
+  const PlantOverview({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<PlantRoute> createState() => _PlantRouteState();
+  State<PlantOverview> createState() => _PlantOverviewState();
 }
 
-class _PlantRouteState extends State<PlantRoute> {
+class _PlantOverviewState extends State<PlantOverview> {
   @override
   Widget build(BuildContext context) {
     // Button an dessen Stelle das aufgenommene Foto angezeigt wird
@@ -69,6 +69,11 @@ class _PlantRouteState extends State<PlantRoute> {
                   }
                 }),
             picOrButton, // Zeigt einen Knopf oder das Foto
+            ElevatedButton(
+                child: const Text('Pflanze XY'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/plant');
+                }),
             const Image(image: AssetImage("assets/images/plant.jpeg"))
           ],
         ),

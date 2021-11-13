@@ -3,8 +3,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter_application_1/camera.dart';
-import 'package:flutter_application_1/general_arguments.dart';
+import 'package:flutter_application_1/plant.dart';
+import 'camera.dart';
+import 'general_arguments.dart';
 
 import 'main_screen.dart';
 // import 'plant_route.dart';
@@ -51,10 +52,7 @@ class MyApp extends StatelessWidget {
         routes: {
           // Routen
           '/': (context) => const MainScreen(),
-          //die routen fliegen evtl. raus weil sie im main screen drinne sind
-          // '/plants': (context) => const PlantRoute(),
-          // '/sprossen': (context) => const SprossenRoute(),
-          // '/settings': (context) => const SettingsRoute(),
+          '/plant': (context) => const PlantScreen(),
           '/camera': (context) => TakePictureScreen(camera: camera),
         });
   }

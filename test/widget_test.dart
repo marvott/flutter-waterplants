@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:camera/camera.dart';
 
-import 'package:flutter_application_1/main.dart';
+import 'main.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -18,7 +18,10 @@ void main() {
     final firstCamera = cameras.first;
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp(camera: firstCamera, cameraName: "fake",));
+    await tester.pumpWidget(MyApp(
+      camera: firstCamera,
+      cameraName: "fake",
+    ));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
