@@ -54,7 +54,7 @@ class _PlantOverviewState extends State<PlantOverview> {
         child: Column(
           children: [
             ElevatedButton(
-                child: const Text('Pflanze XY'),
+                child: const Text('Zierlicher Peter'),
                 onPressed: () {
                   Navigator.pushNamed(context, '/plant');
                 }),

@@ -81,7 +81,7 @@ class _PlantScreenState extends State<PlantScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Pflanze XY'),
+          title: const Text('Zierlicher Peter'),
         ),
         body: ListView.separated(
           padding: const EdgeInsets.all(8),
