@@ -56,31 +56,54 @@ class _PlantScreenState extends State<PlantScreen> {
         ],
       ),
       Row(
-        children: const <Widget>[
+        children: <Widget>[
           Expanded(
-            child: Text.rich(
-              TextSpan(
-                  text: 'Gießen\n',
-                  style: TextStyle(color: Colors.blue),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'In 5 Tagen',
-                      style: TextStyle(color: Colors.white),
-                    )
-                  ]),
+            child: Container(
+              child: const Text.rich(
+                TextSpan(
+                    text: 'Gießen\n',
+                    style: TextStyle(color: Colors.blue),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'In 5 Tagen',
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ]),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                color: Colors.grey.shade700,
+                border: Border.all(
+                  width: 8,
+                  color: Colors.transparent,
+                ),
+              ),
             ),
           ),
+          const SizedBox(
+            width: 8,
+          ),
           Expanded(
-            child: Text.rich(
-              TextSpan(
-                  text: 'Düngen\n',
-                  style: TextStyle(color: Colors.deepOrange),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'In 14 Tagen',
-                      style: TextStyle(color: Colors.white),
-                    )
-                  ]),
+            child: Container(
+              child: const Text.rich(
+                TextSpan(
+                    text: 'Düngen\n',
+                    style: TextStyle(color: Colors.deepOrange),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'In 14 Tagen',
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ]),
+              ),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                color: Colors.grey.shade700,
+                border: Border.all(
+                  width: 8,
+                  color: Colors.transparent,
+                ),
+              ),
             ),
           ),
         ],
@@ -118,7 +141,7 @@ class _PlantScreenState extends State<PlantScreen> {
           return Container(
               child: entries[index],
               // das Bild (Index 0) ist schon in einem abgerundeten Container
-              decoration: index == 0
+              decoration: index == 0 || index == 2
                   ? null
                   : BoxDecoration(
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
