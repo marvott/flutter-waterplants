@@ -28,16 +28,32 @@ class _PlantScreenState extends State<PlantScreen> {
             height: 400,
             fit: BoxFit.fitWidth,
           )),
-      const Text.rich(
-        TextSpan(
-            text: 'Zierpfeffer\n',
-            style: TextStyle(
-                fontSize: 28, fontWeight: FontWeight.bold, color: Colors.green),
-            children: <TextSpan>[
+      Row(
+        children: [
+          const Expanded(
+            child: Text.rich(
               TextSpan(
-                  text: 'Zimmer',
-                  style: TextStyle(fontSize: 20, color: Colors.white70))
-            ]),
+                  text: 'Zierpfeffer\n',
+                  style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: 'Zimmer',
+                        style: TextStyle(fontSize: 20, color: Colors.white70))
+                  ]),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {},
+            child: const Icon(Icons.edit),
+            style: ElevatedButton.styleFrom(
+              shape: const CircleBorder(),
+              padding: const EdgeInsets.all(15),
+            ),
+          )
+        ],
       ),
       Row(
         children: const <Widget>[
@@ -100,8 +116,6 @@ class _PlantScreenState extends State<PlantScreen> {
         // ListView.separated muss mit dem itemBuilder gebaut werden
         itemBuilder: (BuildContext context, int index) {
           return Container(
-              // height: index == 0 ? 500 : Null,
-
               child: entries[index],
               // das Bild (Index 0) ist schon in einem abgerundeten Container
               decoration: index == 0
@@ -121,6 +135,7 @@ class _PlantScreenState extends State<PlantScreen> {
           height: 10,
         ),
       ),
+      // Foto der Pflanze ändern
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (GeneralArguments.cameraName != 'fake') {

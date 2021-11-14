@@ -1,8 +1,6 @@
-//generelle Argumente um das Navigieren zu erleichtern
-import 'dart:io';
-
 import 'package:flutter/widgets.dart';
 
+//generelle Argumente um das Navigieren zu erleichtern
 class GeneralArguments {
   static String cameraName = "";
   static String imagePath = "";
