@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
+import 'package:flutter/rendering.dart';
 
-import 'main_screen.dart';
 import 'general_arguments.dart';
 
 class PlantOverview extends StatefulWidget {
@@ -16,33 +15,31 @@ class PlantOverview extends StatefulWidget {
 class _PlantOverviewState extends State<PlantOverview> {
   @override
   Widget build(BuildContext context) {
-    // Button an dessen Stelle das aufgenommene Foto angezeigt wird
-    StatefulWidget picOrButton;
-
-    if (GeneralArguments.imagePath.isNotEmpty &&
-        GeneralArguments.cameraName != "fake") {
-      picOrButton = Image.file(File(GeneralArguments.imagePath));
-    } else if (GeneralArguments.imagePath.isNotEmpty &&
-        GeneralArguments.cameraName == "fake") {
-      picOrButton = const Image(image: AssetImage("assets/images/plant.jpeg"));
-    } else {
-      picOrButton = ElevatedButton(
-          child: const Text('Foto machen'),
-          onPressed: () {
-            if (GeneralArguments.cameraName == "fake") {
-              GeneralArguments.imagePath = "assets/images/plant.jpeg";
-              setState(() {});
-              // Navigator.of(context).pushReplacement(
-              //   MaterialPageRoute(
-              //     builder: (context) => const MainScreen(),
-              //   ),
-              // );
-            } else {
-              Navigator.pushNamed(context, '/camera')
-                  .then((_) => setState(() {}));
-            }
-          });
-    }
+    // map mit name, imag und onPressedFunction
+    List<Map> plantList = [
+      {
+        'name': 'Zierlicher Peter',
+        'image': GeneralArguments.defaultPlantImg,
+        'plantRoute': '/plant'
+      },
+      {
+        'name': 'Zierlicher Peter',
+        'image': GeneralArguments.defaultPlantImg,
+        'plantRoute': '/plant'
+      },
+      {
+        'name': 'Zierlicher Peter',
+        'image': GeneralArguments.defaultPlantImg,
+        'plantRoute': '/plant'
+      },
+      // Image(
+      //   // image: FileImage(File(GeneralArguments.imagePath)),
+      //   image: GeneralArguments.imagePath.isEmpty
+      //       ? GeneralArguments.defaultPlantImg
+      //       : FileImage(File(GeneralArguments.imagePath)),
+      //   fit: BoxFit.cover,
+      // )
+    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -50,34 +47,39 @@ class _PlantOverviewState extends State<PlantOverview> {
       ),
 
       // Inhalt der Pflanzen-Seite
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ElevatedButton(
-                child: const Text('Zierlicher Peter'),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/plant');
-                }),
-            ElevatedButton(
-                child: const Text('Foto machen oder ändern'),
-                onPressed: () {
-                  if (GeneralArguments.cameraName == "fake") {
-                    GeneralArguments.imagePath = "assets/images/plant.jpeg";
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) => const MainScreen(),
-                      ),
-                    );
-                  } else {
-                    Navigator.pushNamed(context, '/camera')
-                        .then((_) => setState(() {}));
-                  }
-                }),
-            picOrButton, // Zeigt einen Knopf oder das Foto
-            const Image(image: AssetImage("assets/images/plant.jpeg"))
-          ],
-        ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200,
+                childAspectRatio: 1,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8),
+            itemCount: plantList.length,
+            itemBuilder: (BuildContext ctx, index) {
+              return Container(
+                child: InkWell(
+                  child: Text(
+                    plantList[index]['name'],
+                    textAlign: TextAlign.center,
+                    style: TextStyle(backgroundColor: Colors.green.shade800),
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, '/plant');
+                  },
+                  splashColor: Colors.white,
+                ),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: GeneralArguments.defaultPlantImg,
+                        fit: BoxFit.cover),
+                    color: Colors.grey.shade700,
+                    borderRadius: BorderRadius.circular(8)),
+              );
+            }),
       ),
     );
   }
 }
+
+//Navigator.pushNamed(context, '/plant')

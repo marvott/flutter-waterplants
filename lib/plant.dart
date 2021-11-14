@@ -17,7 +17,7 @@ class _PlantScreenState extends State<PlantScreen> {
     // Für Hotreload funktioniert das im build aber besser
 
     //Elemente die in der Liestview sind
-    final List<Widget> entries = [
+    final List<Widget> plantElements = [
       ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           child: Image(
@@ -135,11 +135,11 @@ class _PlantScreenState extends State<PlantScreen> {
       ),
       body: ListView.separated(
         padding: const EdgeInsets.all(8),
-        itemCount: entries.length,
+        itemCount: plantElements.length,
         // ListView.separated muss mit dem itemBuilder gebaut werden
         itemBuilder: (BuildContext context, int index) {
           return Container(
-              child: entries[index],
+              child: plantElements[index],
               // das Bild (Index 0) ist schon in einem abgerundeten Container
               decoration: index == 0 || index == 2
                   ? null
