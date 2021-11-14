@@ -123,7 +123,10 @@ class _PlantScreenState extends State<PlantScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.pushNamed(context, '/camera').then((_) => setState(() {}));
+          if (GeneralArguments.cameraName != 'fake') {
+            Navigator.pushNamed(context, '/camera')
+                .then((_) => setState(() {}));
+          }
         },
         child: const Icon(Icons.camera_alt),
       ),
