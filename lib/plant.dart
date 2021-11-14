@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/general_arguments.dart';
 
 class PlantScreen extends StatefulWidget {
   const PlantScreen({Key? key}) : super(key: key);
@@ -15,10 +18,13 @@ class _PlantScreenState extends State<PlantScreen> {
 
     //Elemente die in der Liestview sind
     final List<Widget> entries = [
-      const ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+      ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
           child: Image(
-            image: AssetImage("assets/images/plant.jpeg"),
+            // image: FileImage(File(GeneralArguments.imagePath)),
+            image: GeneralArguments.imagePath.isEmpty
+                ? GeneralArguments.defaultPlantImg
+                : FileImage(File(GeneralArguments.imagePath)),
             height: 400,
             fit: BoxFit.fitWidth,
           )),
@@ -116,8 +122,10 @@ class _PlantScreenState extends State<PlantScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.edit),
+        onPressed: () {
+          Navigator.pushNamed(context, '/camera').then((_) => setState(() {}));
+        },
+        child: const Icon(Icons.camera_alt),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
     );
