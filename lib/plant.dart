@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class PlantScreen extends StatefulWidget {
   const PlantScreen({Key? key}) : super(key: key);
 
@@ -86,36 +85,41 @@ class _PlantScreenState extends State<PlantScreen> {
     ];
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Zierlicher Peter'),
-        ),
-        body: ListView.separated(
-          padding: const EdgeInsets.all(8),
-          itemCount: entries.length,
-          // ListView.separated muss mit dem itemBuilder gebaut werden
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-                // height: index == 0 ? 500 : Null,
+      appBar: AppBar(
+        title: const Text('Zierlicher Peter'),
+      ),
+      body: ListView.separated(
+        padding: const EdgeInsets.all(8),
+        itemCount: entries.length,
+        // ListView.separated muss mit dem itemBuilder gebaut werden
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+              // height: index == 0 ? 500 : Null,
 
-                child: entries[index],
-                // das Bild (Index 0) ist schon in einem abgerundeten Container
-                decoration: index == 0
-                    ? null
-                    : BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8)),
-                        color: myColors[index],
-                        border: Border.all(
-                          width: 8,
-                          color: Colors.transparent,
-                        ),
-                      ));
-          },
-          // Der Abstand zw. den Listenelementen
-          separatorBuilder: (BuildContext context, int index) => const Divider(
-            color: Colors.transparent,
-            height: 10,
-          ),
-        ));
+              child: entries[index],
+              // das Bild (Index 0) ist schon in einem abgerundeten Container
+              decoration: index == 0
+                  ? null
+                  : BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      color: myColors[index],
+                      border: Border.all(
+                        width: 8,
+                        color: Colors.transparent,
+                      ),
+                    ));
+        },
+        // Der Abstand zw. den Listenelementen
+        separatorBuilder: (BuildContext context, int index) => const Divider(
+          color: Colors.transparent,
+          height: 10,
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.edit),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndTop,
+    );
   }
 }

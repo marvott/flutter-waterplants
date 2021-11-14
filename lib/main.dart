@@ -52,7 +52,10 @@ class MyApp extends StatelessWidget {
                 style: ButtonStyle(
                     // hier einstellen wie breit die Buttons sind?
                     backgroundColor:
-                        MaterialStateProperty.all(Colors.green.shade800)))),
+                        MaterialStateProperty.all(Colors.green.shade800))),
+            floatingActionButtonTheme: FloatingActionButtonThemeData(
+                backgroundColor: Colors.grey.shade700,
+                foregroundColor: Colors.white)),
         initialRoute: '/',
         onUnknownRoute: (settings) => MaterialPageRoute(
             builder: (context) => const Scaffold(
