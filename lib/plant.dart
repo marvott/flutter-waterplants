@@ -101,8 +101,9 @@ class _PlantScreenState extends State<PlantScreen> {
               ),
             );
           },
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
+          separatorBuilder: (BuildContext context, int index) => const Divider(
+            color: Colors.transparent height: 10,
+          ),
         ));
   }
 }
