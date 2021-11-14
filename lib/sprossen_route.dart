@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class SprossenRoute extends StatefulWidget {
   const SprossenRoute({Key? key}) : super(key: key);
 
@@ -13,7 +14,6 @@ class _SprossenRouteState extends State<SprossenRoute> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("Life of Sprossen"),
-          backgroundColor: const Color.fromRGBO(18, 185, 24, 0.8),
         ),
         body: Center(
           child: Column(

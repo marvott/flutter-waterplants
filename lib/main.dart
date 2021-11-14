@@ -42,8 +42,17 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Route Demo',
         theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
+            brightness: Brightness.dark,
+            backgroundColor: Colors.green.shade800,
+            appBarTheme: AppBarTheme(
+              color: Colors.green.shade800,
+            ),
+            buttonTheme: ButtonThemeData(buttonColor: Colors.green.shade800),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ButtonStyle(
+                    // hier einstellen wie breit die Buttons sind?
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.green.shade800)))),
         initialRoute: '/',
         onUnknownRoute: (settings) => MaterialPageRoute(
             builder: (context) => const Scaffold(
