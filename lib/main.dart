@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'plant.dart';
 import 'camera.dart';
 import 'general_arguments.dart';
 
@@ -64,7 +63,6 @@ class MyApp extends StatelessWidget {
         routes: {
           // Routen
           '/': (context) => const MainScreen(),
-          '/plant': (context) => const PlantScreen(),
           '/camera': (context) => TakePictureScreen(camera: camera),
         });
   }

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_application_1/plant.dart';
 import 'package:fluttericon/entypo_icons.dart';
 
 import 'package:flutter/material.dart';
@@ -16,6 +17,10 @@ class PlantOverview extends StatefulWidget {
 }
 
 class _PlantOverviewState extends State<PlantOverview> {
+  callback() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     // map mit name, imag und onPressedFunction
@@ -62,7 +67,13 @@ class _PlantOverviewState extends State<PlantOverview> {
             itemBuilder: (BuildContext ctx, index) {
               return InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, '/plant');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PlantScreen(
+                                callback: callback,
+                              )));
+                  //Navigator.pushNamed(context, '/plant', arguments: callback());
                 },
                 splashColor: Colors.green,
                 child: Stack(

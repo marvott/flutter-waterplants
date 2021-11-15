@@ -4,7 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/general_arguments.dart';
 
 class PlantScreen extends StatefulWidget {
-  const PlantScreen({Key? key}) : super(key: key);
+  final Function callback;
+  const PlantScreen({
+    Key? key,
+    required this.callback,
+  }) : super(key: key);
 
   @override
   _PlantScreenState createState() => _PlantScreenState();
@@ -13,9 +17,6 @@ class PlantScreen extends StatefulWidget {
 class _PlantScreenState extends State<PlantScreen> {
   @override
   Widget build(BuildContext context) {
-    //TODO: entries und myColor noch vor build plazieren,
-    // Für Hotreload funktioniert das im build aber besser
-
     //Elemente die in der Liestview sind
     final List<Widget> plantElements = [
       ClipRRect(
@@ -162,8 +163,10 @@ class _PlantScreenState extends State<PlantScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (GeneralArguments.cameraName != 'fake') {
-            Navigator.pushNamed(context, '/camera')
-                .then((_) => setState(() {}));
+            // damit das Foto direkt angezeigt wird, werden alle betroffenen Widgets neu gerendert
+            Navigator.pushNamed(context, '/camera').then((_) => setState(() {
+                  widget.callback();
+                }));
           }
         },
         child: const Icon(Icons.camera_alt),
