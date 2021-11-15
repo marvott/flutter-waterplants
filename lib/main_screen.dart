@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/plant_route.dart';
+import 'plant_overview.dart';
 
 import 'settings_route.dart';
 import 'sprossen_route.dart';
@@ -7,8 +7,7 @@ import 'sprossen_route.dart';
 class MainScreen extends StatefulWidget {
   final String imagePath;
 
-  const MainScreen({Key? key, this.imagePath = ""})
-      : super(key: key);
+  const MainScreen({Key? key, this.imagePath = ""}) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -27,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: [
-        const PlantRoute(),
+        const PlantOverview(),
         const SprossenRoute(),
         const SettingsRoute(),
       ][_selectedIndex],

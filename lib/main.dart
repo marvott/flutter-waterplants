@@ -3,8 +3,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter_application_1/camera.dart';
-import 'package:flutter_application_1/general_arguments.dart';
+import 'plant.dart';
+import 'camera.dart';
+import 'general_arguments.dart';
 
 import 'main_screen.dart';
 // import 'plant_route.dart';
@@ -41,8 +42,20 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Route Demo',
         theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
+            brightness: Brightness.dark,
+            backgroundColor: Colors.green.shade800,
+            appBarTheme: AppBarTheme(
+              color: Colors.green.shade800,
+            ),
+            buttonTheme: ButtonThemeData(buttonColor: Colors.green.shade800),
+            elevatedButtonTheme: ElevatedButtonThemeData(
+                style: ButtonStyle(
+                    // hier einstellen wie breit die Buttons sind?
+                    backgroundColor:
+                        MaterialStateProperty.all(Colors.green.shade800))),
+            floatingActionButtonTheme: FloatingActionButtonThemeData(
+                backgroundColor: Colors.grey.shade700,
+                foregroundColor: Colors.white)),
         initialRoute: '/',
         onUnknownRoute: (settings) => MaterialPageRoute(
             builder: (context) => const Scaffold(
@@ -51,10 +64,7 @@ class MyApp extends StatelessWidget {
         routes: {
           // Routen
           '/': (context) => const MainScreen(),
-          //die routen fliegen evtl. raus weil sie im main screen drinne sind
-          // '/plants': (context) => const PlantRoute(),
-          // '/sprossen': (context) => const SprossenRoute(),
-          // '/settings': (context) => const SettingsRoute(),
+          '/plant': (context) => const PlantScreen(),
           '/camera': (context) => TakePictureScreen(camera: camera),
         });
   }

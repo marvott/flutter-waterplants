@@ -55,33 +55,17 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           try {
             await _initializeControllerFuture;
 
-            final image = await _controller.takePicture();
-
-            if (image.path.isNotEmpty) {
+            _controller.takePicture().then((image) {
               GeneralArguments.imagePath = image.path;
               Navigator.pop(context);
-            }
-            // await Navigator.of(context).pop(context);
-            // Navigator.popAndPushNamed(context, '/',
-            //     arguments: MainScreen(
-            //       cameraName: widget.camera.name,
-            //       imagePath: image.path,
-            //     ));
-
-            // Navigator.of(context).pushReplacement(
-            //   MaterialPageRoute(
-            //     builder: (context) => MainScreen(
-            //       imagePath: image.path,
-            //       cameraName: widget.camera.name,
-            //     ),
-            //   ),
-            // );
+            });
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
           }
         },
         child: const Icon(Icons.camera_alt),
+        backgroundColor: Colors.grey.shade700,
       ),
     );
   }
