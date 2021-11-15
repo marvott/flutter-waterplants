@@ -144,12 +144,12 @@ class _PlantScreenState extends State<PlantScreen> {
               decoration: index == 0 || index == 2
                   ? null
                   : BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(8)),
                       color: myColors[index],
                       border: Border.all(
                         width: 8,
                         color: Colors.transparent,
                       ),
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
                     ));
         },
         // Der Abstand zw. den Listenelementen

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -57,24 +59,46 @@ class _PlantOverviewState extends State<PlantOverview> {
                 mainAxisSpacing: 8),
             itemCount: plantList.length,
             itemBuilder: (BuildContext ctx, index) {
-              return Container(
-                child: InkWell(
-                  child: Text(
-                    plantList[index]['name'],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(backgroundColor: Colors.green.shade800),
+              return InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, '/plant');
+                },
+                splashColor: Colors.green,
+                child: Expanded(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(8),
+                              topRight: Radius.circular(8)),
+                          child: Image(
+                            // image: FileImage(File(GeneralArguments.imagePath)),
+                            image: GeneralArguments.imagePath.isEmpty
+                                ? GeneralArguments.defaultPlantImg
+                                : FileImage(File(GeneralArguments.imagePath)),
+                            //height: 400,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                            color: Colors.green.shade800,
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(8),
+                              bottomRight: Radius.circular(8),
+                            )),
+                        child: Text(
+                          plantList[index]['name'],
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
                   ),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/plant');
-                  },
-                  splashColor: Colors.white,
                 ),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: GeneralArguments.defaultPlantImg,
-                        fit: BoxFit.cover),
-                    color: Colors.grey.shade700,
-                    borderRadius: BorderRadius.circular(8)),
               );
             }),
       ),
