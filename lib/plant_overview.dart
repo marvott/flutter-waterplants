@@ -64,38 +64,36 @@ class _PlantOverviewState extends State<PlantOverview> {
                   Navigator.pushNamed(context, '/plant');
                 },
                 splashColor: Colors.green,
-                child: Expanded(
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: ClipRRect(
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8)),
+                        child: Image(
+                          image: GeneralArguments.imagePath.isEmpty
+                              ? GeneralArguments.defaultPlantImg
+                              : FileImage(File(GeneralArguments.imagePath)),
+                          width: double.infinity,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: Colors.green.shade800,
                           borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(8),
-                              topRight: Radius.circular(8)),
-                          child: Image(
-                            image: GeneralArguments.imagePath.isEmpty
-                                ? GeneralArguments.defaultPlantImg
-                                : FileImage(File(GeneralArguments.imagePath)),
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                            bottomLeft: Radius.circular(8),
+                            bottomRight: Radius.circular(8),
+                          )),
+                      child: Text(
+                        plantList[index]['name'],
+                        textAlign: TextAlign.center,
                       ),
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            color: Colors.green.shade800,
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(8),
-                              bottomRight: Radius.circular(8),
-                            )),
-                        child: Text(
-                          plantList[index]['name'],
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               );
             }),
