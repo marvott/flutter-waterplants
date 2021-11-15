@@ -73,11 +73,9 @@ class _PlantOverviewState extends State<PlantOverview> {
                               topLeft: Radius.circular(8),
                               topRight: Radius.circular(8)),
                           child: Image(
-                            // image: FileImage(File(GeneralArguments.imagePath)),
                             image: GeneralArguments.imagePath.isEmpty
                                 ? GeneralArguments.defaultPlantImg
                                 : FileImage(File(GeneralArguments.imagePath)),
-                            //height: 400,
                             width: double.infinity,
                             fit: BoxFit.cover,
                           ),
