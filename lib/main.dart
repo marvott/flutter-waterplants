@@ -4,8 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'camera.dart';
-import 'general_arguments.dart';
+import 'package:flutter/services.dart';
 
+import 'general_arguments.dart';
 import 'main_screen.dart';
 // import 'plant_route.dart';
 // import 'settings_route.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
         title: 'Route Demo',
         theme: ThemeData(
