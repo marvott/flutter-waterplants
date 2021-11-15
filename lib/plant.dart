@@ -81,7 +81,7 @@ class _PlantScreenState extends State<PlantScreen> {
             ),
           ),
           const SizedBox(
-            width: 8,
+            width: 10,
           ),
           Expanded(
             child: Container(
