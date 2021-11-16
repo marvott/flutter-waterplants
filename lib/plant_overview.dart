@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter_application_1/plant.dart';
+import 'package:flutter_application_1/plant_properties.dart';
 import 'package:fluttericon/entypo_icons.dart';
 
 import 'package:flutter/material.dart';
@@ -21,33 +22,32 @@ class _PlantOverviewState extends State<PlantOverview> {
     setState(() {});
   }
 
+  int _counter = 2;
+
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
+  }
+
+  List<PlantProperties> plantList = [
+    PlantProperties(
+        name: "Zierlicher Peter 1",
+        species: "Zierpfeffer",
+        waterInterval: 7,
+        lastWatering: DateTime.utc(2021, 11, 16),
+        //TODO: Ändern!, brauche ich nur jetzt fürs standartding damits funkt
+        imagePath: GeneralArguments.imagePath),
+  ];
+
   @override
   Widget build(BuildContext context) {
     // map mit name, imag und onPressedFunction
-    List<Map> plantList = [
-      {
-        'name': 'Zierlicher Peter Zierlicher Peter Zierlicher Peter ',
-        'image': GeneralArguments.defaultPlantImg,
-        'plantRoute': '/plant'
-      },
-      {
-        'name': 'Zierlicher Peterpeterpeterpeterpeter',
-        'image': GeneralArguments.defaultPlantImg,
-        'plantRoute': '/plant'
-      },
-      {
-        'name': 'Zierlicher Peter',
-        'image': GeneralArguments.defaultPlantImg,
-        'plantRoute': '/plant'
-      },
-      // Image(
-      //   // image: FileImage(File(GeneralArguments.imagePath)),
-      //   image: GeneralArguments.imagePath.isEmpty
-      //       ? GeneralArguments.defaultPlantImg
-      //       : FileImage(File(GeneralArguments.imagePath)),
-      //   fit: BoxFit.cover,
-      // )
-    ];
 
     return Scaffold(
       appBar: AppBar(
@@ -72,10 +72,10 @@ class _PlantOverviewState extends State<PlantOverview> {
                       MaterialPageRoute(
                           builder: (context) => PlantScreen(
                                 callback: callback,
+                                plantProperties: plantList[index],
                               )));
                   //Navigator.pushNamed(context, '/plant', arguments: callback());
                 },
-                splashColor: Colors.green,
                 child: Stack(
                   alignment: AlignmentDirectional.topEnd,
                   children: [
@@ -87,9 +87,9 @@ class _PlantOverviewState extends State<PlantOverview> {
                                 topLeft: Radius.circular(8),
                                 topRight: Radius.circular(8)),
                             child: Image(
-                              image: GeneralArguments.imagePath.isEmpty
+                              image: plantList[index].imagePath.isEmpty
                                   ? GeneralArguments.defaultPlantImg
-                                  : FileImage(File(GeneralArguments.imagePath)),
+                                  : FileImage(File(plantList[index].imagePath)),
                               width: double.infinity,
                               fit: BoxFit.cover,
                             ),
@@ -104,7 +104,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                                 bottomRight: Radius.circular(8),
                               )),
                           child: Text(
-                            plantList[index]['name'],
+                            plantList[index].name,
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             style: const TextStyle(
@@ -149,6 +149,17 @@ class _PlantOverviewState extends State<PlantOverview> {
                 ),
               );
             }),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          plantList.add(PlantProperties(
+              name: "Zierlicher Peter" + _counter.toString(),
+              species: "Zierpfeffer",
+              waterInterval: 7,
+              lastWatering: DateTime.utc(2021, 11, 16)));
+          _incrementCounter();
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

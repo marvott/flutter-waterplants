@@ -2,12 +2,15 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/general_arguments.dart';
+import 'package:flutter_application_1/plant_properties.dart';
 
 class PlantScreen extends StatefulWidget {
   final Function callback;
+  final PlantProperties plantProperties;
   const PlantScreen({
     Key? key,
     required this.callback,
+    required this.plantProperties,
   }) : super(key: key);
 
   @override
@@ -23,26 +26,27 @@ class _PlantScreenState extends State<PlantScreen> {
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           child: Image(
             // image: FileImage(File(GeneralArguments.imagePath)),
-            image: GeneralArguments.imagePath.isEmpty
+            image: widget.plantProperties.imagePath.isEmpty
                 ? GeneralArguments.defaultPlantImg
-                : FileImage(File(GeneralArguments.imagePath)),
+                : FileImage(File(widget.plantProperties.imagePath)),
             height: 400,
             fit: BoxFit.fitWidth,
           )),
       Row(
         children: [
-          const Expanded(
+          Expanded(
             child: Text.rich(
               TextSpan(
-                  text: 'Zierpfeffer\n',
-                  style: TextStyle(
+                  text: widget.plantProperties.name + '\n',
+                  style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Colors.green),
                   children: <TextSpan>[
                     TextSpan(
-                        text: 'Zimmer',
-                        style: TextStyle(fontSize: 20, color: Colors.white70))
+                        text: widget.plantProperties.roomName,
+                        style: const TextStyle(
+                            fontSize: 20, color: Colors.white70))
                   ]),
             ),
           ),
@@ -164,9 +168,13 @@ class _PlantScreenState extends State<PlantScreen> {
         onPressed: () {
           if (GeneralArguments.cameraName != 'fake') {
             // damit das Foto direkt angezeigt wird, werden alle betroffenen Widgets neu gerendert
-            Navigator.pushNamed(context, '/camera').then((_) => setState(() {
-                  widget.callback();
-                }));
+            Navigator.pushNamed(context, '/camera')
+                .then((imagePath) => setState(() {
+                      GeneralArguments.imagePath = imagePath as String;
+                      widget.plantProperties.setImagePath = imagePath;
+                      widget.plantProperties.setName = "Fotografierter Peter";
+                      widget.callback();
+                    }));
           }
         },
         child: const Icon(Icons.camera_alt),
