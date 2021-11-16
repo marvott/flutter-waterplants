@@ -1,21 +1,24 @@
-import 'package:flutter_application_1/general_arguments.dart';
-
 class PlantProperties {
   String name;
   String species;
-  String roomName = "";
+  String roomName;
   int waterInterval;
-  int fertiliserInterval = 0;
-  String notes = "";
+  int fertiliserInterval;
+  String notes;
   DateTime lastWatering;
   DateTime? lastFertilising;
-  String imagePath = GeneralArguments.defaultImagePath;
+  String imagePath;
 
   PlantProperties(
       {required this.name,
       required this.species,
       required this.waterInterval,
-      required this.lastWatering});
+      required this.lastWatering,
+      this.roomName = "",
+      this.fertiliserInterval = 0,
+      this.notes = "",
+      this.lastFertilising,
+      this.imagePath = ""});
 
   get getName => name;
 
