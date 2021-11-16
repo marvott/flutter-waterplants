@@ -35,6 +35,9 @@ class _PlantOverviewState extends State<PlantOverview> {
     });
   }
 
+// TODO: Wo speicher ich diese Liste am Besten damit sie beim Routenwechsel erhalten bleibt?
+// staische Variabl in einer Klasse?
+// Als Atribut dieser Klasse? -> dann muss das immer üpbergeben werden -> anstrengend
   List<PlantProperties> plantList = [
     PlantProperties(
         name: "Zierlicher Peter 1",
