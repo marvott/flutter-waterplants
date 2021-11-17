@@ -8,11 +8,7 @@ Column settingslist(context) {
       const Text('Daten dürfen an die NSA weitergegeben werden: Akzeptiert'),
       ElevatedButton(
         onPressed: () {
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => const MainScreen(),
-            ),
-          );
+          Navigator.pushReplacementNamed(context, '/');
         },
         child: const Text('Akzeptieren und zurück!'),
       ),
