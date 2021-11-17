@@ -172,7 +172,7 @@ class _PlantScreenState extends State<PlantScreen> {
                 .then((imagePath) => setState(() {
                       GeneralArguments.imagePath = imagePath as String;
                       widget.plantProperties.setImagePath = imagePath;
-                      widget.plantProperties.setName = "Fotografierter Peter";
+                      widget.plantProperties.setName = "Fotografierter Peter + ";
                       widget.callback();
                     }));
           }

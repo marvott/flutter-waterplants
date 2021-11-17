@@ -25,14 +25,7 @@ class _PlantOverviewState extends State<PlantOverview> {
   int _counter = 2;
 
   void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+    _counter++;
   }
 
 // TODO: Wo speicher ich diese Liste am Besten damit sie beim Routenwechsel erhalten bleibt?
@@ -155,12 +148,14 @@ class _PlantOverviewState extends State<PlantOverview> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          plantList.add(PlantProperties(
-              name: "Zierlicher Peter" + _counter.toString(),
-              species: "Zierpfeffer",
-              waterInterval: 7,
-              lastWatering: DateTime.utc(2021, 11, 16)));
-          _incrementCounter();
+          setState(() {
+            plantList.add(PlantProperties(
+                name: "Zierlicher Peter " + _counter.toString(),
+                species: "Zierpfeffer",
+                waterInterval: 7,
+                lastWatering: DateTime.utc(2021, 11, 16)));
+            _incrementCounter();
+          });
         },
         child: const Icon(Icons.add),
       ),
