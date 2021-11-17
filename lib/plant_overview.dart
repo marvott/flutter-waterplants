@@ -33,12 +33,11 @@ class _PlantOverviewState extends State<PlantOverview> {
 // Als Atribut dieser Klasse? -> dann muss das immer üpbergeben werden -> anstrengend
   List<PlantProperties> plantList = [
     PlantProperties(
-        name: "Zierlicher Peter 1",
-        species: "Zierpfeffer",
-        waterInterval: 7,
-        lastWatering: DateTime.utc(2021, 11, 16),
-        //TODO: Ändern!, brauche ich nur jetzt fürs standartding damits funkt
-        imagePath: GeneralArguments.imagePath),
+      name: "Zierlicher Peter 1",
+      species: "Zierpfeffer",
+      waterInterval: 7,
+      lastWatering: DateTime.utc(2021, 11, 16),
+    ),
   ];
 
   @override

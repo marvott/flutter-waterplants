@@ -25,7 +25,6 @@ class _PlantScreenState extends State<PlantScreen> {
       ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           child: Image(
-            // image: FileImage(File(GeneralArguments.imagePath)),
             image: widget.plantProperties.imagePath.isEmpty
                 ? GeneralArguments.defaultPlantImg
                 : FileImage(File(widget.plantProperties.imagePath)),
@@ -170,9 +169,9 @@ class _PlantScreenState extends State<PlantScreen> {
             // damit das Foto direkt angezeigt wird, werden alle betroffenen Widgets neu gerendert
             Navigator.pushNamed(context, '/camera')
                 .then((imagePath) => setState(() {
-                      GeneralArguments.imagePath = imagePath as String;
                       widget.plantProperties.setImagePath = imagePath;
-                      widget.plantProperties.setName = "Fotografierter Peter + ";
+                      widget.plantProperties.setName =
+                          "Fotografierter Peter + ";
                       widget.callback();
                     }));
           }

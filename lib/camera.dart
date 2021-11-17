@@ -56,7 +56,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             await _initializeControllerFuture;
 
             _controller.takePicture().then((image) {
-              GeneralArguments.imagePath = image.path;
               Navigator.pop(context, image.path);
             });
           } catch (e) {
