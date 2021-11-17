@@ -8,9 +8,6 @@ import 'package:flutter/services.dart';
 
 import 'general_arguments.dart';
 import 'main_screen.dart';
-// import 'plant_route.dart';
-// import 'settings_route.dart';
-// import 'sprossen_route.dart';
 
 Future<void> main() async {
   // Kamera initialisieren
