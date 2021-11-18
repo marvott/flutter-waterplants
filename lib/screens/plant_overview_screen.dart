@@ -17,7 +17,7 @@ class PlantOverview extends StatefulWidget {
 }
 
 class _PlantOverviewState extends State<PlantOverview> {
-  //TODO: der callback kann wegen wenn das Providerpackage fertig ist
+  //TODO: der callback kann weg wenn das Providerpackage fertig ist
   callback() {
     setState(() {});
   }
