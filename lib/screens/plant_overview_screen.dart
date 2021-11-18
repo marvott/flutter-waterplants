@@ -42,13 +42,14 @@ class _PlantOverviewState extends State<PlantOverview> {
             "Muss regelmäßig von Staub befreit und alle paar Tage gedreht werden"),
     PlantProperties(
         name: "Gedüngter Peter",
-        species: "Zierpfeffer",
-        roomName: "Schlafzimmer",
+        species: "Zierpfefferus Maximus",
+        roomName: "Balkonien",
         waterInterval: 7,
         lastWatering: DateTime.utc(2021, 11, 10),
         fertilising: Fertilising(
             fertiliserInterval: 14,
-            lastFertilising: DateTime.utc(2021, 11, 18))),
+            lastFertilising: DateTime.utc(2021, 11, 18)),
+        notes: "Hier stehen viel e tolle Notizen"),
   ];
 
   @override
