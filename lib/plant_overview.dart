@@ -34,12 +34,21 @@ class _PlantOverviewState extends State<PlantOverview> {
 // Provider Package da empfohlen!
   List<PlantProperties> plantList = [
     PlantProperties(
-      name: "Zierlicher Peter 1",
+      name: "Zierlicher Peter",
       species: "Zierpfeffer",
       roomName: "Schlafzimmer",
       waterInterval: 7,
       lastWatering: DateTime.utc(2021, 11, 18),
     ),
+    PlantProperties(
+        name: "Gedüngter Peter",
+        species: "Zierpfeffer",
+        roomName: "Schlafzimmer",
+        waterInterval: 7,
+        lastWatering: DateTime.utc(2021, 11, 18),
+        fertilising: Fertilising(
+            fertiliserInterval: 14,
+            lastFertilising: DateTime.utc(2021, 11, 18))),
   ];
 
   @override

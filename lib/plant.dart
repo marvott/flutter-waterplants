@@ -85,7 +85,7 @@ class _PlantScreenState extends State<PlantScreen> {
             ),
           ),
           //TODO: sehr hässliche Abfrage, das geht schöner!
-          (widget.plantProperties.lastFertilising == null)
+          (widget.plantProperties.fertilising == null)
               ? const SizedBox.shrink()
               : Expanded(
                   child: Row(
@@ -180,8 +180,8 @@ class _PlantScreenState extends State<PlantScreen> {
             Navigator.pushNamed(context, '/camera')
                 .then((imagePath) => setState(() {
                       widget.plantProperties.setImagePath = imagePath;
-                      widget.plantProperties.setName =
-                          "Fotografierter Peter + ";
+                      //TODO: Diese Zeile löschen, Fotografieren soll nicht den Namen ändern
+                      widget.plantProperties.setName = "Fotografierter Peter";
                       widget.callback();
                     }));
           }

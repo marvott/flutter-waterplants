@@ -1,12 +1,21 @@
+class Fertilising {
+  int fertiliserInterval;
+  DateTime? lastFertilising;
+
+  Fertilising({
+    this.fertiliserInterval = 0,
+    this.lastFertilising,
+  });
+}
+
 class PlantProperties {
   String name;
   String species;
   String roomName;
-  int waterInterval;
-  int fertiliserInterval;
-  String notes;
   DateTime lastWatering;
-  DateTime? lastFertilising;
+  int waterInterval;
+  Fertilising? fertilising;
+  String notes;
   String imagePath;
 
   PlantProperties(
@@ -14,9 +23,8 @@ class PlantProperties {
       required this.species,
       required this.waterInterval,
       required this.lastWatering,
+      this.fertilising,
       this.roomName = "",
-      this.fertiliserInterval = 0,
-      this.lastFertilising,
       this.notes = "",
       this.imagePath = ""});
 
@@ -34,12 +42,12 @@ class PlantProperties {
   }
 
   String fertiliseInDays() {
-    assert(lastFertilising != null);
-    int inDays =
-        fertiliserInterval + lastFertilising!.difference(DateTime.now()).inDays;
+    assert(fertilising != null);
+    int inDays = fertilising!.fertiliserInterval +
+        fertilising!.lastFertilising!.difference(DateTime.now()).inDays;
     if (inDays > 0) {
       return "In $inDays Tagen";
-    } else if (inDays <= -fertiliserInterval) {
+    } else if (inDays <= -fertilising!.fertiliserInterval) {
       //Wenn düngen dringen ist, also schon mehr als einem Interwall her ist.
       return "Dringend Düngen!";
     } else if (inDays <= 0) {
@@ -47,9 +55,6 @@ class PlantProperties {
     }
     throw Exception('Gießen in Tagen konnte nicht berechnet werden');
   }
-
-  int lastFertilisingInDays() =>
-      DateTime.now().difference(lastFertilising!).inDays;
 
   get getName => name;
 
@@ -67,11 +72,6 @@ class PlantProperties {
 
   set setWaterInterval(waterInterval) => this.waterInterval = waterInterval;
 
-  get getFertiliserInterval => fertiliserInterval;
-
-  set setFertiliserInterval(fertiliserInterval) =>
-      this.fertiliserInterval = fertiliserInterval;
-
   get getNotes => notes;
 
   set setNotes(notes) => this.notes = notes;
@@ -80,10 +80,10 @@ class PlantProperties {
 
   set setLastWatering(lastWatering) => this.lastWatering = lastWatering;
 
-  get getLastFertilising => lastFertilising;
+  Fertilising? get getFertilising => fertilising;
 
-  set setLastFertilising(lastFertilising) =>
-      this.lastFertilising = lastFertilising;
+  set setFertilising(Fertilising? fertilising) =>
+      this.fertilising = fertilising;
 
   get getImagePath => imagePath;
 
