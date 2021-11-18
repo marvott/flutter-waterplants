@@ -8,7 +8,7 @@ class Fertilising {
   });
 }
 
-class PlantProperties {
+class PlantProperties extends Chan{
   String name;
   String species;
   String roomName;
