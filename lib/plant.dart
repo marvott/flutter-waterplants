@@ -122,15 +122,14 @@ class _PlantScreenState extends State<PlantScreen> {
                 ),
         ],
       ),
-      const Text.rich(
+      Text.rich(
         TextSpan(
             text: 'Notizen\n',
-            style: TextStyle(color: Colors.indigo),
+            style: const TextStyle(color: Colors.indigo),
             children: <TextSpan>[
               TextSpan(
-                text:
-                    'Muss regelmäßig von Staub befreit werden und alle paar Tage gedreht werden',
-                style: TextStyle(color: Colors.white),
+                text: widget.plantProperties.notes,
+                style: const TextStyle(color: Colors.white),
               )
             ]),
       ),

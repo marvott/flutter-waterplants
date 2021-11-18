@@ -57,6 +57,7 @@ class PlantProperties {
     throw Exception('Gießen in Tagen konnte nicht berechnet werden');
   }
 
+  //TODO: nicht benötigten Boilerplatemüll entfernen
   get getName => name;
 
   set setName(name) => this.name = name;

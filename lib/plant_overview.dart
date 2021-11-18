@@ -34,12 +34,13 @@ class _PlantOverviewState extends State<PlantOverview> {
 // Provider Package da empfohlen!
   List<PlantProperties> plantList = [
     PlantProperties(
-      name: "Zierlicher Peter",
-      species: "Zierpfeffer",
-      roomName: "Schlafzimmer",
-      waterInterval: 7,
-      lastWatering: DateTime.utc(2021, 11, 18),
-    ),
+        name: "Zierlicher Peter",
+        species: "Zierpfeffer",
+        roomName: "Schlafzimmer",
+        waterInterval: 7,
+        lastWatering: DateTime.utc(2021, 11, 18),
+        notes:
+            "Muss regelmäßig von Staub befreit und alle paar Tage gedreht werden"),
     PlantProperties(
         name: "Gedüngter Peter",
         species: "Zierpfeffer",
@@ -80,7 +81,6 @@ class _PlantOverviewState extends State<PlantOverview> {
                                 callback: callback,
                                 plantProperties: plantList[index],
                               )));
-                  //Navigator.pushNamed(context, '/plant', arguments: callback());
                 },
                 child: Stack(
                   alignment: AlignmentDirectional.topEnd,
@@ -172,5 +172,3 @@ class _PlantOverviewState extends State<PlantOverview> {
     );
   }
 }
-
-//Navigator.pushNamed(context, '/plant')
