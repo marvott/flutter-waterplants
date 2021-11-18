@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+
 class Fertilising {
   int fertiliserInterval;
   DateTime lastFertilising;
@@ -8,7 +10,7 @@ class Fertilising {
   });
 }
 
-class PlantProperties extends Chan{
+class PlantProperties extends ChangeNotifier {
   String name;
   String species;
   String roomName;
@@ -60,34 +62,57 @@ class PlantProperties extends Chan{
   //TODO: nicht benötigten Boilerplatemüll entfernen
   get getName => name;
 
-  set setName(name) => this.name = name;
+  set setName(String name) {
+    notifyListeners();
+    this.name = name;
+  }
 
   get getSpecies => species;
 
-  set setSpecies(species) => this.species = species;
+  set setSpecies(String species) {
+    notifyListeners();
+    this.species = species;
+  }
 
   get getRoomName => roomName;
 
-  set setRoomName(roomName) => this.roomName = roomName;
+  set setRoomName(roomName) {
+    notifyListeners();
+    this.roomName = roomName;
+  }
 
   get getWaterInterval => waterInterval;
 
-  set setWaterInterval(waterInterval) => this.waterInterval = waterInterval;
+  set setWaterInterval(int waterInterval) {
+    notifyListeners();
+    this.waterInterval = waterInterval;
+  }
 
   get getNotes => notes;
 
-  set setNotes(notes) => this.notes = notes;
+  set setNotes(String notes) {
+    notifyListeners();
+    this.notes = notes;
+  }
 
   get getLastWatering => lastWatering;
 
-  set setLastWatering(lastWatering) => this.lastWatering = lastWatering;
+  set setLastWatering(DateTime lastWatering) {
+    notifyListeners();
+    this.lastWatering = lastWatering;
+  }
 
   Fertilising? get getFertilising => fertilising;
 
-  set setFertilising(Fertilising? fertilising) =>
-      this.fertilising = fertilising;
+  set setFertilising(Fertilising? fertilising) {
+    notifyListeners();
+    this.fertilising = fertilising;
+  }
 
   get getImagePath => imagePath;
 
-  set setImagePath(imagePath) => this.imagePath = imagePath;
+  set setImagePath(imagePath) {
+    notifyListeners();
+    this.imagePath = imagePath;
+  }
 }
