@@ -3,7 +3,7 @@ import 'package:fluttericon/entypo_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'plant.dart';
+import 'plant_screen.dart';
 import '../models/plant.dart';
 import '../models/general.dart';
 
