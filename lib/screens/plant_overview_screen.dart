@@ -3,7 +3,7 @@ import 'package:fluttericon/entypo_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import './plant.dart';
+import 'plant.dart';
 import '/models/plant_properties.dart';
 import '/models/general_arguments.dart';
 
@@ -45,7 +45,7 @@ class _PlantOverviewState extends State<PlantOverview> {
         species: "Zierpfeffer",
         roomName: "Schlafzimmer",
         waterInterval: 7,
-        lastWatering: DateTime.utc(2021, 11, 18),
+        lastWatering: DateTime.utc(2021, 11, 10),
         fertilising: Fertilising(
             fertiliserInterval: 14,
             lastFertilising: DateTime.utc(2021, 11, 18))),
@@ -158,6 +158,7 @@ class _PlantOverviewState extends State<PlantOverview> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
+            //TODO: ändern, Dialog zum Hinzufügen öffnen
             plantList.add(PlantProperties(
                 name: "Zierlicher Peter " + _counter.toString(),
                 species: "Zierpfeffer",

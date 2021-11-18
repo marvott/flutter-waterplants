@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './plant_overview.dart';
+import 'plant_overview_screen.dart';
 
 import '../settings_route.dart';
 import '../sprossen_route.dart';

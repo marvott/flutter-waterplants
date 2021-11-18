@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'screens/main_screen.dart';
 
 Column settingslist(context) {
   var settings = Column(
