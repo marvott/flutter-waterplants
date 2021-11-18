@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/general_arguments.dart';
-import 'package:flutter_application_1/models/plant_properties.dart';
+import 'package:flutter_application_1/models/general.dart';
+import 'package:flutter_application_1/models/plant.dart';
 
 class PlantScreen extends StatefulWidget {
   final Function callback;

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'plant.dart';
-import '/models/plant_properties.dart';
-import '/models/general_arguments.dart';
+import '../models/plant.dart';
+import '../models/general.dart';
 
 class PlantOverview extends StatefulWidget {
   const PlantOverview({

@@ -7,7 +7,7 @@ import 'package:flutter_application_1/theme/style.dart';
 import 'screens/camera.dart';
 import 'package:flutter/services.dart';
 
-import 'models/general_arguments.dart';
+import 'models/general.dart';
 import 'screens/main_screen.dart';
 
 Future<void> main() async {
