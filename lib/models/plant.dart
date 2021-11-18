@@ -10,7 +10,7 @@ class Fertilising {
   });
 }
 
-class PlantProperties extends ChangeNotifier {
+class Plant extends ChangeNotifier {
   String name;
   String species;
   String roomName;
@@ -20,7 +20,7 @@ class PlantProperties extends ChangeNotifier {
   String notes;
   String imagePath;
 
-  PlantProperties(
+  Plant(
       {required this.name,
       required this.species,
       required this.waterInterval,

@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:flutter_application_1/models/plant_list.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:provider/provider.dart';
 
 import 'plant_screen.dart';
 import '../models/plant.dart';
@@ -22,7 +24,7 @@ class _PlantOverviewState extends State<PlantOverview> {
     setState(() {});
   }
 
-  int _counter = 2;
+  int _counter = 1;
 
   void _incrementCounter() {
     _counter++;
@@ -32,31 +34,11 @@ class _PlantOverviewState extends State<PlantOverview> {
 // statische Variable in einer Klasse?
 // Als Atribut dieser Klasse? -> dann muss das immer üpbergeben werden -> anstrengend
 // Provider Package da empfohlen!
-  List<PlantProperties> plantList = [
-    PlantProperties(
-        name: "Zierlicher Peter",
-        species: "Zierpfeffer",
-        roomName: "Schlafzimmer",
-        waterInterval: 7,
-        lastWatering: DateTime.utc(2021, 11, 18),
-        notes:
-            "Muss regelmäßig von Staub befreit und alle paar Tage gedreht werden"),
-    PlantProperties(
-        name: "Gedüngter Peter",
-        species: "Zierpfefferus Maximus",
-        roomName: "Balkonien",
-        waterInterval: 7,
-        lastWatering: DateTime.utc(2021, 11, 10),
-        fertilising: Fertilising(
-            fertiliserInterval: 14,
-            lastFertilising: DateTime.utc(2021, 11, 18)),
-        notes: "Hier stehen viele tolle Notizen"),
-  ];
 
   @override
   Widget build(BuildContext context) {
     // map mit name, imag und onPressedFunction
-
+    var plantList = context.watch<PlantList>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pflanzen'),
@@ -71,7 +53,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                 childAspectRatio: 1,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8),
-            itemCount: plantList.length,
+            itemCount: plantList.lenght(),
             itemBuilder: (BuildContext ctx, index) {
               return InkWell(
                 onTap: () {
@@ -80,7 +62,8 @@ class _PlantOverviewState extends State<PlantOverview> {
                       MaterialPageRoute(
                           builder: (context) => PlantScreen(
                                 callback: callback,
-                                plantProperties: plantList[index],
+                                plantProperties:
+                                    plantList.getElemtWithIndex(index),
                               )));
                 },
                 child: Stack(
@@ -94,9 +77,14 @@ class _PlantOverviewState extends State<PlantOverview> {
                                 topLeft: Radius.circular(8),
                                 topRight: Radius.circular(8)),
                             child: Image(
-                              image: plantList[index].imagePath.isEmpty
+                              image: plantList
+                                      .getElemtWithIndex(index)
+                                      .imagePath
+                                      .isEmpty
                                   ? GeneralArguments.defaultPlantImg
-                                  : FileImage(File(plantList[index].imagePath)),
+                                  : FileImage(File(plantList
+                                      .getElemtWithIndex(index)
+                                      .imagePath)),
                               width: double.infinity,
                               fit: BoxFit.cover,
                             ),
@@ -111,7 +99,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                                 bottomRight: Radius.circular(8),
                               )),
                           child: Text(
-                            plantList[index].name,
+                            plantList.getElemtWithIndex(index).name,
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             style: const TextStyle(
@@ -161,11 +149,15 @@ class _PlantOverviewState extends State<PlantOverview> {
         onPressed: () {
           setState(() {
             //TODO: ändern, Dialog zum Hinzufügen öffnen
-            plantList.add(PlantProperties(
-                name: "Zierlicher Peter " + _counter.toString(),
-                species: "Zierpfeffer",
-                waterInterval: 7,
-                lastWatering: DateTime.utc(2021, 11, 16)));
+            plantList.add(
+              Plant(
+                  name: "Zierlicher Peter " + _counter.toString(),
+                  species: "Zierpfeffer",
+                  waterInterval: 7,
+                  lastWatering: DateTime.utc(2021, 11, 18),
+                  notes:
+                      "Muss regelmäßig von Staub befreit und alle paar Tage gedreht werden"),
+            );
             _incrementCounter();
           });
         },
