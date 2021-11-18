@@ -1,10 +1,10 @@
 class Fertilising {
   int fertiliserInterval;
-  DateTime? lastFertilising;
+  DateTime lastFertilising;
 
   Fertilising({
-    this.fertiliserInterval = 0,
-    this.lastFertilising,
+    required this.fertiliserInterval,
+    required this.lastFertilising,
   });
 }
 
@@ -42,9 +42,10 @@ class PlantProperties {
   }
 
   String fertiliseInDays() {
+    //TODO falls die App released wird brauchen wir hier iwas was Fehler sammelt, checken wie genau sich assert verhält
     assert(fertilising != null);
     int inDays = fertilising!.fertiliserInterval +
-        fertilising!.lastFertilising!.difference(DateTime.now()).inDays;
+        fertilising!.lastFertilising.difference(DateTime.now()).inDays;
     if (inDays > 0) {
       return "In $inDays Tagen";
     } else if (inDays <= -fertilising!.fertiliserInterval) {
