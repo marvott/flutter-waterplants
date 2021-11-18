@@ -49,7 +49,7 @@ class _PlantOverviewState extends State<PlantOverview> {
         fertilising: Fertilising(
             fertiliserInterval: 14,
             lastFertilising: DateTime.utc(2021, 11, 18)),
-        notes: "Hier stehen viel e tolle Notizen"),
+        notes: "Hier stehen viele tolle Notizen"),
   ];
 
   @override
