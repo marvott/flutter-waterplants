@@ -1,12 +1,11 @@
 import 'dart:io';
-import 'package:flutter_application_1/plant.dart';
-import 'package:flutter_application_1/plant_properties.dart';
 import 'package:fluttericon/entypo_icons.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'general_arguments.dart';
+import './plant.dart';
+import '/models/plant_properties.dart';
+import '/models/general_arguments.dart';
 
 class PlantOverview extends StatefulWidget {
   const PlantOverview({

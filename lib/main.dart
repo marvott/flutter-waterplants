@@ -3,11 +3,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'camera.dart';
+import 'package:flutter_application_1/theme/style.dart';
+import 'screens/camera.dart';
 import 'package:flutter/services.dart';
 
-import 'general_arguments.dart';
-import 'main_screen.dart';
+import 'models/general_arguments.dart';
+import 'screens/main_screen.dart';
 
 Future<void> main() async {
   // Kamera initialisieren
@@ -39,28 +40,13 @@ class MyApp extends StatelessWidget {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
         title: 'Route Demo',
-        theme: ThemeData(
-            brightness: Brightness.dark,
-            backgroundColor: Colors.green.shade800,
-            appBarTheme: AppBarTheme(
-              color: Colors.green.shade800,
-            ),
-            buttonTheme: ButtonThemeData(buttonColor: Colors.green.shade800),
-            elevatedButtonTheme: ElevatedButtonThemeData(
-                style: ButtonStyle(
-                    // hier einstellen wie breit die Buttons sind?
-                    backgroundColor:
-                        MaterialStateProperty.all(Colors.green.shade800))),
-            floatingActionButtonTheme: FloatingActionButtonThemeData(
-                backgroundColor: Colors.grey.shade700,
-                foregroundColor: Colors.white)),
+        theme: appTheme(),
         initialRoute: '/',
         onUnknownRoute: (settings) => MaterialPageRoute(
             builder: (context) => const Scaffold(
-                  body: Center(child: Text('Not found')),
+                  body: Center(child: Text('Route Not found')),
                 )),
         routes: {
-          // Routen
           '/': (context) => const MainScreen(),
           '/camera': (context) => TakePictureScreen(camera: camera),
         });

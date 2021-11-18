@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
-import 'general_arguments.dart';
+import '../models/general_arguments.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
