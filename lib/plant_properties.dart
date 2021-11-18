@@ -20,6 +20,22 @@ class PlantProperties {
       this.lastFertilising,
       this.imagePath = ""});
 
+  String waterInDays() {
+    int inDays = waterInterval + lastWatering.difference(DateTime.now()).inDays;
+    if (inDays > 0) {
+      return "In $inDays Tagen";
+    } else if (inDays <= -waterInterval) {
+      //Wenn bewässern dringen ist, also schon mehr als einem Interwall her ist.
+      return "Dringend Gießen!";
+    } else if (inDays <= 0) {
+      return "Heute";
+    }
+    throw Exception('Gießen in Tagen konnte nicht berechnet werden');
+  }
+
+  int lastFertilisingInDays() =>
+      DateTime.now().difference(lastFertilising!).inDays;
+
   get getName => name;
 
   set setName(name) => this.name = name;

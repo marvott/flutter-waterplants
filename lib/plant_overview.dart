@@ -36,8 +36,9 @@ class _PlantOverviewState extends State<PlantOverview> {
     PlantProperties(
       name: "Zierlicher Peter 1",
       species: "Zierpfeffer",
+      roomName: "Schlafzimmer",
       waterInterval: 7,
-      lastWatering: DateTime.utc(2021, 11, 16),
+      lastWatering: DateTime.utc(2021, 11, 9),
     ),
   ];
 

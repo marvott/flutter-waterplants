@@ -63,14 +63,15 @@ class _PlantScreenState extends State<PlantScreen> {
         children: <Widget>[
           Expanded(
             child: Container(
-              child: const Text.rich(
+              child: Text.rich(
                 TextSpan(
                     text: 'Gießen\n',
-                    style: TextStyle(color: Colors.blue),
+                    style: const TextStyle(color: Colors.blue),
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'In 5 Tagen',
-                        style: TextStyle(color: Colors.white),
+                        text:
+                            widget.plantProperties.waterInDays(),
+                        style: const TextStyle(color: Colors.white),
                       )
                     ]),
               ),
