@@ -38,7 +38,7 @@ class _PlantOverviewState extends State<PlantOverview> {
       species: "Zierpfeffer",
       roomName: "Schlafzimmer",
       waterInterval: 7,
-      lastWatering: DateTime.utc(2021, 11, 9),
+      lastWatering: DateTime.utc(2021, 11, 18),
     ),
   ];
 
