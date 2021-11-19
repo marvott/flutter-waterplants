@@ -8,7 +8,7 @@ class Fertilising {
   });
 }
 
-class PlantProperties {
+class Plant {
   String name;
   String species;
   String roomName;
@@ -18,7 +18,7 @@ class PlantProperties {
   String notes;
   String imagePath;
 
-  PlantProperties(
+  Plant(
       {required this.name,
       required this.species,
       required this.waterInterval,

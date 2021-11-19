@@ -6,7 +6,7 @@ import 'package:flutter_application_1/models/plant.dart';
 
 class PlantScreen extends StatefulWidget {
   final Function callback;
-  final PlantProperties plantProperties;
+  final Plant plantProperties;
   const PlantScreen({
     Key? key,
     required this.callback,

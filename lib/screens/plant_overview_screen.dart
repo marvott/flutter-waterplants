@@ -31,8 +31,8 @@ class _PlantOverviewState extends State<PlantOverview> {
 // statische Variable in einer Klasse?
 // Als Atribut dieser Klasse? -> dann muss das immer üpbergeben werden -> anstrengend
 // Provider Package da empfohlen!
-  List<PlantProperties> plantList = [
-    PlantProperties(
+  List<Plant> plantList = [
+    Plant(
         name: "Zierlicher Peter",
         species: "Zierpfeffer",
         roomName: "Schlafzimmer",
@@ -40,7 +40,7 @@ class _PlantOverviewState extends State<PlantOverview> {
         lastWatering: DateTime.utc(2021, 11, 18),
         notes:
             "Muss regelmäßig von Staub befreit und alle paar Tage gedreht werden"),
-    PlantProperties(
+    Plant(
         name: "Gedüngter Peter",
         species: "Zierpfefferus Maximus",
         roomName: "Balkonien",
@@ -160,7 +160,7 @@ class _PlantOverviewState extends State<PlantOverview> {
         onPressed: () {
           setState(() {
             //TODO: ändern, Dialog zum Hinzufügen öffnen
-            plantList.add(PlantProperties(
+            plantList.add(Plant(
                 name: "Zierlicher Peter " + _counter.toString(),
                 species: "Zierpfeffer",
                 waterInterval: 7,
