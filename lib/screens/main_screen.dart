@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/plant.dart';
 import 'package:flutter_application_1/models/plant_list.dart';
+import 'package:flutter_application_1/models/plant_modifier.dart';
 import 'plant_overview_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +30,7 @@ class _MainScreenState extends State<MainScreen> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => PlantList()),
+        Provider(create: (context) => PlantModifier()),
       ],
       child: Scaffold(
         body: [

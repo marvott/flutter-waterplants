@@ -1,16 +1,16 @@
 import 'dart:io';
+import 'package:provider/provider.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/general.dart';
 import 'package:flutter_application_1/models/plant.dart';
+import 'package:flutter_application_1/models/plant_modifier.dart';
 
 class PlantScreen extends StatefulWidget {
-  final Function callback;
-  final Plant plantProperties;
+  final Plant plant;
   const PlantScreen({
     Key? key,
-    required this.callback,
-    required this.plantProperties,
+    required this.plant,
   }) : super(key: key);
 
   @override
@@ -25,9 +25,9 @@ class _PlantScreenState extends State<PlantScreen> {
       ClipRRect(
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           child: Image(
-            image: widget.plantProperties.imagePath.isEmpty
+            image: widget.plant.imagePath.isEmpty
                 ? GeneralArguments.defaultPlantImg
-                : FileImage(File(widget.plantProperties.imagePath)),
+                : FileImage(File(widget.plant.imagePath)),
             height: 400,
             fit: BoxFit.fitWidth,
           )),
@@ -36,14 +36,14 @@ class _PlantScreenState extends State<PlantScreen> {
           Expanded(
             child: Text.rich(
               TextSpan(
-                  text: widget.plantProperties.name + '\n',
+                  text: widget.plant.name + '\n',
                   style: const TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                       color: Colors.green),
                   children: <TextSpan>[
                     TextSpan(
-                        text: widget.plantProperties.roomName,
+                        text: widget.plant.roomName,
                         style: const TextStyle(
                             fontSize: 20, color: Colors.white70))
                   ]),
@@ -69,7 +69,7 @@ class _PlantScreenState extends State<PlantScreen> {
                     style: const TextStyle(color: Colors.blue),
                     children: <TextSpan>[
                       TextSpan(
-                        text: widget.plantProperties.waterInDays(),
+                        text: widget.plant.waterInDays(),
                         style: const TextStyle(color: Colors.white),
                       )
                     ]),
@@ -85,7 +85,7 @@ class _PlantScreenState extends State<PlantScreen> {
             ),
           ),
           //TODO: sehr hässliche Abfrage, das geht schöner!
-          widget.plantProperties.fertilising == null
+          widget.plant.fertilising == null
               ? const SizedBox.shrink()
               : Expanded(
                   child: Row(
@@ -128,7 +128,7 @@ class _PlantScreenState extends State<PlantScreen> {
             style: const TextStyle(color: Colors.indigo),
             children: <TextSpan>[
               TextSpan(
-                text: widget.plantProperties.notes,
+                text: widget.plant.notes,
                 style: const TextStyle(color: Colors.white),
               )
             ]),
@@ -142,9 +142,10 @@ class _PlantScreenState extends State<PlantScreen> {
       Colors.grey.shade700,
     ];
 
+    var plantModifier = context.watch<PlantModifier>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Zierlicher Peter'),
+        title: Text(widget.plant.name),
       ),
       body: ListView.separated(
         padding: const EdgeInsets.all(8),
@@ -176,13 +177,13 @@ class _PlantScreenState extends State<PlantScreen> {
         onPressed: () {
           if (GeneralArguments.cameraName != 'fake') {
             // damit das Foto direkt angezeigt wird, werden alle betroffenen Widgets neu gerendert
-            Navigator.pushNamed(context, '/camera')
-                .then((imagePath) => setState(() {
-                      widget.plantProperties.setImagePath = imagePath;
-                      //TODO: Diese Zeile löschen, Fotografieren soll nicht den Namen ändern
-                      widget.plantProperties.setName = "Fotografierter Peter";
-                      widget.callback();
-                    }));
+            Navigator.pushNamed(context, '/camera').then((imagePath) => () {
+                  PlantModifier().setImagePath(widget.plant, imagePath);
+                  //widget.plant.setImagePath = imagePath;
+                  //TODO: Diese Zeile löschen, Fotografieren soll nicht den Namen ändern
+                  PlantModifier().setName(widget.plant, "Fotografierter Peter");
+                  //widget.plant.setName = "Fotografierter Peter";
+                });
           }
         },
         child: const Icon(Icons.camera_alt),

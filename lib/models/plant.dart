@@ -10,7 +10,7 @@ class Fertilising {
   });
 }
 
-class Plant extends ChangeNotifier {
+class Plant extends ChangeNotifier{
   String name;
   String species;
   String roomName;
@@ -63,56 +63,48 @@ class Plant extends ChangeNotifier {
   get getName => name;
 
   set setName(String name) {
-    notifyListeners();
     this.name = name;
   }
 
   get getSpecies => species;
 
   set setSpecies(String species) {
-    notifyListeners();
     this.species = species;
   }
 
   get getRoomName => roomName;
 
   set setRoomName(roomName) {
-    notifyListeners();
     this.roomName = roomName;
   }
 
   get getWaterInterval => waterInterval;
 
   set setWaterInterval(int waterInterval) {
-    notifyListeners();
     this.waterInterval = waterInterval;
   }
 
   get getNotes => notes;
 
   set setNotes(String notes) {
-    notifyListeners();
     this.notes = notes;
   }
 
   get getLastWatering => lastWatering;
 
   set setLastWatering(DateTime lastWatering) {
-    notifyListeners();
     this.lastWatering = lastWatering;
   }
 
   Fertilising? get getFertilising => fertilising;
 
   set setFertilising(Fertilising? fertilising) {
-    notifyListeners();
     this.fertilising = fertilising;
   }
 
   get getImagePath => imagePath;
 
   set setImagePath(imagePath) {
-    notifyListeners();
     this.imagePath = imagePath;
   }
 }

@@ -19,11 +19,6 @@ class PlantOverview extends StatefulWidget {
 }
 
 class _PlantOverviewState extends State<PlantOverview> {
-  //TODO: der callback kann weg wenn das Providerpackage fertig ist
-  callback() {
-    setState(() {});
-  }
-
   int _counter = 1;
 
   void _incrementCounter() {
@@ -37,7 +32,6 @@ class _PlantOverviewState extends State<PlantOverview> {
 
   @override
   Widget build(BuildContext context) {
-    // map mit name, imag und onPressedFunction
     var plantList = context.watch<PlantList>();
     return Scaffold(
       appBar: AppBar(
@@ -61,8 +55,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => PlantScreen(
-                                callback: callback,
-                                plantProperties:
+                                plant:
                                     plantList.getElemtWithIndex(index),
                               )));
                 },
@@ -147,19 +140,17 @@ class _PlantOverviewState extends State<PlantOverview> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          setState(() {
-            //TODO: ändern, Dialog zum Hinzufügen öffnen
-            plantList.add(
-              Plant(
-                  name: "Zierlicher Peter " + _counter.toString(),
-                  species: "Zierpfeffer",
-                  waterInterval: 7,
-                  lastWatering: DateTime.utc(2021, 11, 18),
-                  notes:
-                      "Muss regelmäßig von Staub befreit und alle paar Tage gedreht werden"),
-            );
-            _incrementCounter();
-          });
+          //TODO: ändern, Dialog zum Hinzufügen öffnen
+          plantList.add(
+            Plant(
+                name: "Zierlicher Peter " + _counter.toString(),
+                species: "Zierpfeffer",
+                waterInterval: 7,
+                lastWatering: DateTime.utc(2021, 11, 18),
+                notes:
+                    "Muss regelmäßig von Staub befreit und alle paar Tage gedreht werden"),
+          );
+          _incrementCounter();
         },
         child: const Icon(Icons.add),
       ),
