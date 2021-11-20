@@ -31,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //So bleiben die Screens im Widgettree, ist mit der geringen ANzahl an Screens vertretbar und performant
+      //So bleiben die Screens im Widgettree, ist mit der geringen Anzahl an Screens vertretbar und performant
       body: IndexedStack(
         index: _selectedIndex,
         children: screens,

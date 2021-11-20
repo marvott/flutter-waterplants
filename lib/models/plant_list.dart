@@ -1,7 +1,7 @@
 import '/models/plant.dart';
 
 class PlantList {
-  final List<Plant> _myPlants = [];
+  List<Plant> _myPlants = [];
 
   add(Plant plant) {
     _myPlants.add(plant);
@@ -12,6 +12,11 @@ class PlantList {
   }
 
   lenght() => _myPlants.length;
+
+  //ist eigentlich ein setter, aber sollte nur 1x verwendet werden
+  construct(List<Plant> newPlantlist) {
+    _myPlants = newPlantlist;
+  }
 
   getElemtByIndex(int index) => _myPlants[index];
 
