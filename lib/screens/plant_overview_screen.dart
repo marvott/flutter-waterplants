@@ -149,7 +149,11 @@ class _PlantOverviewState extends State<PlantOverview> {
             plantList.add(Plant(
                 name: "Zierlicher Peter " + _counter.toString(),
                 species: "Zierpfeffer",
+                roomName: "Schlafzimmer",
                 waterInterval: 7,
+                fertilising: Fertilising(
+                    fertiliserInterval: 14,
+                    lastFertilising: DateTime.utc(2021, 11, 16)),
                 lastWatering: DateTime.utc(2021, 11, 16)));
             _incrementCounter();
           });
