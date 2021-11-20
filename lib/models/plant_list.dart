@@ -1,22 +1,19 @@
-import 'package:flutter/foundation.dart';
 import '/models/plant.dart';
 
-class PlantList extends ChangeNotifier {
-  List<Plant> myPlants = [];
+class PlantList {
+  final List<Plant> _myPlants = [];
 
   add(Plant plant) {
-    myPlants.add(plant);
-    notifyListeners();
+    _myPlants.add(plant);
   }
 
   remove(Plant plant) {
-    myPlants.remove(plant);
-    notifyListeners();
+    _myPlants.remove(plant);
   }
 
-  lenght() => myPlants.length;
+  lenght() => _myPlants.length;
 
-  getElemtWithIndex(int index) => myPlants[index];
+  getElemtByIndex(int index) => _myPlants[index];
 
-  get getMyPlants => myPlants;
+  get getMyPlants => _myPlants;
 }

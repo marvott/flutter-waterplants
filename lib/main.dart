@@ -1,5 +1,21 @@
-//to open xcode run this in terminal:
-//open ios/Runner.xcworkspace
+/* 
+# open xcode:
+open ios/Runner.xcworkspace
+
+# after changing branch, when imports fail:
+flutter pub get
+
+# after flutter upgrade:
+flutter clean
+flutter pub get
+flutter pub upgrade
+
+# fix ios build errors:
+cd ios
+rm Podfile.lock
+rm Podfile
+pod install
+*/
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';

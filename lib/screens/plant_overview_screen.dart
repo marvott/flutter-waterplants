@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_application_1/models/plant_list.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -17,20 +18,23 @@ class PlantOverview extends StatefulWidget {
 }
 
 class _PlantOverviewState extends State<PlantOverview> {
+  int _counter = 2;
+
   callback() {
     setState(() {});
   }
-
-  int _counter = 2;
 
   void _incrementCounter() {
     _counter++;
   }
 
+  PlantList plantList = PlantList();
+
 // TODO: Wo speicher ich diese Liste am Besten damit sie beim Routenwechsel erhalten bleibt?
 // statische Variable in einer Klasse?
-// Als Atribut dieser Klasse? -> dann muss das immer üpbergeben werden -> anstrengend
-// Provider Package da empfohlen!
+// Als Atribut dieser Klasse? -> dann muss das immer üpbergeben werden -> Ja passt, wir haben wenige screens -> geringster aufwand
+// Indexed Stack mit Bottom-Bar!
+  /* 
   List<Plant> plantList = [
     Plant(
         name: "Zierlicher Peter",
@@ -51,11 +55,9 @@ class _PlantOverviewState extends State<PlantOverview> {
             lastFertilising: DateTime.utc(2021, 11, 18)),
         notes: "Hier stehen viel e tolle Notizen"),
   ];
-
+ */
   @override
   Widget build(BuildContext context) {
-    // map mit name, imag und onPressedFunction
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pflanzen'),
@@ -70,7 +72,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                 childAspectRatio: 1,
                 crossAxisSpacing: 8,
                 mainAxisSpacing: 8),
-            itemCount: plantList.length,
+            itemCount: plantList.lenght(),
             itemBuilder: (BuildContext ctx, index) {
               return InkWell(
                 onTap: () {
@@ -79,7 +81,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                       MaterialPageRoute(
                           builder: (context) => PlantScreen(
                                 callback: callback,
-                                plantProperties: plantList[index],
+                                plantProperties: plantList.getElemtByIndex(index),
                               )));
                 },
                 child: Stack(
@@ -93,9 +95,9 @@ class _PlantOverviewState extends State<PlantOverview> {
                                 topLeft: Radius.circular(8),
                                 topRight: Radius.circular(8)),
                             child: Image(
-                              image: plantList[index].imagePath.isEmpty
+                              image: plantList.getElemtByIndex(index).imagePath.isEmpty
                                   ? GeneralArguments.defaultPlantImg
-                                  : FileImage(File(plantList[index].imagePath)),
+                                  : FileImage(File(plantList.getElemtByIndex(index).imagePath)),
                               width: double.infinity,
                               fit: BoxFit.cover,
                             ),
@@ -110,7 +112,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                                 bottomRight: Radius.circular(8),
                               )),
                           child: Text(
-                            plantList[index].name,
+                            plantList.getElemtByIndex(index).name,
                             textAlign: TextAlign.center,
                             maxLines: 1,
                             style: const TextStyle(

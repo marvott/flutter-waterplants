@@ -16,6 +16,12 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
+  List<Widget> screens = [
+    const PlantOverview(),
+    const SprossenRoute(),
+    const SettingsRoute(),
+  ];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -25,11 +31,12 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: [
-        const PlantOverview(),
-        const SprossenRoute(),
-        const SettingsRoute(),
-      ][_selectedIndex],
+      //So bleiben die Screens im Widgettree, ist mit der geringen ANzahl an Screens vertretbar und performant
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: screens,
+
+      ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
