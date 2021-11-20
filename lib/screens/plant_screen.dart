@@ -145,7 +145,7 @@ class _PlantScreenState extends State<PlantScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Zierlicher Peter'),
+        title: Text(widget.plantProperties.name),
       ),
       body: ListView.separated(
         padding: const EdgeInsets.all(8),
