@@ -58,29 +58,31 @@ class Plant {
   }
 
   //TODO: nicht benötigten Boilerplatemüll entfernen
+  //Setter können weg da nix private
   get getName => name;
 
-  set setName(name) => this.name = name;
+  set setName(String name) => this.name = name;
 
   get getSpecies => species;
 
-  set setSpecies(species) => this.species = species;
+  set setSpecies(String species) => this.species = species;
 
   get getRoomName => roomName;
 
-  set setRoomName(roomName) => this.roomName = roomName;
+  set setRoomName(String roomName) => this.roomName = roomName;
 
   get getWaterInterval => waterInterval;
 
-  set setWaterInterval(waterInterval) => this.waterInterval = waterInterval;
+  set setWaterInterval(int waterInterval) => this.waterInterval = waterInterval;
 
   get getNotes => notes;
 
-  set setNotes(notes) => this.notes = notes;
+  set setNotes(String notes) => this.notes = notes;
 
   get getLastWatering => lastWatering;
 
-  set setLastWatering(lastWatering) => this.lastWatering = lastWatering;
+  set setLastWatering(DateTime lastWatering) =>
+      this.lastWatering = lastWatering;
 
   Fertilising? get getFertilising => fertilising;
 
