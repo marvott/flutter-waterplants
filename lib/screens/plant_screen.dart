@@ -20,6 +20,7 @@ class PlantScreen extends StatefulWidget {
 class _PlantScreenState extends State<PlantScreen> {
   @override
   Widget build(BuildContext context) {
+    //TODO: kann ich das vor dem Build platzieren UND die Properties vom StatefulWidget kriegen?
     //Elemente die in der Liestview sind
     final List<Widget> plantElements = [
       ClipRRect(
