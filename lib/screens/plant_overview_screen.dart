@@ -18,7 +18,7 @@ class PlantOverview extends StatefulWidget {
 }
 
 class _PlantOverviewState extends State<PlantOverview> {
-  int _counter = 2;
+  int _counter = 1;
 
   callback() {
     setState(() {});
@@ -28,34 +28,12 @@ class _PlantOverviewState extends State<PlantOverview> {
     _counter++;
   }
 
-  PlantList plantList = PlantList();
-
-// TODO: Wo speicher ich diese Liste am Besten damit sie beim Routenwechsel erhalten bleibt?
-// statische Variable in einer Klasse?
+//Liste wird hier gespeichert
 // Als Atribut dieser Klasse? -> dann muss das immer üpbergeben werden -> Ja passt, wir haben wenige screens -> geringster aufwand
 // Indexed Stack mit Bottom-Bar!
-  /* 
-  List<Plant> plantList = [
-    Plant(
-        name: "Zierlicher Peter",
-        species: "Zierpfeffer",
-        roomName: "Schlafzimmer",
-        waterInterval: 7,
-        lastWatering: DateTime.utc(2021, 11, 18),
-        notes:
-            "Muss regelmäßig von Staub befreit und alle paar Tage gedreht werden"),
-    Plant(
-        name: "Gedüngter Peter",
-        species: "Zierpfefferus Maximus",
-        roomName: "Balkonien",
-        waterInterval: 7,
-        lastWatering: DateTime.utc(2021, 11, 10),
-        fertilising: Fertilising(
-            fertiliserInterval: 14,
-            lastFertilising: DateTime.utc(2021, 11, 18)),
-        notes: "Hier stehen viel e tolle Notizen"),
-  ];
- */
+//kann später auch von der DB direkt was reinkriegen
+  PlantList plantList = PlantList();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +59,8 @@ class _PlantOverviewState extends State<PlantOverview> {
                       MaterialPageRoute(
                           builder: (context) => PlantScreen(
                                 callback: callback,
-                                plantProperties: plantList.getElemtByIndex(index),
+                                plantProperties:
+                                    plantList.getElemtByIndex(index),
                               )));
                 },
                 child: Stack(
@@ -95,9 +74,14 @@ class _PlantOverviewState extends State<PlantOverview> {
                                 topLeft: Radius.circular(8),
                                 topRight: Radius.circular(8)),
                             child: Image(
-                              image: plantList.getElemtByIndex(index).imagePath.isEmpty
+                              image: plantList
+                                      .getElemtByIndex(index)
+                                      .imagePath
+                                      .isEmpty
                                   ? GeneralArguments.defaultPlantImg
-                                  : FileImage(File(plantList.getElemtByIndex(index).imagePath)),
+                                  : FileImage(File(plantList
+                                      .getElemtByIndex(index)
+                                      .imagePath)),
                               width: double.infinity,
                               fit: BoxFit.cover,
                             ),
