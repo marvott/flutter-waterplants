@@ -7,7 +7,6 @@ import 'package:flutter_application_1/models/general.dart';
 import 'package:flutter_application_1/models/plant.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/rpg_awesome_icons.dart';
 
 class PlantScreen extends StatefulWidget {
@@ -169,68 +168,72 @@ class _PlantScreenState extends State<PlantScreen> {
         builder: (BuildContext context) {
           return Form(
             key: formKeyWatering,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      final isValid = formKeyWatering.currentState!.validate();
-                      if (isValid) {
-                        formKeyWatering.currentState!.save();
-                        setState(() {
-                          widget.callback();
-                        });
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: const Text("Fertig")),
-                Padding(
-                  padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).viewInsets.bottom,
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        final isValid =
+                            formKeyWatering.currentState!.validate();
+                        if (isValid) {
+                          formKeyWatering.currentState!.save();
+                          setState(() {
+                            widget.callback();
+                          });
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: const Text("Fertig")),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        initialValue: "${widget.plant.waterInterval}",
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Gieß-Interwall in Tagen",
+                          icon: Icon(Entypo.droplet),
+                        ),
+                        onSaved: (String? value) =>
+                            widget.plant.setWaterInterval = int.parse(value!),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? value) {
+                          return (value == null || value.isEmpty)
+                              ? 'Darf nicht leer sein'
+                              : null;
+                        }),
                   ),
-                  child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                      initialValue: "${widget.plant.waterInterval}",
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Gieß-Interwall in Tagen",
-                        icon: Icon(RpgAwesome.wooden_sign),
-                      ),
-                      onSaved: (String? value) =>
-                          widget.plant.setWaterInterval = int.parse(value!),
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (String? value) {
-                        return (value == null || value.isEmpty)
-                            ? 'Darf nicht leer sein'
-                            : null;
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: TextFormField(
-                      keyboardType: TextInputType.datetime,
-                      // inputFormatters: <TextInputFormatter>[
-                      //   FilteringTextInputFormatter.digitsOnly
-                      // ],
-                      initialValue: "${widget.plant.waterInterval}",
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Zuletzt gegossen",
-                        icon: Icon(RpgAwesome.wooden_sign),
-                      ),
-                      onSaved: (String? value) =>
-                          widget.plant.lastWatering = DateTime.parse(value!),
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (String? value) {
-                        return (value == null || value.isEmpty)
-                            ? 'Darf nicht leer sein'
-                            : null;
-                      }),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                        keyboardType: TextInputType.datetime,
+                        // inputFormatters: <TextInputFormatter>[
+                        //   FilteringTextInputFormatter.digitsOnly
+                        // ],
+                        initialValue: "${widget.plant.lastWatering}",
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Zuletzt gegossen",
+                          icon: Icon(Entypo.back_in_time),
+                        ),
+                        onSaved: (String? value) =>
+                            widget.plant.lastWatering = DateTime.parse(value!),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? value) {
+                          return (value == null || value.isEmpty)
+                              ? 'Darf nicht leer sein'
+                              : null;
+                        }),
+                  ),
+                ],
+              ),
             ),
           );
         },

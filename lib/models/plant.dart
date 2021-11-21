@@ -94,8 +94,9 @@ class Plant {
       fertilising = Fertilising(
           fertiliserInterval: fertilising!.fertiliserInterval,
           lastFertilising: lastFertilising);
-    } else
+    } else {
       print("fertilising Problem");
+    }
   }
 
   get getImagePath => imagePath;
