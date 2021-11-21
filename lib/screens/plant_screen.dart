@@ -162,13 +162,15 @@ class _PlantScreenState extends State<PlantScreen> {
           );
         },
       );
-
+//TODO Hier weiter diese bearbeiten wie das waterding
   void showBottomSheetWatering(BuildContext context) => showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (BuildContext context) {
           return Form(
             key: formKeyWatering,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 ElevatedButton(
                     onPressed: () {
@@ -183,7 +185,9 @@ class _PlantScreenState extends State<PlantScreen> {
                     },
                     child: const Text("Fertig")),
                 Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom,
+                  ),
                   child: TextFormField(
                       keyboardType: TextInputType.number,
                       inputFormatters: <TextInputFormatter>[
@@ -208,9 +212,9 @@ class _PlantScreenState extends State<PlantScreen> {
                   padding: const EdgeInsets.all(8),
                   child: TextFormField(
                       keyboardType: TextInputType.datetime,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
+                      // inputFormatters: <TextInputFormatter>[
+                      //   FilteringTextInputFormatter.digitsOnly
+                      // ],
                       initialValue: "${widget.plant.waterInterval}",
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
