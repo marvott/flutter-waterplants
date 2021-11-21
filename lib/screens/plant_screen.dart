@@ -510,8 +510,8 @@ class _PlantScreenState extends State<PlantScreen> {
         Text.rich(
           TextSpan(
               text: 'Notizen\n',
-              style: TextStyle(
-                color: Colors.green.shade800,
+              style: const TextStyle(
+                color: Colors.green,
               ),
               children: <TextSpan>[
                 TextSpan(
