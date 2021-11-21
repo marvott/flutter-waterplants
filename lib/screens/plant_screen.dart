@@ -506,16 +506,16 @@ class _PlantScreenState extends State<PlantScreen> {
                   ),
           ],
         ),
+        //TODO farbe ändern
         Text.rich(
           TextSpan(
               text: 'Notizen\n',
               style: TextStyle(
-                color: Colors.grey.shade700,
+                color: Colors.green.shade800,
               ),
               children: <TextSpan>[
                 TextSpan(
                   text: widget.plant.notes,
-                  //TODO farbe ändern
                   style: const TextStyle(color: Colors.white),
                 )
               ]),
