@@ -59,7 +59,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                       MaterialPageRoute(
                           builder: (context) => PlantScreen(
                                 callback: callback,
-                                plantProperties:
+                                plant:
                                     plantList.getElemtByIndex(index),
                               )));
                 },

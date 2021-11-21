@@ -4,14 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/general.dart';
 import 'package:flutter_application_1/models/plant.dart';
 import 'package:fluttericon/entypo_icons.dart';
+import 'package:fluttericon/font_awesome5_icons.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/rpg_awesome_icons.dart';
 
 class PlantScreen extends StatefulWidget {
   final Function callback;
-  final Plant plantProperties;
+  final Plant plant;
   const PlantScreen({
     Key? key,
     required this.callback,
-    required this.plantProperties,
+    required this.plant,
   }) : super(key: key);
 
   @override
@@ -33,7 +36,7 @@ class _PlantScreenState extends State<PlantScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.plantProperties.name),
+        title: Text(widget.plant.name),
       ),
       body: ListView.separated(
         padding: const EdgeInsets.all(8),
@@ -67,7 +70,7 @@ class _PlantScreenState extends State<PlantScreen> {
             // damit das Foto direkt angezeigt wird, werden alle betroffenen Widgets neu gerendert
             Navigator.pushNamed(context, '/camera')
                 .then((imagePath) => setState(() {
-                      widget.plantProperties.setImagePath = imagePath;
+                      widget.plant.setImagePath = imagePath;
                       widget.callback();
                     }));
           }
@@ -97,21 +100,59 @@ class _PlantScreenState extends State<PlantScreen> {
                       }
                     },
                     child: const Text("Fertig")),
-                TextFormField(
-                    initialValue: widget.plantProperties.name,
-                    decoration: const InputDecoration(
-                      icon: Icon(Entypo.droplet),
-                      border: OutlineInputBorder(),
-                      labelText: "Name",
-                    ),
-                    onSaved: (String? value) =>
-                        widget.plantProperties.setName = value!,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (String? value) {
-                      return (value == null || value.isEmpty)
-                          ? 'Darf nicht leer sein'
-                          : null;
-                    }),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TextFormField(
+                      initialValue: widget.plant.name,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Name",
+                        icon: Icon(RpgAwesome.wooden_sign),
+                      ),
+                      onSaved: (String? value) => widget.plant.setName = value!,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (String? value) {
+                        return (value == null || value.isEmpty)
+                            ? 'Darf nicht leer sein'
+                            : null;
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TextFormField(
+                      initialValue: widget.plant.roomName,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Spezies",
+                        icon: Icon(RpgAwesome.flowers),
+                      ),
+                      onSaved: (String? value) =>
+                          widget.plant.setRoomName = value!,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (String? value) {
+                        return (value == null || value.isEmpty)
+                            ? 'Darf nicht leer sein'
+                            : null;
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TextFormField(
+                      initialValue: widget.plant.roomName,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Zimmer",
+                        icon: Icon(FontAwesome5.house_user),
+                      ),
+                      onSaved: (String? value) =>
+                          widget.plant.setRoomName = value!,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (String? value) {
+                        return (value == null || value.isEmpty)
+                            ? 'Darf nicht leer sein'
+                            : null;
+                      }),
+                ),
               ],
             ),
           );
@@ -123,9 +164,9 @@ class _PlantScreenState extends State<PlantScreen> {
         ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(8)),
             child: Image(
-              image: widget.plantProperties.imagePath.isEmpty
+              image: widget.plant.imagePath.isEmpty
                   ? GeneralArguments.defaultPlantImg
-                  : FileImage(File(widget.plantProperties.imagePath)),
+                  : FileImage(File(widget.plant.imagePath)),
               height: 400,
               fit: BoxFit.fitWidth,
             )),
@@ -134,14 +175,14 @@ class _PlantScreenState extends State<PlantScreen> {
             Expanded(
               child: Text.rich(
                 TextSpan(
-                    text: widget.plantProperties.name + '\n',
+                    text: widget.plant.name + '\n',
                     style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                         color: Colors.green),
                     children: <TextSpan>[
                       TextSpan(
-                          text: widget.plantProperties.roomName,
+                          text: widget.plant.roomName,
                           style: const TextStyle(
                               fontSize: 20, color: Colors.white70))
                     ]),
@@ -163,16 +204,38 @@ class _PlantScreenState extends State<PlantScreen> {
           children: <Widget>[
             Expanded(
               child: Container(
-                child: Text.rich(
-                  TextSpan(
-                      text: 'Gießen\n',
-                      style: const TextStyle(color: Colors.blue),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: widget.plantProperties.waterInDays(),
-                          style: const TextStyle(color: Colors.white),
-                        )
-                      ]),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text.rich(
+                      TextSpan(
+                          text: 'Gießen\n',
+                          style: const TextStyle(color: Colors.blue),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: widget.plant.waterInDays(),
+                              style: const TextStyle(color: Colors.white),
+                            )
+                          ]),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          widget.plant.setLastWatering = DateTime.now();
+                          setState(() {
+                            widget.callback;
+                          });
+                        },
+                        child: const Icon(
+                          Entypo.droplet,
+                          size: 20,
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(15),
+                          primary: Colors.blue,
+                          minimumSize: Size.zero,
+                        )),
+                  ],
                 ),
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -185,7 +248,7 @@ class _PlantScreenState extends State<PlantScreen> {
               ),
             ),
             //TODO: sehr hässliche Abfrage, das geht schöner!
-            widget.plantProperties.fertilising == null
+            widget.plant.fertilising == null
                 ? const SizedBox.shrink()
                 : Expanded(
                     child: Row(
@@ -195,16 +258,41 @@ class _PlantScreenState extends State<PlantScreen> {
                         ),
                         Expanded(
                           child: Container(
-                            child: const Text.rich(
-                              TextSpan(
-                                  text: 'Düngen\n',
-                                  style: TextStyle(color: Colors.deepOrange),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: 'In 14 Tagen',
-                                      style: TextStyle(color: Colors.white),
-                                    )
-                                  ]),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text.rich(
+                                  TextSpan(
+                                      text: 'Düngen\n',
+                                      style: const TextStyle(
+                                          color: Colors.deepOrange),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: widget.plant.fertiliseInDays(),
+                                          style: const TextStyle(
+                                              color: Colors.white),
+                                        )
+                                      ]),
+                                ),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      widget.plant.setLastFerilising =
+                                          DateTime.now();
+                                      setState(() {
+                                        widget.callback;
+                                      });
+                                    },
+                                    child: const Icon(
+                                      Entypo.leaf,
+                                      size: 20,
+                                    ),
+                                    style: ElevatedButton.styleFrom(
+                                      shape: const CircleBorder(),
+                                      padding: const EdgeInsets.all(15),
+                                      primary: Colors.deepOrange,
+                                      minimumSize: Size.zero,
+                                    )),
+                              ],
                             ),
                             decoration: BoxDecoration(
                               borderRadius:
@@ -228,7 +316,7 @@ class _PlantScreenState extends State<PlantScreen> {
               style: const TextStyle(color: Colors.indigo),
               children: <TextSpan>[
                 TextSpan(
-                  text: widget.plantProperties.notes,
+                  text: widget.plant.notes,
                   style: const TextStyle(color: Colors.white),
                 )
               ]),
