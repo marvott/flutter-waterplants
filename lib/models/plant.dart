@@ -89,6 +89,15 @@ class Plant {
   set setFertilising(Fertilising? fertilising) =>
       this.fertilising = fertilising;
 
+  set setLastFerilising(DateTime lastFertilising) {
+    if (fertilising != null) {
+      fertilising = Fertilising(
+          fertiliserInterval: fertilising!.fertiliserInterval,
+          lastFertilising: lastFertilising);
+    } else
+      print("fertilising Problem");
+  }
+
   get getImagePath => imagePath;
 
   set setImagePath(imagePath) => this.imagePath = imagePath;
