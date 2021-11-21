@@ -344,13 +344,16 @@ class _PlantScreenState extends State<PlantScreen> {
         Row(
           children: [
             Expanded(
+              //Ändern in eine colum mit 2 Text Feldern um maxline anzuwenden
               child: Text.rich(
                 TextSpan(
                     text: widget.plant.name + '\n',
                     style: const TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green),
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                     children: <TextSpan>[
                       TextSpan(
                           text: widget.plant.roomName,
@@ -506,7 +509,9 @@ class _PlantScreenState extends State<PlantScreen> {
         Text.rich(
           TextSpan(
               text: 'Notizen\n',
-              style: const TextStyle(color: Colors.indigo),
+              style: TextStyle(
+                color: Colors.grey.shade700,
+              ),
               children: <TextSpan>[
                 TextSpan(
                   text: widget.plant.notes,
