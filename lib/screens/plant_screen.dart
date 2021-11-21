@@ -515,6 +515,7 @@ class _PlantScreenState extends State<PlantScreen> {
               children: <TextSpan>[
                 TextSpan(
                   text: widget.plant.notes,
+                  //TODO farbe ändern
                   style: const TextStyle(color: Colors.white),
                 )
               ]),
