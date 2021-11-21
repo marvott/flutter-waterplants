@@ -6,14 +6,17 @@ class Utils {
       ScaffoldMessenger.of(context)
         ..removeCurrentSnackBar()
         ..showSnackBar(SnackBar(
-          content: Text(
-            message,
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-              overflow: TextOverflow.ellipsis,
+          content: Padding(
+            padding: const EdgeInsets.all(8),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
           duration: const Duration(seconds: 2),
