@@ -86,82 +86,92 @@ class _PlantScreenState extends State<PlantScreen> {
 
   void showBottomSheetPlantEdit(BuildContext context) => showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
         builder: (BuildContext context) {
-          return Form(
-            key: formKeyPlantedit,
-            child: Column(
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      final isValid = formKeyPlantedit.currentState!.validate();
-                      if (isValid) {
-                        formKeyPlantedit.currentState!.save();
-                        setState(() {
-                          widget.callback();
-                        });
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: const Text("Fertig")),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: TextFormField(
-                      initialValue: widget.plant.name,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Name",
-                        icon: Icon(RpgAwesome.wooden_sign),
-                      ),
-                      onSaved: (String? value) => widget.plant.setName = value!,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (String? value) {
-                        return (value == null || value.isEmpty)
-                            ? 'Darf nicht leer sein'
-                            : null;
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: TextFormField(
-                      initialValue: widget.plant.species,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Spezies",
-                        icon: Icon(RpgAwesome.flowers),
-                      ),
-                      onSaved: (String? value) =>
-                          widget.plant.setSpecies = value!,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (String? value) {
-                        return (value == null || value.isEmpty)
-                            ? 'Darf nicht leer sein'
-                            : null;
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: TextFormField(
-                      initialValue: widget.plant.roomName,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: "Zimmer",
-                        icon: Icon(FontAwesome5.house_user),
-                      ),
-                      onSaved: (String? value) =>
-                          widget.plant.setRoomName = value!,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (String? value) {
-                        return (value == null || value.isEmpty)
-                            ? 'Darf nicht leer sein'
-                            : null;
-                      }),
-                ),
-              ],
+          return Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: Form(
+              key: formKeyPlantedit,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        final isValid =
+                            formKeyPlantedit.currentState!.validate();
+                        if (isValid) {
+                          formKeyPlantedit.currentState!.save();
+                          setState(() {
+                            widget.callback();
+                          });
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: const Text("Fertig")),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                        initialValue: widget.plant.name,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Name",
+                          icon: Icon(RpgAwesome.wooden_sign),
+                        ),
+                        onSaved: (String? value) =>
+                            widget.plant.setName = value!,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? value) {
+                          return (value == null || value.isEmpty)
+                              ? 'Darf nicht leer sein'
+                              : null;
+                        }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                        initialValue: widget.plant.species,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Spezies",
+                          icon: Icon(RpgAwesome.flowers),
+                        ),
+                        onSaved: (String? value) =>
+                            widget.plant.setSpecies = value!,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? value) {
+                          return (value == null || value.isEmpty)
+                              ? 'Darf nicht leer sein'
+                              : null;
+                        }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                        initialValue: widget.plant.roomName,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Zimmer",
+                          icon: Icon(FontAwesome5.house_user),
+                        ),
+                        onSaved: (String? value) =>
+                            widget.plant.setRoomName = value!,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? value) {
+                          return (value == null || value.isEmpty)
+                              ? 'Darf nicht leer sein'
+                              : null;
+                        }),
+                  ),
+                  const SizedBox(height: 50)
+                ],
+              ),
             ),
           );
         },
       );
-//TODO Hier weiter diese bearbeiten wie das waterding
+
   void showBottomSheetWatering(BuildContext context) => showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -232,6 +242,7 @@ class _PlantScreenState extends State<PlantScreen> {
                               : null;
                         }),
                   ),
+                  const SizedBox(height: 50)
                 ],
               ),
             ),
