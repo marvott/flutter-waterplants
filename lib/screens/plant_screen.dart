@@ -250,6 +250,86 @@ class _PlantScreenState extends State<PlantScreen> {
         },
       );
 
+  void showBottomSheetFertilizing(BuildContext context) => showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (BuildContext context) {
+          return Form(
+            key: formKeyWatering,
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ElevatedButton(
+                      onPressed: () {
+                        final isValid =
+                            formKeyWatering.currentState!.validate();
+                        if (isValid) {
+                          formKeyWatering.currentState!.save();
+                          setState(() {
+                            widget.callback();
+                          });
+                          Navigator.pop(context);
+                        }
+                      },
+                      child: const Text("Fertig")),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        initialValue:
+                            "${widget.plant.fertilising!.fertiliserInterval}",
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Düngen-Interwall in Tagen",
+                          icon: Icon(Entypo.droplet),
+                        ),
+                        onSaved: (String? value) => widget.plant.fertilising!
+                            .setFertiliserInterval = int.parse(value!),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? value) {
+                          return (value == null || value.isEmpty)
+                              ? 'Darf nicht leer sein'
+                              : null;
+                        }),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: TextFormField(
+                        keyboardType: TextInputType.datetime,
+                        // inputFormatters: <TextInputFormatter>[
+                        //   FilteringTextInputFormatter.digitsOnly
+                        // ],
+                        initialValue:
+                            "${widget.plant.fertilising!.lastFertilising}",
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Zuletzt gedüngt",
+                          icon: Icon(Entypo.back_in_time),
+                        ),
+                        onSaved: (String? value) => widget.plant.fertilising!
+                            .setLastFertilising = DateTime.parse(value!),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (String? value) {
+                          return (value == null || value.isEmpty)
+                              ? 'Darf nicht leer sein'
+                              : null;
+                        }),
+                  ),
+                  const SizedBox(height: 50)
+                ],
+              ),
+            ),
+          );
+        },
+      );
+
   Widget buildPlantScreenElements(BuildContext context, int index) => <Widget>[
         //Elemente die in der Liestview sind
         ClipRRect(
@@ -359,7 +439,7 @@ class _PlantScreenState extends State<PlantScreen> {
                         Expanded(
                           child: GestureDetector(
                             onTap: () {
-                              Utils.showSnackBar(context, message: "Moin");
+                              showBottomSheetFertilizing(context);
                             },
                             child: Container(
                               child: Row(
@@ -387,7 +467,8 @@ class _PlantScreenState extends State<PlantScreen> {
                                         Utils.showSnackBar(context,
                                             message: message,
                                             color: Colors.deepOrange);
-                                        widget.plant.setLastFerilising =
+                                        widget.plant.fertilising!
+                                                .setLastFertilising =
                                             DateTime.now();
                                         setState(() {
                                           widget.callback;
