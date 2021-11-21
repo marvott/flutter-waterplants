@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_application_1/components/snackbar_dialog.dart';
 import 'package:flutter_application_1/models/general.dart';
 import 'package:flutter_application_1/models/plant.dart';
 import 'package:fluttericon/entypo_icons.dart';
@@ -22,7 +24,9 @@ class PlantScreen extends StatefulWidget {
 }
 
 class _PlantScreenState extends State<PlantScreen> {
-  final formKey = GlobalKey<FormState>();
+  final formKeyPlantedit = GlobalKey<FormState>();
+  final formKeyWatering = GlobalKey<FormState>();
+  final formKeyFertilizing = GlobalKey<FormState>();
 
   //Farben der Listview, gehe sicher dass es die RICHTIGE LÄNGE HAT!
   final List myColors = <Color>[
@@ -81,18 +85,18 @@ class _PlantScreenState extends State<PlantScreen> {
     );
   }
 
-  void showBottomSheet(BuildContext context) => showModalBottomSheet(
+  void showBottomSheetPlantEdit(BuildContext context) => showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
           return Form(
-            key: formKey,
+            key: formKeyPlantedit,
             child: Column(
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      final isValid = formKey.currentState!.validate();
+                      final isValid = formKeyPlantedit.currentState!.validate();
                       if (isValid) {
-                        formKey.currentState!.save();
+                        formKeyPlantedit.currentState!.save();
                         setState(() {
                           widget.callback();
                         });
@@ -120,14 +124,14 @@ class _PlantScreenState extends State<PlantScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8),
                   child: TextFormField(
-                      initialValue: widget.plant.roomName,
+                      initialValue: widget.plant.species,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "Spezies",
                         icon: Icon(RpgAwesome.flowers),
                       ),
                       onSaved: (String? value) =>
-                          widget.plant.setRoomName = value!,
+                          widget.plant.setSpecies = value!,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (String? value) {
                         return (value == null || value.isEmpty)
@@ -146,6 +150,75 @@ class _PlantScreenState extends State<PlantScreen> {
                       ),
                       onSaved: (String? value) =>
                           widget.plant.setRoomName = value!,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (String? value) {
+                        return (value == null || value.isEmpty)
+                            ? 'Darf nicht leer sein'
+                            : null;
+                      }),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+
+  void showBottomSheetWatering(BuildContext context) => showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Form(
+            key: formKeyWatering,
+            child: Column(
+              children: [
+                ElevatedButton(
+                    onPressed: () {
+                      final isValid = formKeyWatering.currentState!.validate();
+                      if (isValid) {
+                        formKeyWatering.currentState!.save();
+                        setState(() {
+                          widget.callback();
+                        });
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: const Text("Fertig")),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      initialValue: "${widget.plant.waterInterval}",
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Gieß-Interwall in Tagen",
+                        icon: Icon(RpgAwesome.wooden_sign),
+                      ),
+                      onSaved: (String? value) =>
+                          widget.plant.setWaterInterval = int.parse(value!),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (String? value) {
+                        return (value == null || value.isEmpty)
+                            ? 'Darf nicht leer sein'
+                            : null;
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: TextFormField(
+                      keyboardType: TextInputType.datetime,
+                      inputFormatters: <TextInputFormatter>[
+                        FilteringTextInputFormatter.digitsOnly
+                      ],
+                      initialValue: "${widget.plant.waterInterval}",
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: "Zuletzt gegossen",
+                        icon: Icon(RpgAwesome.wooden_sign),
+                      ),
+                      onSaved: (String? value) =>
+                          widget.plant.lastWatering = DateTime.parse(value!),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (String? value) {
                         return (value == null || value.isEmpty)
@@ -190,7 +263,7 @@ class _PlantScreenState extends State<PlantScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                showBottomSheet(context);
+                showBottomSheetPlantEdit(context);
               },
               child: const Icon(Icons.edit),
               style: ElevatedButton.styleFrom(
@@ -203,46 +276,55 @@ class _PlantScreenState extends State<PlantScreen> {
         Row(
           children: <Widget>[
             Expanded(
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text.rich(
-                      TextSpan(
-                          text: 'Gießen\n',
-                          style: const TextStyle(color: Colors.blue),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: widget.plant.waterInDays(),
-                              style: const TextStyle(color: Colors.white),
-                            )
-                          ]),
+              child: GestureDetector(
+                onTap: () {
+                  showBottomSheetWatering(context);
+                },
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text.rich(
+                        TextSpan(
+                            text: 'Gießen\n',
+                            style: const TextStyle(color: Colors.blue),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: widget.plant.waterInDays(),
+                                style: const TextStyle(color: Colors.white),
+                              )
+                            ]),
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            String message =
+                                "${widget.plant.name} wurde gegossen";
+                            Utils.showSnackBar(context,
+                                message: message, color: Colors.blue);
+                            widget.plant.setLastWatering = DateTime.now();
+                            setState(() {
+                              widget.callback;
+                            });
+                          },
+                          child: const Icon(
+                            Entypo.droplet,
+                            size: 20,
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            shape: const CircleBorder(),
+                            padding: const EdgeInsets.all(15),
+                            primary: Colors.blue,
+                            minimumSize: Size.zero,
+                          )),
+                    ],
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                    color: Colors.grey.shade700,
+                    border: Border.all(
+                      width: 8,
+                      color: Colors.transparent,
                     ),
-                    ElevatedButton(
-                        onPressed: () {
-                          widget.plant.setLastWatering = DateTime.now();
-                          setState(() {
-                            widget.callback;
-                          });
-                        },
-                        child: const Icon(
-                          Entypo.droplet,
-                          size: 20,
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          shape: const CircleBorder(),
-                          padding: const EdgeInsets.all(15),
-                          primary: Colors.blue,
-                          minimumSize: Size.zero,
-                        )),
-                  ],
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                  color: Colors.grey.shade700,
-                  border: Border.all(
-                    width: 8,
-                    color: Colors.transparent,
                   ),
                 ),
               ),
@@ -257,50 +339,62 @@ class _PlantScreenState extends State<PlantScreen> {
                           width: 10,
                         ),
                         Expanded(
-                          child: Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text.rich(
-                                  TextSpan(
-                                      text: 'Düngen\n',
-                                      style: const TextStyle(
-                                          color: Colors.deepOrange),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: widget.plant.fertiliseInDays(),
-                                          style: const TextStyle(
-                                              color: Colors.white),
-                                        )
-                                      ]),
+                          child: GestureDetector(
+                            onTap: () {
+                              Utils.showSnackBar(context, message: "Moin");
+                            },
+                            child: Container(
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text.rich(
+                                    TextSpan(
+                                        text: 'Düngen\n',
+                                        style: const TextStyle(
+                                            color: Colors.deepOrange),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text:
+                                                widget.plant.fertiliseInDays(),
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                          )
+                                        ]),
+                                  ),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        String message =
+                                            "${widget.plant.name} wurde gedüngt";
+                                        Utils.showSnackBar(context,
+                                            message: message,
+                                            color: Colors.deepOrange);
+                                        widget.plant.setLastFerilising =
+                                            DateTime.now();
+                                        setState(() {
+                                          widget.callback;
+                                        });
+                                      },
+                                      child: const Icon(
+                                        Entypo.leaf,
+                                        size: 20,
+                                      ),
+                                      style: ElevatedButton.styleFrom(
+                                        shape: const CircleBorder(),
+                                        padding: const EdgeInsets.all(15),
+                                        primary: Colors.deepOrange,
+                                        minimumSize: Size.zero,
+                                      )),
+                                ],
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(8)),
+                                color: Colors.grey.shade700,
+                                border: Border.all(
+                                  width: 8,
+                                  color: Colors.transparent,
                                 ),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      widget.plant.setLastFerilising =
-                                          DateTime.now();
-                                      setState(() {
-                                        widget.callback;
-                                      });
-                                    },
-                                    child: const Icon(
-                                      Entypo.leaf,
-                                      size: 20,
-                                    ),
-                                    style: ElevatedButton.styleFrom(
-                                      shape: const CircleBorder(),
-                                      padding: const EdgeInsets.all(15),
-                                      primary: Colors.deepOrange,
-                                      minimumSize: Size.zero,
-                                    )),
-                              ],
-                            ),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8)),
-                              color: Colors.grey.shade700,
-                              border: Border.all(
-                                width: 8,
-                                color: Colors.transparent,
                               ),
                             ),
                           ),
