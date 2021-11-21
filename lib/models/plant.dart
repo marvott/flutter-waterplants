@@ -6,6 +6,12 @@ class Fertilising {
     required this.fertiliserInterval,
     required this.lastFertilising,
   });
+
+  set setFertiliserInterval(fertiliserInterval) =>
+      this.fertiliserInterval = fertiliserInterval;
+
+  set setLastFertilising(lastFertilising) =>
+      this.lastFertilising = lastFertilising;
 }
 
 class Plant {
@@ -88,16 +94,6 @@ class Plant {
 
   set setFertilising(Fertilising? fertilising) =>
       this.fertilising = fertilising;
-
-  set setLastFerilising(DateTime lastFertilising) {
-    if (fertilising != null) {
-      fertilising = Fertilising(
-          fertiliserInterval: fertilising!.fertiliserInterval,
-          lastFertilising: lastFertilising);
-    } else {
-      print("fertilising Problem");
-    }
-  }
 
   get getImagePath => imagePath;
 
