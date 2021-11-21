@@ -1,15 +1,30 @@
-//to open xcode run this in terminal:
-//open ios/Runner.xcworkspace
+/* 
+# open xcode:
+open ios/Runner.xcworkspace
+
+# after changing branch, when imports fail:
+flutter pub get
+
+# after flutter upgrade:
+flutter clean
+flutter pub get
+flutter pub upgrade
+
+# fix ios build errors:
+cd ios
+rm Podfile.lock
+rm Podfile
+pod install
+*/
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter_application_1/camera.dart';
-import 'package:flutter_application_1/general_arguments.dart';
+import 'package:flutter_application_1/theme/style.dart';
+import 'screens/camera.dart';
+import 'package:flutter/services.dart';
 
-import 'main_screen.dart';
-// import 'plant_route.dart';
-// import 'settings_route.dart';
-// import 'sprossen_route.dart';
+import 'models/general.dart';
+import 'screens/main_screen.dart';
 
 Future<void> main() async {
   // Kamera initialisieren
@@ -38,23 +53,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
         title: 'Route Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
+        theme: appTheme(),
         initialRoute: '/',
         onUnknownRoute: (settings) => MaterialPageRoute(
             builder: (context) => const Scaffold(
-                  body: Center(child: Text('Not found')),
+                  body: Center(child: Text('Route Not found')),
                 )),
         routes: {
-          // Routen
           '/': (context) => const MainScreen(),
-          //die routen fliegen evtl. raus weil sie im main screen drinne sind
-          // '/plants': (context) => const PlantRoute(),
-          // '/sprossen': (context) => const SprossenRoute(),
-          // '/settings': (context) => const SettingsRoute(),
           '/camera': (context) => TakePictureScreen(camera: camera),
         });
   }

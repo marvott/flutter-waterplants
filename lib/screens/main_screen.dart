@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/plant_route.dart';
+import 'plant_overview_screen.dart';
 
-import 'settings_route.dart';
-import 'sprossen_route.dart';
+import '../settings_route.dart';
+import '../sprossen_route.dart';
 
 class MainScreen extends StatefulWidget {
   final String imagePath;
 
-  const MainScreen({Key? key, this.imagePath = ""})
-      : super(key: key);
+  const MainScreen({Key? key, this.imagePath = ""}) : super(key: key);
 
   @override
   _MainScreenState createState() => _MainScreenState();
@@ -16,6 +15,12 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
+
+  List<Widget> screens = [
+    const PlantOverview(),
+    const SprossenRoute(),
+    const SettingsRoute(),
+  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -26,11 +31,12 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: [
-        const PlantRoute(),
-        const SprossenRoute(),
-        const SettingsRoute(),
-      ][_selectedIndex],
+      //So bleiben die Screens im Widgettree, ist mit der geringen Anzahl an Screens vertretbar und performant
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: screens,
+
+      ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
