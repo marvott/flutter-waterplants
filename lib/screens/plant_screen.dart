@@ -1,13 +1,13 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/components/snackbar_dialog.dart';
-import 'package:flutter_application_1/models/general.dart';
-import 'package:flutter_application_1/models/plant.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/rpg_awesome_icons.dart';
+
+import 'package:flutter_application_1/components/snackbar_dialog.dart';
+import 'package:flutter_application_1/models/general.dart';
+import 'package:flutter_application_1/models/plant.dart';
 
 class PlantScreen extends StatefulWidget {
   final Function callback;
@@ -27,6 +27,8 @@ class _PlantScreenState extends State<PlantScreen> {
   final formKeyWatering = GlobalKey<FormState>();
   final formKeyFertilizing = GlobalKey<FormState>();
 
+  final TextEditingController _dateController = TextEditingController();
+
   //Farben der Listview, gehe sicher dass es die RICHTIGE LÄNGE HAT!
   final List myColors = <Color>[
     Colors.transparent,
@@ -34,6 +36,8 @@ class _PlantScreenState extends State<PlantScreen> {
     Colors.grey.shade700,
     Colors.grey.shade700,
   ];
+
+  DateTime? pickedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +113,7 @@ class _PlantScreenState extends State<PlantScreen> {
                           Navigator.pop(context);
                         }
                       },
-                      child: const Text("Fertig")),
+                      child: const Text("Speichern")),
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: TextFormField(
@@ -222,25 +226,34 @@ class _PlantScreenState extends State<PlantScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                        keyboardType: TextInputType.datetime,
-                        // inputFormatters: <TextInputFormatter>[
-                        //   FilteringTextInputFormatter.digitsOnly
-                        // ],
-                        initialValue: "${widget.plant.lastWatering}",
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Zuletzt gegossen",
-                          icon: Icon(Entypo.back_in_time),
-                        ),
-                        onSaved: (String? value) =>
-                            widget.plant.lastWatering = DateTime.parse(value!),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? value) {
-                          return (value == null || value.isEmpty)
-                              ? 'Darf nicht leer sein'
-                              : null;
-                        }),
+                    child: InkWell(
+                      onTap: () {
+                        pickDate(context, widget.plant.lastWatering, "water");
+                      },
+                      child: TextFormField(
+                          keyboardType: TextInputType.text,
+                          enabled: false,
+                          controller: _dateController
+                            ..text =
+                                "${widget.plant.lastWatering.day}.${widget.plant.lastWatering.month}.${widget.plant.lastWatering.year}",
+                          //initialValue: "${widget.plant.lastWatering}",
+                          decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: "Zuletzt gegossen",
+                            icon: Icon(Entypo.back_in_time),
+                          ),
+                          onSaved: (String? value) {
+                            if (pickedDate != null) {
+                              widget.plant.lastWatering = pickedDate!;
+                            }
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (String? value) {
+                            return (value == null || value.isEmpty)
+                                ? 'Darf nicht leer sein'
+                                : null;
+                          }),
+                    ),
                   ),
                   const SizedBox(height: 50)
                 ],
@@ -275,7 +288,7 @@ class _PlantScreenState extends State<PlantScreen> {
                           Navigator.pop(context);
                         }
                       },
-                      child: const Text("Fertig")),
+                      child: const Text("Speichern")),
                   Padding(
                     padding: const EdgeInsets.all(8),
                     child: TextFormField(
@@ -521,4 +534,21 @@ class _PlantScreenState extends State<PlantScreen> {
               ]),
         ),
       ][index];
+
+  Future pickDate(BuildContext context, DateTime initialDate,
+      String waterOrFertilzise) async {
+    final newDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime(DateTime.now().year - 5),
+      lastDate: DateTime.now(),
+    );
+
+    if (newDate == null) return;
+    setState(() {
+      //Todo Dateformater verwenden
+      _dateController.text = "${newDate.day}.${newDate.month}.${newDate.year}";
+      pickedDate = newDate;
+    });
+  }
 }
