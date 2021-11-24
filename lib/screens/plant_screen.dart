@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/components/plant_edit_sheet.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/rpg_awesome_icons.dart';
@@ -10,11 +11,11 @@ import 'package:flutter_application_1/models/general.dart';
 import 'package:flutter_application_1/models/plant.dart';
 
 class PlantScreen extends StatefulWidget {
-  final Function callback;
+  final Function plantOverviewCallback;
   final Plant plant;
   const PlantScreen({
     Key? key,
-    required this.callback,
+    required this.plantOverviewCallback,
     required this.plant,
   }) : super(key: key);
 
@@ -38,6 +39,10 @@ class _PlantScreenState extends State<PlantScreen> {
   ];
 
   DateTime? pickedDate;
+
+  callback() {
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +83,7 @@ class _PlantScreenState extends State<PlantScreen> {
             Navigator.pushNamed(context, '/camera')
                 .then((imagePath) => setState(() {
                       widget.plant.setImagePath = imagePath;
-                      widget.callback();
+                      widget.plantOverviewCallback();
                     }));
           }
         },
@@ -88,93 +93,93 @@ class _PlantScreenState extends State<PlantScreen> {
     );
   }
 
-  void showBottomSheetPlantEdit(BuildContext context) => showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (BuildContext context) {
-          return Padding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-            ),
-            child: Form(
-              key: formKeyPlantedit,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        final isValid =
-                            formKeyPlantedit.currentState!.validate();
-                        if (isValid) {
-                          formKeyPlantedit.currentState!.save();
-                          setState(() {
-                            widget.callback();
-                          });
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: const Text("Speichern")),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                        initialValue: widget.plant.name,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Name",
-                          icon: Icon(RpgAwesome.wooden_sign),
-                        ),
-                        onSaved: (String? value) =>
-                            widget.plant.setName = value!,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? value) {
-                          return (value == null || value.isEmpty)
-                              ? 'Darf nicht leer sein'
-                              : null;
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                        initialValue: widget.plant.species,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Spezies",
-                          icon: Icon(RpgAwesome.flowers),
-                        ),
-                        onSaved: (String? value) =>
-                            widget.plant.setSpecies = value!,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? value) {
-                          return (value == null || value.isEmpty)
-                              ? 'Darf nicht leer sein'
-                              : null;
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                        initialValue: widget.plant.roomName,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Zimmer",
-                          icon: Icon(FontAwesome5.house_user),
-                        ),
-                        onSaved: (String? value) =>
-                            widget.plant.setRoomName = value!,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? value) {
-                          return (value == null || value.isEmpty)
-                              ? 'Darf nicht leer sein'
-                              : null;
-                        }),
-                  ),
-                  const SizedBox(height: 50)
-                ],
-              ),
-            ),
-          );
-        },
-      );
+  // void showBottomSheetPlantEdit(BuildContext context) => showModalBottomSheet(
+  //       context: context,
+  //       isScrollControlled: true,
+  //       builder: (BuildContext context) {
+  //         return Padding(
+  //           padding: EdgeInsets.only(
+  //             bottom: MediaQuery.of(context).viewInsets.bottom,
+  //           ),
+  //           child: Form(
+  //             key: formKeyPlantedit,
+  //             child: Column(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: [
+  //                 ElevatedButton(
+  //                     onPressed: () {
+  //                       final isValid =
+  //                           formKeyPlantedit.currentState!.validate();
+  //                       if (isValid) {
+  //                         formKeyPlantedit.currentState!.save();
+  //                         setState(() {
+  //                           widget.plantOverviewCallback();
+  //                         });
+  //                         Navigator.pop(context);
+  //                       }
+  //                     },
+  //                     child: const Text("Speichern")),
+  //                 Padding(
+  //                   padding: const EdgeInsets.all(8),
+  //                   child: TextFormField(
+  //                       initialValue: widget.plant.name,
+  //                       decoration: const InputDecoration(
+  //                         border: OutlineInputBorder(),
+  //                         labelText: "Name",
+  //                         icon: Icon(RpgAwesome.wooden_sign),
+  //                       ),
+  //                       onSaved: (String? value) =>
+  //                           widget.plant.setName = value!,
+  //                       autovalidateMode: AutovalidateMode.onUserInteraction,
+  //                       validator: (String? value) {
+  //                         return (value == null || value.isEmpty)
+  //                             ? 'Darf nicht leer sein'
+  //                             : null;
+  //                       }),
+  //                 ),
+  //                 Padding(
+  //                   padding: const EdgeInsets.all(8),
+  //                   child: TextFormField(
+  //                       initialValue: widget.plant.species,
+  //                       decoration: const InputDecoration(
+  //                         border: OutlineInputBorder(),
+  //                         labelText: "Spezies",
+  //                         icon: Icon(RpgAwesome.flowers),
+  //                       ),
+  //                       onSaved: (String? value) =>
+  //                           widget.plant.setSpecies = value!,
+  //                       autovalidateMode: AutovalidateMode.onUserInteraction,
+  //                       validator: (String? value) {
+  //                         return (value == null || value.isEmpty)
+  //                             ? 'Darf nicht leer sein'
+  //                             : null;
+  //                       }),
+  //                 ),
+  //                 Padding(
+  //                   padding: const EdgeInsets.all(8),
+  //                   child: TextFormField(
+  //                       initialValue: widget.plant.roomName,
+  //                       decoration: const InputDecoration(
+  //                         border: OutlineInputBorder(),
+  //                         labelText: "Zimmer",
+  //                         icon: Icon(FontAwesome5.house_user),
+  //                       ),
+  //                       onSaved: (String? value) =>
+  //                           widget.plant.setRoomName = value!,
+  //                       autovalidateMode: AutovalidateMode.onUserInteraction,
+  //                       validator: (String? value) {
+  //                         return (value == null || value.isEmpty)
+  //                             ? 'Darf nicht leer sein'
+  //                             : null;
+  //                       }),
+  //                 ),
+  //                 const SizedBox(height: 50)
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       },
+  //     );
 
   void showBottomSheetWatering(BuildContext context) => showModalBottomSheet(
         context: context,
@@ -196,7 +201,7 @@ class _PlantScreenState extends State<PlantScreen> {
                         if (isValid) {
                           formKeyWatering.currentState!.save();
                           setState(() {
-                            widget.callback();
+                            widget.plantOverviewCallback();
                           });
                           Navigator.pop(context);
                         }
@@ -228,7 +233,7 @@ class _PlantScreenState extends State<PlantScreen> {
                     padding: const EdgeInsets.all(8),
                     child: InkWell(
                       onTap: () {
-                        pickDate(context, widget.plant.lastWatering, "water");
+                        pickDate(context, widget.plant.lastWatering);
                       },
                       child: TextFormField(
                           keyboardType: TextInputType.text,
@@ -245,6 +250,7 @@ class _PlantScreenState extends State<PlantScreen> {
                           onSaved: (String? value) {
                             if (pickedDate != null) {
                               widget.plant.lastWatering = pickedDate!;
+                              pickedDate = null;
                             }
                           },
                           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -268,7 +274,7 @@ class _PlantScreenState extends State<PlantScreen> {
         isScrollControlled: true,
         builder: (BuildContext context) {
           return Form(
-            key: formKeyWatering,
+            key: formKeyFertilizing,
             child: Padding(
               padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom,
@@ -279,11 +285,11 @@ class _PlantScreenState extends State<PlantScreen> {
                   ElevatedButton(
                       onPressed: () {
                         final isValid =
-                            formKeyWatering.currentState!.validate();
+                            formKeyFertilizing.currentState!.validate();
                         if (isValid) {
-                          formKeyWatering.currentState!.save();
+                          formKeyFertilizing.currentState!.save();
                           setState(() {
-                            widget.callback();
+                            widget.plantOverviewCallback();
                           });
                           Navigator.pop(context);
                         }
@@ -377,7 +383,9 @@ class _PlantScreenState extends State<PlantScreen> {
             ),
             ElevatedButton(
               onPressed: () {
-                showBottomSheetPlantEdit(context);
+                // showBottomSheetPlantEdit(context);
+                showBottomSheetPlantEdit(context, widget.plant, callback,
+                    widget.plantOverviewCallback);
               },
               child: const Icon(Icons.edit),
               style: ElevatedButton.styleFrom(
@@ -417,7 +425,7 @@ class _PlantScreenState extends State<PlantScreen> {
                                 message: message, color: Colors.blue);
                             widget.plant.setLastWatering = DateTime.now();
                             setState(() {
-                              widget.callback;
+                              widget.plantOverviewCallback;
                             });
                           },
                           child: const Icon(
@@ -487,7 +495,7 @@ class _PlantScreenState extends State<PlantScreen> {
                                                 .setLastFertilising =
                                             DateTime.now();
                                         setState(() {
-                                          widget.callback;
+                                          widget.plantOverviewCallback;
                                         });
                                       },
                                       child: const Icon(
@@ -535,8 +543,7 @@ class _PlantScreenState extends State<PlantScreen> {
         ),
       ][index];
 
-  Future pickDate(BuildContext context, DateTime initialDate,
-      String waterOrFertilzise) async {
+  Future pickDate(BuildContext context, DateTime initialDate) async {
     final newDate = await showDatePicker(
       context: context,
       initialDate: initialDate,
