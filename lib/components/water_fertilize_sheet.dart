@@ -7,7 +7,7 @@ import 'package:fluttericon/rpg_awesome_icons.dart';
 import '../models/plant.dart';
 
 //waterOrFertilize == true bedeutet Water, false ist Düngen
-//TODO: icons je nach wasser oder dünger anpassen
+//TODO: icons je nach wasser oder dünger anpassen, siehe Ende des Files
 class WaterFertilizeSheet {
   BuildContext? context;
   Plant? plant;
@@ -158,3 +158,85 @@ class WaterFertilizeSheet {
     callback();
   }
 }
+
+
+
+  // void showBottomSheetFertilizing(BuildContext context) => showModalBottomSheet(
+  //       context: context,
+  //       isScrollControlled: true,
+  //       builder: (BuildContext context) {
+  //         return Form(
+  //           key: formKeyFertilizing,
+  //           child: Padding(
+  //             padding: EdgeInsets.only(
+  //               bottom: MediaQuery.of(context).viewInsets.bottom,
+  //             ),
+  //             child: Column(
+  //               mainAxisSize: MainAxisSize.min,
+  //               children: [
+  //                 ElevatedButton(
+  //                     onPressed: () {
+  //                       final isValid =
+  //                           formKeyFertilizing.currentState!.validate();
+  //                       if (isValid) {
+  //                         formKeyFertilizing.currentState!.save();
+  //                         setState(() {
+  //                           widget.plantOverviewCallback();
+  //                         });
+  //                         Navigator.pop(context);
+  //                       }
+  //                     },
+  //                     child: const Text("Speichern")),
+  //                 Padding(
+  //                   padding: const EdgeInsets.all(8),
+  //                   child: TextFormField(
+  //                       keyboardType: TextInputType.number,
+  //                       inputFormatters: <TextInputFormatter>[
+  //                         FilteringTextInputFormatter.digitsOnly
+  //                       ],
+  //                       initialValue:
+  //                           "${widget.plant.fertilising!.fertiliserInterval}",
+  //                       decoration: const InputDecoration(
+  //                         border: OutlineInputBorder(),
+  //                         labelText: "Düngen-Interwall in Tagen",
+  //                         icon: Icon(Entypo.droplet),
+  //                       ),
+  //                       onSaved: (String? value) => widget.plant.fertilising!
+  //                           .setFertiliserInterval = int.parse(value!),
+  //                       autovalidateMode: AutovalidateMode.onUserInteraction,
+  //                       validator: (String? value) {
+  //                         return (value == null || value.isEmpty)
+  //                             ? 'Darf nicht leer sein'
+  //                             : null;
+  //                       }),
+  //                 ),
+  //                 Padding(
+  //                   padding: const EdgeInsets.all(8),
+  //                   child: TextFormField(
+  //                       keyboardType: TextInputType.datetime,
+  //                       // inputFormatters: <TextInputFormatter>[
+  //                       //   FilteringTextInputFormatter.digitsOnly
+  //                       // ],
+  //                       initialValue:
+  //                           "${widget.plant.fertilising!.lastFertilising}",
+  //                       decoration: const InputDecoration(
+  //                         border: OutlineInputBorder(),
+  //                         labelText: "Zuletzt gedüngt",
+  //                         icon: Icon(Entypo.back_in_time),
+  //                       ),
+  //                       onSaved: (String? value) => widget.plant.fertilising!
+  //                           .setLastFertilising = DateTime.parse(value!),
+  //                       autovalidateMode: AutovalidateMode.onUserInteraction,
+  //                       validator: (String? value) {
+  //                         return (value == null || value.isEmpty)
+  //                             ? 'Darf nicht leer sein'
+  //                             : null;
+  //                       }),
+  //                 ),
+  //                 const SizedBox(height: 50)
+  //               ],
+  //             ),
+  //           ),
+  //         );
+  //       },
+  //     );

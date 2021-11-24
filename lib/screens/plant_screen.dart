@@ -94,174 +94,6 @@ class _PlantScreenState extends State<PlantScreen> {
     );
   }
 
-  void showBottomSheetWatering(BuildContext context) => showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (BuildContext context) {
-          return Form(
-            key: formKeyWatering,
-            child: Padding(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ElevatedButton(
-                      onPressed: () {
-                        final isValid =
-                            formKeyWatering.currentState!.validate();
-                        if (isValid) {
-                          formKeyWatering.currentState!.save();
-                          setState(() {
-                            widget.plantOverviewCallback();
-                          });
-                          Navigator.pop(context);
-                        }
-                      },
-                      child: const Text("Fertig")),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        inputFormatters: <TextInputFormatter>[
-                          FilteringTextInputFormatter.digitsOnly
-                        ],
-                        initialValue: "${widget.plant.waterInterval}",
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: "Gieß-Interwall in Tagen",
-                          icon: Icon(Entypo.droplet),
-                        ),
-                        onSaved: (String? value) =>
-                            widget.plant.setWaterInterval = int.parse(value!),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? value) {
-                          return (value == null || value.isEmpty)
-                              ? 'Darf nicht leer sein'
-                              : null;
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: InkWell(
-                      onTap: () {
-                        pickDate(context, widget.plant.lastWatering);
-                      },
-                      child: TextFormField(
-                          keyboardType: TextInputType.text,
-                          enabled: false,
-                          controller: _dateController
-                            ..text =
-                                "${widget.plant.lastWatering.day}.${widget.plant.lastWatering.month}.${widget.plant.lastWatering.year}",
-                          //initialValue: "${widget.plant.lastWatering}",
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: "Zuletzt gegossen",
-                            icon: Icon(Entypo.back_in_time),
-                          ),
-                          onSaved: (String? value) {
-                            if (pickedDate != null) {
-                              widget.plant.lastWatering = pickedDate!;
-                              pickedDate = null;
-                            }
-                          },
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (String? value) {
-                            return (value == null || value.isEmpty)
-                                ? 'Darf nicht leer sein'
-                                : null;
-                          }),
-                    ),
-                  ),
-                  const SizedBox(height: 50)
-                ],
-              ),
-            ),
-          );
-        },
-      );
-
-  // void showBottomSheetFertilizing(BuildContext context) => showModalBottomSheet(
-  //       context: context,
-  //       isScrollControlled: true,
-  //       builder: (BuildContext context) {
-  //         return Form(
-  //           key: formKeyFertilizing,
-  //           child: Padding(
-  //             padding: EdgeInsets.only(
-  //               bottom: MediaQuery.of(context).viewInsets.bottom,
-  //             ),
-  //             child: Column(
-  //               mainAxisSize: MainAxisSize.min,
-  //               children: [
-  //                 ElevatedButton(
-  //                     onPressed: () {
-  //                       final isValid =
-  //                           formKeyFertilizing.currentState!.validate();
-  //                       if (isValid) {
-  //                         formKeyFertilizing.currentState!.save();
-  //                         setState(() {
-  //                           widget.plantOverviewCallback();
-  //                         });
-  //                         Navigator.pop(context);
-  //                       }
-  //                     },
-  //                     child: const Text("Speichern")),
-  //                 Padding(
-  //                   padding: const EdgeInsets.all(8),
-  //                   child: TextFormField(
-  //                       keyboardType: TextInputType.number,
-  //                       inputFormatters: <TextInputFormatter>[
-  //                         FilteringTextInputFormatter.digitsOnly
-  //                       ],
-  //                       initialValue:
-  //                           "${widget.plant.fertilising!.fertiliserInterval}",
-  //                       decoration: const InputDecoration(
-  //                         border: OutlineInputBorder(),
-  //                         labelText: "Düngen-Interwall in Tagen",
-  //                         icon: Icon(Entypo.droplet),
-  //                       ),
-  //                       onSaved: (String? value) => widget.plant.fertilising!
-  //                           .setFertiliserInterval = int.parse(value!),
-  //                       autovalidateMode: AutovalidateMode.onUserInteraction,
-  //                       validator: (String? value) {
-  //                         return (value == null || value.isEmpty)
-  //                             ? 'Darf nicht leer sein'
-  //                             : null;
-  //                       }),
-  //                 ),
-  //                 Padding(
-  //                   padding: const EdgeInsets.all(8),
-  //                   child: TextFormField(
-  //                       keyboardType: TextInputType.datetime,
-  //                       // inputFormatters: <TextInputFormatter>[
-  //                       //   FilteringTextInputFormatter.digitsOnly
-  //                       // ],
-  //                       initialValue:
-  //                           "${widget.plant.fertilising!.lastFertilising}",
-  //                       decoration: const InputDecoration(
-  //                         border: OutlineInputBorder(),
-  //                         labelText: "Zuletzt gedüngt",
-  //                         icon: Icon(Entypo.back_in_time),
-  //                       ),
-  //                       onSaved: (String? value) => widget.plant.fertilising!
-  //                           .setLastFertilising = DateTime.parse(value!),
-  //                       autovalidateMode: AutovalidateMode.onUserInteraction,
-  //                       validator: (String? value) {
-  //                         return (value == null || value.isEmpty)
-  //                             ? 'Darf nicht leer sein'
-  //                             : null;
-  //                       }),
-  //                 ),
-  //                 const SizedBox(height: 50)
-  //               ],
-  //             ),
-  //           ),
-  //         );
-  //       },
-  //     );
-
   Widget buildPlantScreenElements(BuildContext context, int index) => <Widget>[
         //Elemente die in der Liestview sind
         ClipRRect(
@@ -313,7 +145,12 @@ class _PlantScreenState extends State<PlantScreen> {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  showBottomSheetWatering(context);
+                  WaterFertilizeSheet().showBottomSheetWaterOrFertilize(
+                      context,
+                      widget.plant,
+                      true,
+                      callback,
+                      widget.plantOverviewCallback);
                 },
                 child: Container(
                   child: Row(
@@ -461,20 +298,4 @@ class _PlantScreenState extends State<PlantScreen> {
               ]),
         ),
       ][index];
-
-  Future pickDate(BuildContext context, DateTime initialDate) async {
-    final newDate = await showDatePicker(
-      context: context,
-      initialDate: initialDate,
-      firstDate: DateTime(DateTime.now().year - 5),
-      lastDate: DateTime.now(),
-    );
-
-    if (newDate == null) return;
-    setState(() {
-      //Todo Dateformater verwenden
-      _dateController.text = "${newDate.day}.${newDate.month}.${newDate.year}";
-      pickedDate = newDate;
-    });
-  }
 }
