@@ -31,6 +31,7 @@ class WaterFertilizeSheet {
     DateTime initialLastDate;
     String initialLastDateFormatted;
     String lastLabel;
+    Icon intervalIcon;
     if (waterOrFertilize) {
       initialIntervalValue = "${plant.waterInterval}";
       intervalLabel = "Gieß-Interwall in Tagen";
@@ -38,6 +39,7 @@ class WaterFertilizeSheet {
       initialLastDateFormatted =
           "${plant.lastWatering.day}.${plant.lastWatering.month}.${plant.lastWatering.year}";
       lastLabel = "Zuletzt gegossen";
+      intervalIcon = const Icon(Entypo.droplet);
     } else {
       initialIntervalValue = "${plant.fertilising!.fertiliserInterval}";
       intervalLabel = "Düngen-Interwall in Tagen";
@@ -45,6 +47,8 @@ class WaterFertilizeSheet {
       initialLastDateFormatted =
           "${plant.fertilising!.lastFertilising.day}.${plant.fertilising!.lastFertilising.month}.${plant.fertilising!.lastFertilising.year}";
       lastLabel = "Zuletzt gedüngt";
+      //TODO: passendes Icon für Düngen finden
+      intervalIcon = const Icon(Entypo.droplet);
     }
     showModalBottomSheet(
       context: context,
@@ -56,73 +60,57 @@ class WaterFertilizeSheet {
             padding: EdgeInsets.only(
               bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      final isValid = formKey.currentState!.validate();
-                      if (isValid) {
-                        formKey.currentState!.save();
-                        callback();
-                        plantOverviewCallback();
-                        Navigator.pop(context);
-                      }
-                    },
-                    child: const Text("Fertig")),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: TextFormField(
-                      keyboardType: TextInputType.number,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Bearbeiten:",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            final isValid = formKey.currentState!.validate();
+                            if (isValid) {
+                              formKey.currentState!.save();
+                              callback();
+                              plantOverviewCallback();
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: const Text(
+                            "Speichern",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
                       ],
-                      initialValue: initialIntervalValue,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        labelText: intervalLabel,
-                        icon: const Icon(Entypo.droplet),
-                      ),
-                      onSaved: (String? value) {
-                        if (waterOrFertilize) {
-                          plant.setWaterInterval = int.parse(value!);
-                        } else {
-                          plant.fertilising!.setFertiliserInterval =
-                              int.parse(value!);
-                        }
-                      },
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (String? value) {
-                        return (value == null || value.isEmpty)
-                            ? 'Darf nicht leer sein'
-                            : null;
-                      }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: InkWell(
-                    onTap: () {
-                      pickDate(context, initialLastDate, callback);
-                    },
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8),
                     child: TextFormField(
-                        keyboardType: TextInputType.text,
-                        enabled: false,
-                        controller: _dateController
-                          ..text = initialLastDateFormatted,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        initialValue: initialIntervalValue,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
-                          labelText: lastLabel,
-                          icon: const Icon(Entypo.back_in_time),
+                          labelText: intervalLabel,
+                          icon: intervalIcon,
                         ),
                         onSaved: (String? value) {
-                          if (pickedDate != null) {
-                            if (waterOrFertilize) {
-                              plant.setLastWatering = pickedDate!;
-                            } else {
-                              plant.fertilising!.setLastFertilising =
-                                  pickedDate!;
-                            }
-                            pickedDate = null;
+                          if (waterOrFertilize) {
+                            plant.setWaterInterval = int.parse(value!);
+                          } else {
+                            plant.fertilising!.setFertiliserInterval =
+                                int.parse(value!);
                           }
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -132,9 +120,44 @@ class WaterFertilizeSheet {
                               : null;
                         }),
                   ),
-                ),
-                const SizedBox(height: 50)
-              ],
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: InkWell(
+                      onTap: () {
+                        pickDate(context, initialLastDate, callback);
+                      },
+                      child: TextFormField(
+                          keyboardType: TextInputType.text,
+                          enabled: false,
+                          controller: _dateController
+                            ..text = initialLastDateFormatted,
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            labelText: lastLabel,
+                            icon: const Icon(Entypo.back_in_time),
+                          ),
+                          onSaved: (String? value) {
+                            if (pickedDate != null) {
+                              if (waterOrFertilize) {
+                                plant.setLastWatering = pickedDate!;
+                              } else {
+                                plant.fertilising!.setLastFertilising =
+                                    pickedDate!;
+                              }
+                              pickedDate = null;
+                            }
+                          },
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (String? value) {
+                            return (value == null || value.isEmpty)
+                                ? 'Darf nicht leer sein'
+                                : null;
+                          }),
+                    ),
+                  ),
+                  const SizedBox(height: 50)
+                ],
+              ),
             ),
           ),
         );
@@ -158,85 +181,3 @@ class WaterFertilizeSheet {
     callback();
   }
 }
-
-
-
-  // void showBottomSheetFertilizing(BuildContext context) => showModalBottomSheet(
-  //       context: context,
-  //       isScrollControlled: true,
-  //       builder: (BuildContext context) {
-  //         return Form(
-  //           key: formKeyFertilizing,
-  //           child: Padding(
-  //             padding: EdgeInsets.only(
-  //               bottom: MediaQuery.of(context).viewInsets.bottom,
-  //             ),
-  //             child: Column(
-  //               mainAxisSize: MainAxisSize.min,
-  //               children: [
-  //                 ElevatedButton(
-  //                     onPressed: () {
-  //                       final isValid =
-  //                           formKeyFertilizing.currentState!.validate();
-  //                       if (isValid) {
-  //                         formKeyFertilizing.currentState!.save();
-  //                         setState(() {
-  //                           widget.plantOverviewCallback();
-  //                         });
-  //                         Navigator.pop(context);
-  //                       }
-  //                     },
-  //                     child: const Text("Speichern")),
-  //                 Padding(
-  //                   padding: const EdgeInsets.all(8),
-  //                   child: TextFormField(
-  //                       keyboardType: TextInputType.number,
-  //                       inputFormatters: <TextInputFormatter>[
-  //                         FilteringTextInputFormatter.digitsOnly
-  //                       ],
-  //                       initialValue:
-  //                           "${widget.plant.fertilising!.fertiliserInterval}",
-  //                       decoration: const InputDecoration(
-  //                         border: OutlineInputBorder(),
-  //                         labelText: "Düngen-Interwall in Tagen",
-  //                         icon: Icon(Entypo.droplet),
-  //                       ),
-  //                       onSaved: (String? value) => widget.plant.fertilising!
-  //                           .setFertiliserInterval = int.parse(value!),
-  //                       autovalidateMode: AutovalidateMode.onUserInteraction,
-  //                       validator: (String? value) {
-  //                         return (value == null || value.isEmpty)
-  //                             ? 'Darf nicht leer sein'
-  //                             : null;
-  //                       }),
-  //                 ),
-  //                 Padding(
-  //                   padding: const EdgeInsets.all(8),
-  //                   child: TextFormField(
-  //                       keyboardType: TextInputType.datetime,
-  //                       // inputFormatters: <TextInputFormatter>[
-  //                       //   FilteringTextInputFormatter.digitsOnly
-  //                       // ],
-  //                       initialValue:
-  //                           "${widget.plant.fertilising!.lastFertilising}",
-  //                       decoration: const InputDecoration(
-  //                         border: OutlineInputBorder(),
-  //                         labelText: "Zuletzt gedüngt",
-  //                         icon: Icon(Entypo.back_in_time),
-  //                       ),
-  //                       onSaved: (String? value) => widget.plant.fertilising!
-  //                           .setLastFertilising = DateTime.parse(value!),
-  //                       autovalidateMode: AutovalidateMode.onUserInteraction,
-  //                       validator: (String? value) {
-  //                         return (value == null || value.isEmpty)
-  //                             ? 'Darf nicht leer sein'
-  //                             : null;
-  //                       }),
-  //                 ),
-  //                 const SizedBox(height: 50)
-  //               ],
-  //             ),
-  //           ),
-  //         );
-  //       },
-  //     );
