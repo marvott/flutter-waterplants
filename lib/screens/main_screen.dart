@@ -19,7 +19,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> screens = [
     const PlantOverview(),
     const SprossenRoute(),
-    const SettingsRoute(),
+    SettingsRoute(),
   ];
 
   void _onItemTapped(int index) {
@@ -35,7 +35,6 @@ class _MainScreenState extends State<MainScreen> {
       body: IndexedStack(
         index: _selectedIndex,
         children: screens,
-
       ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
