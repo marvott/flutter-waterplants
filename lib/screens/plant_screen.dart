@@ -143,144 +143,123 @@ class _PlantScreenState extends State<PlantScreen> {
         Row(
           children: <Widget>[
             Expanded(
-              child: GestureDetector(
-                onTap: () {
-                  WaterFertilizeSheet().showBottomSheetWaterOrFertilize(
-                      context,
-                      widget.plant,
-                      true,
-                      callback,
-                      widget.plantOverviewCallback);
-                },
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text.rich(
-                        TextSpan(
-                            text: 'Gießen\n',
-                            style: const TextStyle(color: Colors.blue),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: widget.plant.waterInDays(),
-                                style: const TextStyle(color: Colors.white),
-                              )
-                            ]),
-                      ),
-                      ElevatedButton(
-                          onPressed: () {
-                            String message =
-                                "${widget.plant.name} wurde gegossen";
-                            Utils.showSnackBar(context,
-                                message: message, color: Colors.blue);
-                            widget.plant.setLastWatering = DateTime.now();
-                            setState(() {
-                              widget.plantOverviewCallback;
-                            });
-                          },
-                          child: const Icon(
-                            Entypo.droplet,
-                            size: 20,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: const CircleBorder(),
-                            padding: const EdgeInsets.all(15),
-                            primary: Colors.blue,
-                            minimumSize: Size.zero,
-                          )),
-                    ],
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    color: Colors.grey.shade700,
-                    border: Border.all(
-                      width: 8,
-                      color: Colors.transparent,
+              child: Material(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                color: Colors.grey.shade700,
+                type: MaterialType.button,
+                child: InkWell(
+                  onTap: () {
+                    WaterFertilizeSheet().showBottomSheetWaterOrFertilize(
+                        context,
+                        widget.plant,
+                        true,
+                        callback,
+                        widget.plantOverviewCallback);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text.rich(
+                          TextSpan(
+                              text: 'Gießen\n',
+                              style: const TextStyle(color: Colors.blue),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: widget.plant.waterInDays(),
+                                  style: const TextStyle(color: Colors.white),
+                                )
+                              ]),
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              String message =
+                                  "${widget.plant.name} wurde gegossen";
+                              Utils.showSnackBar(context,
+                                  message: message, color: Colors.blue);
+                              widget.plant.setLastWatering = DateTime.now();
+                              setState(() {
+                                widget.plantOverviewCallback;
+                              });
+                            },
+                            child: const Icon(
+                              Entypo.droplet,
+                              size: 20,
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              shape: const CircleBorder(),
+                              padding: const EdgeInsets.all(15),
+                              primary: Colors.blue,
+                              minimumSize: Size.zero,
+                            )),
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
-            //TODO: sehr hässliche Abfrage, das geht schöner!
-            widget.plant.fertilising == null
-                ? const SizedBox.shrink()
-                : Expanded(
+            const SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Material(
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                color: Colors.grey.shade700,
+                type: MaterialType.button,
+                child: InkWell(
+                  onTap: () {
+                    WaterFertilizeSheet().showBottomSheetWaterOrFertilize(
+                        context,
+                        widget.plant,
+                        false,
+                        callback,
+                        widget.plantOverviewCallback);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const SizedBox(
-                          width: 10,
+                        Text.rich(
+                          TextSpan(
+                              text: 'Düngen\n',
+                              style: const TextStyle(color: Colors.deepOrange),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: widget.plant.fertiliseInDays(),
+                                  style: const TextStyle(color: Colors.white),
+                                )
+                              ]),
                         ),
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              WaterFertilizeSheet()
-                                  .showBottomSheetWaterOrFertilize(
-                                      context,
-                                      widget.plant,
-                                      false,
-                                      callback,
-                                      widget.plantOverviewCallback);
+                        ElevatedButton(
+                            onPressed: () {
+                              String message =
+                                  "${widget.plant.name} wurde gedüngt";
+                              Utils.showSnackBar(context,
+                                  message: message, color: Colors.deepOrange);
+                              widget.plant.fertilising!.setLastFertilising =
+                                  DateTime.now();
+                              setState(() {
+                                widget.plantOverviewCallback;
+                              });
                             },
-                            child: Container(
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text.rich(
-                                    TextSpan(
-                                        text: 'Düngen\n',
-                                        style: const TextStyle(
-                                            color: Colors.deepOrange),
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            text:
-                                                widget.plant.fertiliseInDays(),
-                                            style: const TextStyle(
-                                                color: Colors.white),
-                                          )
-                                        ]),
-                                  ),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        String message =
-                                            "${widget.plant.name} wurde gedüngt";
-                                        Utils.showSnackBar(context,
-                                            message: message,
-                                            color: Colors.deepOrange);
-                                        widget.plant.fertilising!
-                                                .setLastFertilising =
-                                            DateTime.now();
-                                        setState(() {
-                                          widget.plantOverviewCallback;
-                                        });
-                                      },
-                                      child: const Icon(
-                                        Entypo.leaf,
-                                        size: 20,
-                                      ),
-                                      style: ElevatedButton.styleFrom(
-                                        shape: const CircleBorder(),
-                                        padding: const EdgeInsets.all(15),
-                                        primary: Colors.deepOrange,
-                                        minimumSize: Size.zero,
-                                      )),
-                                ],
-                              ),
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(8)),
-                                color: Colors.grey.shade700,
-                                border: Border.all(
-                                  width: 8,
-                                  color: Colors.transparent,
-                                ),
-                              ),
+                            child: const Icon(
+                              Entypo.leaf,
+                              size: 20,
                             ),
-                          ),
-                        ),
+                            style: ElevatedButton.styleFrom(
+                              shape: const CircleBorder(),
+                              padding: const EdgeInsets.all(15),
+                              primary: Colors.deepOrange,
+                              minimumSize: Size.zero,
+                            )),
                       ],
                     ),
                   ),
+                ),
+              ),
+            ),
           ],
         ),
         //TODO farbe ändern
