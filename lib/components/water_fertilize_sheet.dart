@@ -48,7 +48,7 @@ class WaterFertilizeSheet {
           "${plant.fertilising!.lastFertilising.day}.${plant.fertilising!.lastFertilising.month}.${plant.fertilising!.lastFertilising.year}";
       lastLabel = "Zuletzt gedüngt";
       //TODO: passendes Icon für Düngen finden
-      intervalIcon = const Icon(Entypo.droplet);
+      intervalIcon = const Icon(Entypo.leaf);
     }
     showModalBottomSheet(
       context: context,
