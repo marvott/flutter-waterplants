@@ -26,8 +26,6 @@ import 'package:flutter/services.dart';
 import 'models/general.dart';
 import 'screens/main_screen.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async {

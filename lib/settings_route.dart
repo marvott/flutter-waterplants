@@ -26,10 +26,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_application_1/components/snackbar_dialog.dart';
 
 //FirebaseFirestore.instance.settings = Settings(host: '10.0.2.2:8080', sslEnabled: false); // use emulatorvoid main() async {
 
 class SettingsRoute extends StatefulWidget {
+  const SettingsRoute({Key? key}) : super(key: key);
+
   @override
   _MySettingsState createState() => _MySettingsState();
 }
@@ -38,7 +41,7 @@ class _MySettingsState extends State<SettingsRoute> {
   User? user;
 
   final _emailInput = TextEditingController(text: 'bob@example.com');
-  final _passInput = TextEditingController(text: 'secret');
+  final _passInput = TextEditingController(text: 'passwort');
 
   @override
   void initState() {
@@ -54,96 +57,71 @@ class _MySettingsState extends State<SettingsRoute> {
     return Material(
         child: Center(
             child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        /*
-        SignInButtonBuilder(
-            text: 'Sign in anonymously',
-            icon: Icons.account_circle,
-            onPressed: () => loginAnonymously(),
-            backgroundColor: Colors.blueGrey),
-            */
-
-        Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-          SizedBox(
-              width: 150,
-              child: TextField(
-                  controller: _emailInput,
-                  decoration: InputDecoration(hintText: 'Email'))),
-          SizedBox(
-              width: 150,
-              child: TextField(
-                  controller: _passInput,
-                  obscureText: true,
-                  decoration: InputDecoration(hintText: 'Password'))),
-        ]),
-
-        SignInButton(Buttons.Email,
-            onPressed: () => loginWithEmail(_emailInput.text, _passInput.text,
-                (e) => _showErrorDialog(context, 'Failed to sign in', e))),
-        SignInButtonBuilder(
-            text: 'Sign Up',
-            icon: Icons.account_circle,
-            onPressed: () => createUserWithEmailAndPassword(
-                _emailInput.text, _passInput.text),
-            backgroundColor: Colors.blueGrey),
-
-        //SignInButton(Buttons.Google, onPressed: () => loginWithGoogle()),
-        //SignInButton(Buttons.FacebookNew, onPressed: () {}),
-        //SignInButton(Buttons.Twitter, onPressed: () {}),
-        //SignInButton(Buttons.Microsoft, onPressed: () {}),
-        //SignInButton(Buttons.AppleDark, onPressed: () {}),
-        Container(child: userInfo()),
-        ElevatedButton(
-            child: const Text('Sign out'),
-            style: ElevatedButton.styleFrom(primary: Colors.red),
-            onPressed: user != null ? () => logout() : null)
-      ],
-    )));
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+          Container(child: userInfo()),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            SizedBox(
+                width: 150,
+                child: TextField(
+                    controller: _emailInput,
+                    decoration: const InputDecoration(hintText: 'Email'))),
+            SizedBox(
+                width: 150,
+                child: TextField(
+                    controller: _passInput,
+                    obscureText: true,
+                    decoration: const InputDecoration(hintText: 'Passwort'))),
+          ]),
+          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            SignInButton(Buttons.Email,
+                text: "Mit Email anmelden",
+                onPressed: () => loginWithEmail(
+                      _emailInput.text,
+                      _passInput
+                          .text, /*(e) => _showErrorDialog(context, 'Failed to sign in', e)*/
+                    )),
+            SignInButtonBuilder(
+                text: 'Registrieren',
+                icon: Icons.account_circle,
+                onPressed: () => createUserWithEmailAndPassword(
+                    _emailInput.text, _passInput.text),
+                backgroundColor: Colors.blueGrey),
+            ElevatedButton(
+                child: const Text('Abmelden'),
+                style: ElevatedButton.styleFrom(primary: Colors.blue),
+                onPressed: user != null ? () => logout() : null),
+          ]),
+        ])));
   }
 
   Widget userInfo() {
-    if (user == null) return Text('Not signed in.');
-    if (user!.isAnonymous) return Text('Anonymous sign in: ${user!.uid}.');
+    if (user == null) return const Text('Nicht angemeldet.');
+    if (user!.isAnonymous) return Text('Anonym angemeldet: ${user!.uid}.');
     return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       if (user!.photoURL != null) Image.network(user!.photoURL!, width: 50),
       Text(
-          'Signed in as ${user!.displayName != null ? user!.displayName! + ', ' : ''}${user!.email}.')
+          'Angemeldet als: ${user!.displayName != null ? user!.displayName! + ', ' : ''}${user!.email}.')
     ]);
   }
 
-  /*
-  Future<UserCredential> loginAnonymously() {
-    return FirebaseAuth.instance.signInAnonymously();
-  }
-*/
-  /*Future<UserCredential> loginWithEmail(
+  Future<UserCredential?> loginWithEmail(
     String email,
     String pass,
-    void Function(FirebaseAuthException e) errorCallback,
-  ) {
+    /*void Function(FirebaseAuthException e) errorCallback,*/
+  ) async {
     try {
-      print("test");
-      return FirebaseAuth.instance
+      return await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: pass);
     } on FirebaseAuthException catch (e) {
-      print("this ist shit");
-      errorCallback(e);
-    }*/
-
-  Future<UserCredential> loginWithEmail(
-    String email,
-    String pass,
-    void Function(FirebaseAuthException e) errorCallback,
-  ) {
-    try {
-      return FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: pass);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'firebase_auth/user-not-found') {
+      if (e.code == 'user-not-found') {
         print('No user found for that email.');
+        String message = "Nutzer muss erst registriert werden.";
+        Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
+        String message = "Falsches Passwort.";
+        Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
       }
     } catch (e) {
       print(e);
@@ -151,7 +129,7 @@ class _MySettingsState extends State<SettingsRoute> {
     return Future.value(null);
   }
 
-  Future<UserCredential> createUserWithEmailAndPassword(
+  Future<UserCredential?> createUserWithEmailAndPassword(
       String email, String pass) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -160,10 +138,17 @@ class _MySettingsState extends State<SettingsRoute> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.${e.code}');
+        String message = "Passwort zu schwach. Versuch es nochmal.";
+        Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.${e.code}');
+        String message = "Die Email ist bereits registriert.";
+        Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
       }
+    } catch (e) {
+      print(e);
     }
+
     return Future.value(null);
   }
 
