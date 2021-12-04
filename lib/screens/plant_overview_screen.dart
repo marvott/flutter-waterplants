@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:flutter_application_1/models/plant_list.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 import 'plant_screen.dart';
+import '../models/plant_list.dart';
 import '../models/plant.dart';
 import '../models/general.dart';
 
@@ -58,9 +58,8 @@ class _PlantOverviewState extends State<PlantOverview> {
                       context,
                       MaterialPageRoute(
                           builder: (context) => PlantScreen(
-                                callback: callback,
-                                plant:
-                                    plantList.getElemtByIndex(index),
+                                plantOverviewCallback: callback,
+                                plant: plantList.getElemtByIndex(index),
                               )));
                 },
                 child: Stack(

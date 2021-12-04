@@ -14,6 +14,7 @@ flutter pub upgrade
 cd ios
 rm Podfile.lock
 rm Podfile
+pod init
 pod install
 */
 
