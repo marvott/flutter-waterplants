@@ -87,10 +87,11 @@ class _MySettingsState extends State<SettingsRoute> {
                 onPressed: () => createUserWithEmailAndPassword(
                     _emailInput.text, _passInput.text),
                 backgroundColor: Colors.blueGrey),
-            ElevatedButton(
-                child: const Text('Abmelden'),
-                style: ElevatedButton.styleFrom(primary: Colors.blue),
-                onPressed: user != null ? () => logout() : null),
+            SignInButtonBuilder(
+                text: 'Abmelden',
+                icon: Icons.logout_rounded,
+                onPressed: () => user != null ? logout() : null,
+                backgroundColor: Colors.redAccent),
           ]),
         ])));
   }
