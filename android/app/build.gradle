@@ -43,7 +43,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.example.mobPlantUs"
+        applicationId "com.mob.PlantUs"
         minSdkVersion 21    // 21 is needed to use camera
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
