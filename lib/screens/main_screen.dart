@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'plant_overview_screen.dart';
 
-import '../settings_route.dart';
-import '../sprossen_route.dart';
+import 'settings_screen.dart';
+import 'sprossen_screen.dart';
 
 class MainScreen extends StatefulWidget {
   final String imagePath;

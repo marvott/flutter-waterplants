@@ -54,46 +54,52 @@ class _MySettingsState extends State<SettingsRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-        child: Center(
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Settings"),
+      ),
+      body: Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+            Container(child: userInfo()),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+              SizedBox(
+                  width: 150,
+                  child: TextField(
+                      controller: _emailInput,
+                      decoration: const InputDecoration(hintText: 'Email'))),
+              SizedBox(
+                  width: 150,
+                  child: TextField(
+                      controller: _passInput,
+                      obscureText: true,
+                      decoration: const InputDecoration(hintText: 'Passwort'))),
+            ]),
+            Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-          Container(child: userInfo()),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            SizedBox(
-                width: 150,
-                child: TextField(
-                    controller: _emailInput,
-                    decoration: const InputDecoration(hintText: 'Email'))),
-            SizedBox(
-                width: 150,
-                child: TextField(
-                    controller: _passInput,
-                    obscureText: true,
-                    decoration: const InputDecoration(hintText: 'Passwort'))),
-          ]),
-          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            SignInButton(Buttons.Email,
-                text: "Mit Email anmelden",
-                onPressed: () => loginWithEmail(
-                      _emailInput.text,
-                      _passInput
-                          .text, /*(e) => _showErrorDialog(context, 'Failed to sign in', e)*/
-                    )),
-            SignInButtonBuilder(
-                text: 'Registrieren',
-                icon: Icons.account_circle,
-                onPressed: () => createUserWithEmailAndPassword(
-                    _emailInput.text, _passInput.text),
-                backgroundColor: Colors.blueGrey),
-            SignInButtonBuilder(
-                text: 'Abmelden',
-                icon: Icons.logout_rounded,
-                onPressed: () => user != null ? logout() : null,
-                backgroundColor: Colors.redAccent),
-          ]),
-        ])));
+                  SignInButton(Buttons.Email,
+                      text: "Mit Email anmelden",
+                      onPressed: () => loginWithEmail(
+                            _emailInput.text,
+                            _passInput
+                                .text, /*(e) => _showErrorDialog(context, 'Failed to sign in', e)*/
+                          )),
+                  SignInButtonBuilder(
+                      text: 'Registrieren',
+                      icon: Icons.account_circle,
+                      onPressed: () => createUserWithEmailAndPassword(
+                          _emailInput.text, _passInput.text),
+                      backgroundColor: Colors.blueGrey),
+                  SignInButtonBuilder(
+                      text: 'Abmelden',
+                      icon: Icons.logout_rounded,
+                      onPressed: () => user != null ? logout() : null,
+                      backgroundColor: Colors.redAccent),
+                ]),
+          ])),
+    );
   }
 
   Widget userInfo() {
