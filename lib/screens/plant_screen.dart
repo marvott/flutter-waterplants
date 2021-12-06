@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/components/notes_sheet.dart';
 import 'package:flutter_application_1/components/plant_edit_sheet.dart';
 import 'package:flutter_application_1/components/water_fertilize_sheet.dart';
 import 'package:fluttericon/entypo_icons.dart';
@@ -269,9 +270,13 @@ class _PlantScreenState extends State<PlantScreen> {
           color: Colors.grey.shade700,
           type: MaterialType.button,
           child: InkWell(
-            onTap: () => setState(() {
-              widget.plant.setNotes = "Hier kommen Notizen hin";
-            }),
+            onTap: () {
+              NotesSheet().showBottomSheet(
+                context,
+                widget.plant,
+                callback,
+              );
+            },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text.rich(

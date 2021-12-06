@@ -32,6 +32,7 @@ class WaterFertilizeSheet {
     String initialLastDateFormatted;
     String lastLabel;
     Icon intervalIcon;
+
     if (waterOrFertilize) {
       initialIntervalValue = "${plant.waterInterval}";
       intervalLabel = "Gieß-Interwall in Tagen";
