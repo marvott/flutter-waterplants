@@ -59,7 +59,7 @@ class WaterFertilizeSheet {
           key: formKey,
           child: Padding(
             padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,
+              bottom: MediaQuery.of(context).viewInsets.bottom,   //Abstand zur Tastatur
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),

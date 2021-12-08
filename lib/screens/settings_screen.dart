@@ -1,34 +1,9 @@
-/*
-//Sinnloser Screen, kann weg
-class SettingsRoute extends StatefulWidget {
-  const SettingsRoute({Key? key}) : super(key: key);
-
-  @override
-  State<SettingsRoute> createState() => _SettingsRouteState();
-}
-
-class _SettingsRouteState extends State<SettingsRoute> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Settings"),
-      ),
-      body: Center(child: settingslist(context)),
-    );
-  }
-}
-*/
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter_application_1/components/snackbar_dialog.dart';
 
-//FirebaseFirestore.instance.settings = Settings(host: '10.0.2.2:8080', sslEnabled: false); // use emulatorvoid main() async {
 
 class SettingsRoute extends StatefulWidget {
   const SettingsRoute({Key? key}) : super(key: key);
