@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:flutter_application_1/components/snackbar_dialog.dart';
 
-
 class SettingsRoute extends StatefulWidget {
   const SettingsRoute({Key? key}) : super(key: key);
 
@@ -15,6 +14,7 @@ class SettingsRoute extends StatefulWidget {
 class _MySettingsState extends State<SettingsRoute> {
   User? user;
 
+  //Example for Input-Fields
   final _emailInput = TextEditingController(text: 'bob@example.com');
   final _passInput = TextEditingController(text: 'passwort');
 
@@ -38,6 +38,8 @@ class _MySettingsState extends State<SettingsRoute> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
             Container(child: userInfo()),
+
+            //Input for Email and Password
             Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
               SizedBox(
                   width: 150,
@@ -51,6 +53,8 @@ class _MySettingsState extends State<SettingsRoute> {
                       obscureText: true,
                       decoration: const InputDecoration(hintText: 'Passwort'))),
             ]),
+
+            //Sign-In, Sign-Up and Sign-Out Buttons
             Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -58,8 +62,7 @@ class _MySettingsState extends State<SettingsRoute> {
                       text: "Mit Email anmelden",
                       onPressed: () => loginWithEmail(
                             _emailInput.text,
-                            _passInput
-                                .text, /*(e) => _showErrorDialog(context, 'Failed to sign in', e)*/
+                            _passInput.text,
                           )),
                   SignInButtonBuilder(
                       text: 'Registrieren',
@@ -77,6 +80,7 @@ class _MySettingsState extends State<SettingsRoute> {
     );
   }
 
+  //Status Message if User is logged in
   Widget userInfo() {
     if (user == null) return const Text('Nicht angemeldet.');
     if (user!.isAnonymous) return Text('Anonym angemeldet: ${user!.uid}.');
@@ -87,30 +91,29 @@ class _MySettingsState extends State<SettingsRoute> {
     ]);
   }
 
-  Future<UserCredential?> loginWithEmail(
-    String email,
-    String pass,
-    /*void Function(FirebaseAuthException e) errorCallback,*/
-  ) async {
+  //Communication with Firebase when user logs in
+  //Error-Handling and Message in Snackbar if user was not found or wrong pw
+  Future<UserCredential?> loginWithEmail(String email, String pass) async {
     try {
       return await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: pass);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
         String message = "Nutzer muss erst registriert werden.";
         Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
         String message = "Falsches Passwort.";
         Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
       }
     } catch (e) {
-      print(e);
+      String message = "Es ist ein Fehler aufgetreten.";
+      Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
     }
     return Future.value(null);
   }
 
+  //Communication with Firebase when user is created
+  //Error-Handling when the email is being used or weak pw
   Future<UserCredential?> createUserWithEmailAndPassword(
       String email, String pass) async {
     try {
@@ -119,65 +122,19 @@ class _MySettingsState extends State<SettingsRoute> {
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.${e.code}');
         String message = "Passwort zu schwach. Versuch es nochmal.";
         Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.${e.code}');
         String message = "Die Email ist bereits registriert.";
         Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
       }
     } catch (e) {
-      print(e);
+      String message = "Es ist ein Fehler aufgetreten.";
+      Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
     }
 
     return Future.value(null);
   }
 
-/*
-  Future<UserCredential> loginWithGoogle() async {
-    final GoogleSignInAccount? googleUser = await (GoogleSignIn().signIn());
-    final GoogleSignInAuthentication googleAuth =
-        await googleUser!.authentication;
-    final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken, idToken: googleAuth.idToken);
-    return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
-*/
   logout() => FirebaseAuth.instance.signOut();
-}
-
-void _showErrorDialog(BuildContext context, String title, Exception e) {
-  showDialog<void>(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: Text(
-          title,
-          style: const TextStyle(fontSize: 24),
-        ),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(
-                '${(e as dynamic).message}',
-                style: const TextStyle(fontSize: 18),
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text(
-              'OK',
-              style: TextStyle(color: Colors.deepPurple),
-            ),
-          ),
-        ],
-      );
-    },
-  );
 }
