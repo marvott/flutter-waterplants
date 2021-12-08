@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_application_1/components/snackbar_dialog.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -110,7 +111,15 @@ class _PlantOverviewState extends State<PlantOverview> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              String message =
+                                  "${plantList.getElemtByIndex(index).name} wurde gegossen";
+                              Utils.showSnackBar(context,
+                                  message: message, color: Colors.blue);
+                              plantList.getElemtByIndex(index).setLastWatering =
+                                  DateTime.now();
+                              //setState könnte später nötig werden
+                            },
                             child: const Icon(
                               Entypo.droplet,
                               size: 20,
@@ -122,7 +131,19 @@ class _PlantOverviewState extends State<PlantOverview> {
                               minimumSize: Size.zero,
                             )),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (plantList.getElemtByIndex(index) != null) {
+                              String message =
+                                  "${plantList.getElemtByIndex(index).name} wurde gedüngt";
+                              Utils.showSnackBar(context,
+                                  message: message, color: Colors.deepOrange);
+                              plantList
+                                  .getElemtByIndex(index)
+                                  .fertilising!
+                                  .setLastFertilising = DateTime.now();
+                              //setState könnte später vlt nötig werden
+                            }
+                          },
                           child: const Icon(
                             Entypo.leaf,
                             size: 20,

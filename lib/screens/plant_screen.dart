@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/components/notes_sheet.dart';
 import 'package:flutter_application_1/components/plant_edit_sheet.dart';
 import 'package:flutter_application_1/components/water_fertilize_sheet.dart';
 import 'package:fluttericon/entypo_icons.dart';
@@ -57,18 +58,19 @@ class _PlantScreenState extends State<PlantScreen> {
         // ListView.separated muss mit dem itemBuilder gebaut werden
         itemBuilder: (BuildContext context, int index) {
           return Container(
-              child: buildPlantScreenElements(context, index),
-              // das Bild (Index 0) ist schon in einem abgerundeten Container
-              decoration: index == 0 || index == 2
-                  ? null
-                  : BoxDecoration(
-                      color: myColors[index],
-                      border: Border.all(
-                        width: 8,
-                        color: Colors.transparent,
-                      ),
-                      borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    ));
+            child: buildPlantScreenElements(context, index),
+            // das Bild (Index 0) ist schon in einem abgerundeten Container
+            decoration: index == 1
+                ? BoxDecoration(
+                    color: myColors[index],
+                    border: Border.all(
+                      width: 8,
+                      color: Colors.transparent,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  )
+                : null,
+          );
         },
         // Der Abstand zw. den Listenelementen
         separatorBuilder: (BuildContext context, int index) => const Divider(
@@ -263,18 +265,35 @@ class _PlantScreenState extends State<PlantScreen> {
           ],
         ),
         //TODO farbe ändern
-        Text.rich(
-          TextSpan(
-              text: 'Notizen\n',
-              style: const TextStyle(
-                color: Colors.green,
-              ),
-              children: <TextSpan>[
+        Material(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          color: Colors.grey.shade700,
+          type: MaterialType.button,
+          child: InkWell(
+            onTap: () {
+              NotesSheet().showBottomSheet(
+                context,
+                widget.plant,
+                callback,
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text.rich(
                 TextSpan(
-                  text: widget.plant.notes,
-                  style: const TextStyle(color: Colors.white),
-                )
-              ]),
+                    text: 'Notizen\n',
+                    style: const TextStyle(
+                      color: Colors.green,
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: widget.plant.notes,
+                        style: const TextStyle(color: Colors.white),
+                      )
+                    ]),
+              ),
+            ),
+          ),
         ),
       ][index];
 }
