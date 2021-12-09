@@ -112,27 +112,21 @@ class Plant {
   //Setter können weg da nix private
   //Getters, Setters:
   get getName => name;
-
   set setName(String name) => this.name = name;
 
   get getSpecies => species;
-
   set setSpecies(String species) => this.species = species;
 
   get getRoomName => roomName;
-
   set setRoomName(String roomName) => this.roomName = roomName;
 
   get getWaterInterval => waterInterval;
-
   set setWaterInterval(int waterInterval) => this.waterInterval = waterInterval;
 
   get getNotes => notes;
-
   set setNotes(String notes) => this.notes = notes;
 
   get getLastWatering => lastWatering;
-
   set setLastWatering(DateTime lastWatering) =>
       this.lastWatering = lastWatering;
 
@@ -142,6 +136,5 @@ class Plant {
       this.fertilising = fertilising;
 
   get getImagePath => imagePath;
-
   set setImagePath(imagePath) => this.imagePath = imagePath;
 }
