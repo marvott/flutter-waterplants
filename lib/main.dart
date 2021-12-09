@@ -72,3 +72,6 @@ class MyApp extends StatelessWidget {
         });
   }
 }
+
+//TODO: iwo hier alle exception abfangen und sammeln und iwie an firebase
+//schicken oder so

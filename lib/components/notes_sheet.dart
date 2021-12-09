@@ -11,7 +11,6 @@ class NotesSheet {
   Function? callback;
 
   final formKey = GlobalKey<FormState>();
-  final TextEditingController _dateController = TextEditingController();
 
   void showBottomSheet(
     BuildContext context,
