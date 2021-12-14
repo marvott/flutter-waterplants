@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_application_1/components/delet_dialog.dart';
 import 'package:flutter_application_1/components/snackbar_dialog.dart';
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:flutter/material.dart';
@@ -63,6 +64,8 @@ class _PlantOverviewState extends State<PlantOverview> {
                                 plant: plantList.getElemtByIndex(index),
                               )));
                 },
+                onLongPress: () => Dialogs.showSimpleDialog(
+                    context, plantList, index, callback),
                 child: Stack(
                   alignment: AlignmentDirectional.topEnd,
                   children: [
