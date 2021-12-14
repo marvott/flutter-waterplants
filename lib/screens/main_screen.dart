@@ -49,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Sprossen',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.person_rounded),
             label: 'Einstellungen',
           ),
         ],

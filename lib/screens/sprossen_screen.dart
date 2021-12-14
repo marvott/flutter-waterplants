@@ -33,6 +33,7 @@ class _SprossenRouteState extends State<SprossenRoute> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          ...?itemsStreamBuilder(),
           Expanded(
               child: SizedBox(
             child: StreamBuilder<QuerySnapshot>(
