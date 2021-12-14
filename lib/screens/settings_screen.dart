@@ -140,6 +140,17 @@ class _MySettingsState extends State<SettingsRoute> {
           .doc(email)
           .set({'usercreated': currentTime});
 
+      firestore
+          .collection('users')
+          .doc(email)
+          .collection('sprossen')
+          .doc()
+          .set({
+        'name': '',
+        'Keimdauer (Tage)': '',
+        'Wasser gewechselt': currentTime
+      });
+
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

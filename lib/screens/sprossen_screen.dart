@@ -1,8 +1,7 @@
-// ignore_for_file: prefer_const_constructors
+import 'dart:core';
+
 import 'package:intl/intl.dart';
-
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +32,6 @@ class _SprossenRouteState extends State<SprossenRoute> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          ...?itemsStreamBuilder(),
           Expanded(
               child: SizedBox(
             child: StreamBuilder<QuerySnapshot>(
@@ -42,8 +40,8 @@ class _SprossenRouteState extends State<SprossenRoute> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
                   }
-                  List<Item> items = snapshot.data!.docs
-                      .map((doc) => Item.fromJson(
+                  List<SprossenItems> items = snapshot.data!.docs
+                      .map((doc) => SprossenItems.fromJson(
                           (doc.data() as Map<String, dynamic>)
                             ..['id'] = doc.id))
                       .toList();
@@ -59,6 +57,66 @@ class _SprossenRouteState extends State<SprossenRoute> {
     );
   }
 }
+
+_listTiles(CollectionReference itemsRef, List<SprossenItems> items) {
+  return items
+      .map((i) => ListTile(
+          title: Text(i.name,
+              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20)),
+          subtitle: Text("Keimdauer (Tage):" + i.keimdauer.toString()),
+          leading: Container(width: 40, height: 40, color: Colors.blue),
+          trailing: IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () => _deleteItem(itemsRef, i.id))))
+      .toList();
+}
+
+_addItem(CollectionReference itemsRef) {
+  final name = "test";
+  final keimdauer = 4;
+  final menge = '1-2';
+
+  final item = SprossenItems(name, keimdauer);
+  itemsRef
+      .add(item.toJson())
+      .then((doc) => print('Added a new item with id = ${doc.id}'));
+}
+
+_deleteItem(CollectionReference itemsRef, String id) {
+  itemsRef.doc(id).delete().then((_) => print('Deleted item with id = $id'));
+}
+
+class SprossenItems {
+  late String id;
+  String name;
+  var keimdauer;
+
+  SprossenItems(this.name, this.keimdauer);
+
+  SprossenItems.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        keimdauer = json['Keimdauer (Tage)'];
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'Keimdauer (Tage)': keimdauer,
+      };
+}
+
+
+
+
+
+
+
+
+
+
+
+/*
+* ALTE IDEEN ABER ERSTMAL NOCH ALS BACKUP UND REFERENZ
+*
 
 //Versuch einzelne Werte zu bekommen -> Noch behalten und ausprobieren. Am Ende löschen
 Future<Object?> getFirestoreValues() async {
@@ -81,83 +139,7 @@ Future<Object?> getFirestoreValues() async {
 
   return sprossenlist;
 }
-
-List<Widget>? itemsStreamBuilder() {
-  CollectionReference itemsRef =
-      FirebaseFirestore.instance.collection('sprossen');
-  Query query = itemsRef.orderBy('name');
-  StreamBuilder<QuerySnapshot>(
-      stream: query.snapshots(),
-      builder: (BuildContext context, var snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        }
-        List<Item> items = snapshot.data!.docs
-            .map((doc) => Item.fromJson(
-                (doc.data() as Map<String, dynamic>)..['id'] = doc.id))
-            .toList();
-        return ListView(children: _listTiles(itemsRef, items));
-      });
-}
-
-_addItem(CollectionReference itemsRef) {
-  final name = "test";
-  final keimdauer = '4';
-
-  final item = Item(name, keimdauer);
-  itemsRef
-      .add(item.toJson())
-      .then((doc) => print('Added a new item with id = ${doc.id}'));
-}
-
-_deleteItem(CollectionReference itemsRef, String id) {
-  itemsRef.doc(id).delete().then((_) => print('Deleted item with id = $id'));
-}
-
-_listTiles(CollectionReference itemsRef, List<Item> items) {
-  return items
-      .map((i) => ListTile(
-          title: Text(i.name,
-              style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20)),
-          subtitle: Text("Keimdauer (Tage):" + i.keimdauer),
-          leading: Container(width: 40, height: 40, color: Colors.blue),
-          trailing: IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () => _deleteItem(itemsRef, i.id))))
-      .toList();
-}
-
-class Item {
-  late String id;
-  String name;
-  String keimdauer;
-  //Color color;
-  //DateTime created = DateTime.now();
-
-  Item(this.name, this.keimdauer);
-
-  Item.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        keimdauer = json['Keimdauer (Tage)'];
-
-  Map<String, dynamic> toJson() =>
-      {'name': name, 'Keimdauer (Tage)': keimdauer};
-}
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-* ALTE IDEEN ABER ERSTMAL NOCH ALS BACKUP UND REFERENZ
+*
 *
 //First Row from Table = Header
           Padding(
