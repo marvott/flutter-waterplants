@@ -15,6 +15,8 @@ class SettingsRoute extends StatefulWidget {
 class _MySettingsState extends State<SettingsRoute> {
   User? user;
 
+  UserInfos userInfos = new UserInfos();
+
   //Init firestore
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -108,6 +110,7 @@ class _MySettingsState extends State<SettingsRoute> {
   //Error-Handling and Message in Snackbar if user was not found or wrong pw
   Future<UserCredential?> loginWithEmail(String email, String pass) async {
     try {
+      userInfos.setEmail = email;
       return await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: pass);
     } on FirebaseAuthException catch (e) {
@@ -135,20 +138,20 @@ class _MySettingsState extends State<SettingsRoute> {
           .createUserWithEmailAndPassword(email: email, password: pass);
 
       //Adding the users email to the firestore collection 'users' with corresponding timestamp
-      firestore
-          .collection('users')
-          .doc(email)
-          .set({'usercreated': currentTime});
+      var _currentUser = firestore.collection('users').doc(email);
 
-      firestore
-          .collection('users')
-          .doc(email)
-          .collection('sprossen')
-          .doc()
-          .set({
+      _currentUser.set({'usercreated': currentTime});
+
+      _currentUser.collection('sprossen').doc().set({
         'name': '',
         'Keimdauer (Tage)': '',
         'Wasser gewechselt': currentTime
+      });
+
+      _currentUser.collection('pflanzen').doc().set({
+        'name': '',
+        'Zuletzt gewässert': currentTime,
+        'Zuletzt gedüngt': currentTime,
       });
 
       return userCredential;
@@ -169,4 +172,12 @@ class _MySettingsState extends State<SettingsRoute> {
   }
 
   logout() => FirebaseAuth.instance.signOut();
+}
+
+class UserInfos {
+  String _email = "";
+  String get getEmail => _email;
+  set setEmail(String email) {
+    _email = email;
+  }
 }
