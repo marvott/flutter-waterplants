@@ -1,6 +1,11 @@
 import 'package:flutter/widgets.dart';
 
-//generelle Argumente um das Navigieren zu erleichtern
+/*
+Die Klasse hat mal "globale" Variablen zur Verfügung gestellt
+Bis zur Fertigstellung muss diese Klasse gelöscht werden können.
+*/
+
+//TODO: diese Klasse wenn möglich löschen
 class GeneralArguments {
   static String cameraName = "";
   static String imagePath = "";
