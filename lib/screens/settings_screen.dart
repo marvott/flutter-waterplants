@@ -14,7 +14,6 @@ class SettingsRoute extends StatefulWidget {
 
 class _MySettingsState extends State<SettingsRoute> {
   User? user;
-
   UserInfos userInfos = new UserInfos();
 
   //Init firestore
@@ -30,6 +29,7 @@ class _MySettingsState extends State<SettingsRoute> {
 
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       setState(() => this.user = user);
+      userInfos.setEmail = user!.email.toString();
     });
   }
 
@@ -53,7 +53,6 @@ class _MySettingsState extends State<SettingsRoute> {
   //Status Message if User is logged in
   Widget userInfo() {
     if (user == null) return const Text('Nicht angemeldet.');
-    if (user!.isAnonymous) return Text('Anonym angemeldet: ${user!.uid}.');
     return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       if (user!.photoURL != null) Image.network(user!.photoURL!, width: 50),
       Text(
@@ -110,7 +109,6 @@ class _MySettingsState extends State<SettingsRoute> {
   //Error-Handling and Message in Snackbar if user was not found or wrong pw
   Future<UserCredential?> loginWithEmail(String email, String pass) async {
     try {
-      userInfos.setEmail = email;
       return await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: pass);
     } on FirebaseAuthException catch (e) {
