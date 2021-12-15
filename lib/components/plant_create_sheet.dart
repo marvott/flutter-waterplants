@@ -223,6 +223,26 @@ class PlantCreateSheet {
                             }),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: TextFormField(
+                        minLines: 3,
+                        maxLines: 10,
+                        // keyboardType: TextInputType.text,
+                        initialValue: notes,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: "Notizen:",
+                        ),
+                        onSaved: (String? value) {
+                          if (value != null) {
+                            value = value.trim();
+                          }
+                          notes = value!;
+                        },
+                        autovalidateMode: AutovalidateMode.disabled,
+                      ),
+                    ),
                   ],
                 ),
               ),
