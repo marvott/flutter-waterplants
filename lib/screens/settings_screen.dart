@@ -14,7 +14,6 @@ class SettingsRoute extends StatefulWidget {
 
 class _MySettingsState extends State<SettingsRoute> {
   User? user;
-  UserInfos userInfos = new UserInfos();
 
   //Init firestore
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -29,7 +28,6 @@ class _MySettingsState extends State<SettingsRoute> {
 
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       setState(() => this.user = user);
-      userInfos.setEmail = user!.email.toString();
     });
   }
 
@@ -60,6 +58,7 @@ class _MySettingsState extends State<SettingsRoute> {
     ]);
   }
 
+  //Buttons
   Widget mySignInButtons() {
     return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       SignInButtonBuilder(
@@ -87,6 +86,7 @@ class _MySettingsState extends State<SettingsRoute> {
     ]);
   }
 
+  //Email and Password Input for User
   Widget inputTextFields() {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       SizedBox(
@@ -170,12 +170,4 @@ class _MySettingsState extends State<SettingsRoute> {
   }
 
   logout() => FirebaseAuth.instance.signOut();
-}
-
-class UserInfos {
-  String _email = "test@test.com";
-  get getEmail => _email;
-  set setEmail(String email) {
-    _email = email;
-  }
 }

@@ -7,8 +7,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-FirebaseFirestore firestore = FirebaseFirestore.instance;
-
 class SprossenRoute extends StatefulWidget {
   const SprossenRoute({Key? key}) : super(key: key);
 
@@ -20,21 +18,28 @@ class _SprossenRouteState extends State<SprossenRoute> {
   //Variables
   double fontsize = 16;
 
+  //Init firestore
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+
+    //Listens for Changes in Authentification State -> Other user logs in
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    //TODO: _currenUser muss geupdatet werden, wenn sich ein anderer user anmeldet
-
-    var _currenUser = FirebaseAuth.instance.currentUser!.email;
-    print(_currenUser);
-
-/*     FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      _currenUser = FirebaseAuth.instance.currentUser!.email;
-      print(_currenUser); */
-
+    //Gets the 'users' and the email that is logged in and their list of 'Sprossen'
     CollectionReference itemsRef = FirebaseFirestore.instance
         .collection('users')
-        .doc(_currenUser.toString())
+        .doc(FirebaseAuth.instance.currentUser!.email.toString())
         .collection('sprossen');
+
+    //Orders items by Name
     Query query = itemsRef.orderBy('name');
 
     //UI
@@ -54,8 +59,8 @@ class _SprossenRouteState extends State<SprossenRoute> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
                   }
-                  List<SprossenItems> items = snapshot.data!.docs
-                      .map((doc) => SprossenItems.fromJson(
+                  List<SproutItems> items = snapshot.data!.docs
+                      .map((doc) => SproutItems.fromJson(
                           (doc.data() as Map<String, dynamic>)
                             ..['id'] = doc.id))
                       .toList();
@@ -72,7 +77,8 @@ class _SprossenRouteState extends State<SprossenRoute> {
   }
 }
 
-_listTiles(CollectionReference itemsRef, List<SprossenItems> items) {
+//Lists the items of 'Sprouts' as a Listview
+_listTiles(CollectionReference itemsRef, List<SproutItems> items) {
   return items
       .map((i) => ListTile(
           title: Text(i.name,
@@ -85,29 +91,32 @@ _listTiles(CollectionReference itemsRef, List<SprossenItems> items) {
       .toList();
 }
 
+//Adds a new Item to the Collection
 _addItem(CollectionReference itemsRef) {
   final name = "test";
   final keimdauer = 4;
   final menge = '1-2';
 
-  final item = SprossenItems(name, keimdauer);
+  final item = SproutItems(name, keimdauer);
   itemsRef
       .add(item.toJson())
       .then((doc) => print('Added a new item with id = ${doc.id}'));
 }
 
+//Deletes Item
 _deleteItem(CollectionReference itemsRef, String id) {
   itemsRef.doc(id).delete().then((_) => print('Deleted item with id = $id'));
 }
 
-class SprossenItems {
+//Class of Sprouts
+class SproutItems {
   late String id;
   String name;
   var keimdauer;
 
-  SprossenItems(this.name, this.keimdauer);
+  SproutItems(this.name, this.keimdauer);
 
-  SprossenItems.fromJson(Map<String, dynamic> json)
+  SproutItems.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
         keimdauer = json['Keimdauer (Tage)'];
@@ -117,16 +126,6 @@ class SprossenItems {
         'Keimdauer (Tage)': keimdauer,
       };
 }
-
-
-
-
-
-
-
-
-
-
 
 /*
 * ALTE IDEEN ABER ERSTMAL NOCH ALS BACKUP UND REFERENZ
@@ -182,7 +181,7 @@ ElevatedButton(
                   // Navigate back to first route when tapped.
                 },
                 child: Text('Go back!'),
-              ),*//*
+              ),*/ /*
               Expanded(
                   child: CustomScrollView(
                 primary: false,
