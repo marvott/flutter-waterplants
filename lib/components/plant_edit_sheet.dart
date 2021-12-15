@@ -4,8 +4,12 @@ import 'package:fluttericon/rpg_awesome_icons.dart';
 
 import '../models/plant.dart';
 
-showBottomSheetPlantEdit(BuildContext context, Plant plant, Function callback,
-    Function plantOverviewCallback) {
+showBottomSheetPlantEdit(
+  BuildContext context,
+  Plant plant,
+  Function callback,
+  Function plantOverviewCallback,
+) {
   final formKeyPlantedit = GlobalKey<FormState>();
   showModalBottomSheet(
     context: context,
