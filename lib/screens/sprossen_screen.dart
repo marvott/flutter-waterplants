@@ -23,13 +23,14 @@ class _SprossenRouteState extends State<SprossenRoute> {
   @override
   Widget build(BuildContext context) {
     //TODO: _currenUser muss geupdatet werden, wenn sich ein anderer user anmeldet
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      var _currenUser = FirebaseAuth.instance.currentUser?.email;
-    });
-    var _currenUser = FirebaseAuth.instance.currentUser?.email;
+
+    var _currenUser = FirebaseAuth.instance.currentUser!.email;
     print(_currenUser);
 
-    //CollectionReference itemsRef = FirebaseFirestore.instance.collection('sprossen');
+/*     FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      _currenUser = FirebaseAuth.instance.currentUser!.email;
+      print(_currenUser); */
+
     CollectionReference itemsRef = FirebaseFirestore.instance
         .collection('users')
         .doc(_currenUser.toString())

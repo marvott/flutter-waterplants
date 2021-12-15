@@ -32,7 +32,7 @@ import 'package:firebase_core/firebase_core.dart';
 Future<void> main() async {
   // Kamera initialisieren
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(); //TODO hinzugefügt
+  await Firebase.initializeApp();
   final cameras = await availableCameras();
   final CameraDescription firstCamera;
   if (cameras.isNotEmpty) {

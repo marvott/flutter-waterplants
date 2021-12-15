@@ -173,8 +173,8 @@ class _MySettingsState extends State<SettingsRoute> {
 }
 
 class UserInfos {
-  String _email = "";
-  String get getEmail => _email;
+  String _email = "test@test.com";
+  get getEmail => _email;
   set setEmail(String email) {
     _email = email;
   }
