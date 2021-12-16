@@ -110,8 +110,7 @@ class Plant {
   }
 
   Plant.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
+      : name = json['name'],
         species = json['species'],
         roomName = json['roomName'],
         lastWatering = json['lastWatering'],
