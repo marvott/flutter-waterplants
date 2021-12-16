@@ -1,15 +1,21 @@
 import 'dart:io';
-import 'package:flutter_application_1/components/delet_dialog.dart';
-import 'package:flutter_application_1/components/plant_create_sheet.dart';
-import 'package:flutter_application_1/components/snackbar_dialog.dart';
-import 'package:fluttericon/entypo_icons.dart';
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import 'plant_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:fluttericon/entypo_icons.dart';
+
+import 'package:flutter_application_1/components/delet_dialog.dart';
+import 'package:flutter_application_1/components/plant_create_sheet.dart';
+import 'package:flutter_application_1/components/snackbar_dialog.dart';
 import '../models/plant_list.dart';
 import '../models/plant.dart';
 import '../models/general.dart';
+import 'plant_screen.dart';
 
 class PlantOverview extends StatefulWidget {
   const PlantOverview({
@@ -21,24 +27,36 @@ class PlantOverview extends StatefulWidget {
 }
 
 class _PlantOverviewState extends State<PlantOverview> {
-  int _counter = 1;
+  //Init firestore
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+
+    //Listens for Changes in Authentification State -> Other user logs in
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      setState(() {});
+    });
+  }
 
   callback() {
     setState(() {});
   }
 
-  void _incrementCounter() {
-    _counter++;
-  }
-
-//Liste wird hier gespeichert
-// Als Atribut dieser Klasse? -> dann muss das immer üpbergeben werden -> Ja passt, wir haben wenige screens -> geringster aufwand
-// Indexed Stack mit Bottom-Bar!
-//kann später auch von der DB direkt was reinkriegen
   PlantList plantList = PlantList();
 
   @override
   Widget build(BuildContext context) {
+    //Gets the 'users' and the email that is logged in and their list of 'Sprossen'
+    CollectionReference itemsRef = FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser?.email.toString())
+        .collection('pflanzen');
+
+    //Orders items by Name
+    Query query = itemsRef.orderBy('lastWatered');
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Pflanzen'),
@@ -169,7 +187,7 @@ class _PlantOverviewState extends State<PlantOverview> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           PlantCreateSheet()
-              .showBottomSheetPlantCreate(context, callback, plantList);
+              .showBottomSheetPlantCreate(context, callback, plantList, itemsRef);
         },
         child: const Icon(Icons.add),
       ),

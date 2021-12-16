@@ -1,10 +1,15 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/models/plant_list.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fluttericon/entypo_icons.dart';
+
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/rpg_awesome_icons.dart';
 
+import 'package:flutter_application_1/models/plant_list.dart';
 import '../models/plant.dart';
 
 class PlantCreateSheet {
@@ -20,8 +25,8 @@ class PlantCreateSheet {
   DateTime lastFertilising = DateTime.now();
   String notes = "";
 
-  showBottomSheetPlantCreate(
-      BuildContext context, Function callback, PlantList plantList) {
+  showBottomSheetPlantCreate(BuildContext context, Function callback,
+      PlantList plantList, CollectionReference itemsRef) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -53,7 +58,7 @@ class PlantCreateSheet {
                               if (isValid) {
                                 formKey.currentState!.save();
                                 callback();
-                                plantList.add(Plant(
+                                Plant newPlant = Plant(
                                     name: name,
                                     species: species,
                                     waterInterval: waterInterval,
@@ -62,7 +67,9 @@ class PlantCreateSheet {
                                     fertilising: Fertilising(
                                         fertiliserInterval: fertiliserInterval,
                                         lastFertilising: lastFertilising),
-                                    notes: notes));
+                                    notes: notes);
+                                plantList.add(newPlant);
+                                itemsRef.add(newPlant.toJson());
                                 Navigator.pop(context);
                               }
                             },

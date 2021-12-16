@@ -56,6 +56,7 @@ class Fertilising {
 
 class Plant {
   //Eigenschaften:
+  late String id;
   String name;
   String species;
   String roomName;
@@ -107,6 +108,31 @@ class Plant {
     }
     throw Exception('fertiliseInDays konnte nicht berechnet werden');
   }
+
+  Plant.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        species = json['species'],
+        roomName = json['roomName'],
+        lastWatering = json['lastWatering'],
+        waterInterval = json['waterInterval'],
+        fertilising = Fertilising(
+          fertiliserInterval: json['fertiliserInterval'],
+          lastFertilising: json['fertiliserInterval'],
+        ),
+        notes = json['notes'],
+        imagePath = "";
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'species': species,
+        'roomName': roomName,
+        'lastWatering': lastWatering,
+        'waterInterval': waterInterval,
+        'lastFertilising': fertilising!._lastFertilising,
+        'fertiliserInterval': fertilising!.fertiliserInterval,
+        'notes': notes,
+      };
 
   //TODO: nicht benötigten Boilerplatemüll entfernen
   //Setter können weg da nix private
