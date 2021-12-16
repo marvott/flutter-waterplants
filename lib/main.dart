@@ -28,11 +28,13 @@ import 'models/general.dart';
 import 'screens/main_screen.dart';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart'; //TODO
 
 Future<void> main() async {
   // Kamera initialisieren
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   final cameras = await availableCameras();
   final CameraDescription firstCamera;
   if (cameras.isNotEmpty) {
@@ -57,6 +59,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FirebaseMessaging.instance
+        .getToken()
+        .then((token) => print('Device token = $token'));
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
         title: 'Route Demo',
@@ -71,4 +76,9 @@ class MyApp extends StatelessWidget {
           '/camera': (context) => TakePictureScreen(camera: camera),
         });
   }
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  print('Received a background message.');
+  // You can't update the app UI here!
 }

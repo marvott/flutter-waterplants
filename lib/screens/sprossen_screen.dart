@@ -42,6 +42,25 @@ class _SprossenRouteState extends State<SprossenRoute> {
     //Orders items by Name
     Query query = itemsRef.orderBy('name');
 
+/*
+TODO1
+showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    builder: (BuildContext context) {
+      return Padding(
+
+Der nutzer kann mit + seine eigenen sprossen aus der fixen sprossenliste hinzufügen
+
+TODO2:
+
+Der nutzer bekommt erinnerungen wenn gegossen und wasser gewechselt werden muss -> video ehlers
+
+TODO3:
+Teste -> video von ehlers
+
+*/
+
     //UI
     return Scaffold(
       appBar: AppBar(
