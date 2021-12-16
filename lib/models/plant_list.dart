@@ -10,8 +10,8 @@ class PlantList {
   }
 
   //Pflanzen entfernen
-  remove(Plant plant) {
-    _myPlants.remove(plant);
+  remove(int index) {
+    _myPlants.removeAt(index);
   }
 
   lenght() => _myPlants.length; //Länge der Liste

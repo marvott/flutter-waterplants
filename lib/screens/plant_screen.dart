@@ -23,9 +23,9 @@ class PlantScreen extends StatefulWidget {
 }
 
 class _PlantScreenState extends State<PlantScreen> {
-  final formKeyPlantedit = GlobalKey<FormState>();
-  final formKeyWatering = GlobalKey<FormState>();
-  final formKeyFertilizing = GlobalKey<FormState>();
+  // final formKeyPlantedit = GlobalKey<FormState>();
+  // final formKeyWatering = GlobalKey<FormState>();
+  // final formKeyFertilizing = GlobalKey<FormState>();
 
   //Farben der Listview, gehe sicher dass es die RICHTIGE LÄNGE HAT!
   final List myColors = <Color>[
