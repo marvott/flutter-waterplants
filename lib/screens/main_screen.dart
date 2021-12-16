@@ -18,8 +18,8 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> screens = [
     const PlantOverview(),
-    const SprossenRoute(),
-    const SettingsRoute(),
+    SprossenRoute(),
+    SettingsRoute(),
   ];
 
   void _onItemTapped(int index) {
@@ -49,7 +49,7 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Sprossen',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
+            icon: Icon(Icons.person_rounded),
             label: 'Einstellungen',
           ),
         ],
