@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttericon/entypo_icons.dart';
-import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/rpg_awesome_icons.dart';
 
 import '../models/plant.dart';
 
@@ -59,7 +57,9 @@ class WaterFertilizeSheet {
           key: formKey,
           child: Padding(
             padding: EdgeInsets.only(
-              bottom: MediaQuery.of(context).viewInsets.bottom,   //Abstand zur Tastatur
+              bottom: MediaQuery.of(context)
+                  .viewInsets
+                  .bottom, //Abstand zur Tastatur
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
