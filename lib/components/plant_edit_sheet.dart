@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/rpg_awesome_icons.dart';
 
@@ -9,6 +12,7 @@ showBottomSheetPlantEdit(
   Plant plant,
   Function callback,
   Function plantOverviewCallback,
+  CollectionReference itemsRef,
 ) {
   final formKeyPlantedit = GlobalKey<FormState>();
   showModalBottomSheet(

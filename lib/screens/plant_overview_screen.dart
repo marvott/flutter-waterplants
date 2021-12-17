@@ -95,6 +95,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                                 builder: (context) => PlantScreen(
                                       plantOverviewCallback: callback,
                                       plant: plantList.getElemtByIndex(index),
+                                      itemsRef: itemsRef,
                                     )));
                       },
                       onLongPress: () => Dialogs.showSimpleDialog(
