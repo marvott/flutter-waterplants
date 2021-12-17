@@ -59,7 +59,6 @@ class PlantCreateSheet {
                               final isValid = formKey.currentState!.validate();
                               if (isValid) {
                                 formKey.currentState!.save();
-                                callback();
                                 Plant newPlant = Plant(
                                     name: name,
                                     species: species,
@@ -75,6 +74,7 @@ class PlantCreateSheet {
                                 itemsRef.add(newPlant.toJson()).then((doc) =>
                                     print(
                                         'Added a new plant with id = ${doc.id}'));
+                                // callback();
                                 Navigator.pop(context);
                               }
                             },
