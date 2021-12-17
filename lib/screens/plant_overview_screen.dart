@@ -55,7 +55,7 @@ class _PlantOverviewState extends State<PlantOverview> {
         .collection('pflanzen');
 
     //Orders items by Name
-    Query query = itemsRef.orderBy('lastWatered');
+    Query query = itemsRef.orderBy('lastWatering');
 
     return Scaffold(
       appBar: AppBar(
@@ -63,131 +63,150 @@ class _PlantOverviewState extends State<PlantOverview> {
       ),
 
       // Inhalt der Pflanzen-Seite
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                childAspectRatio: 1,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8),
-            itemCount: plantList.lenght(),
-            itemBuilder: (BuildContext ctx, index) {
-              return InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PlantScreen(
-                                plantOverviewCallback: callback,
-                                plant: plantList.getElemtByIndex(index),
-                              )));
-                },
-                onLongPress: () => Dialogs.showSimpleDialog(
-                    context, plantList, index, callback),
-                child: Stack(
-                  alignment: AlignmentDirectional.topEnd,
-                  children: [
-                    Column(
-                      children: [
-                        Expanded(
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(8),
-                                topRight: Radius.circular(8)),
-                            child: Image(
-                              image: plantList
-                                      .getElemtByIndex(index)
-                                      .imagePath
-                                      .isEmpty
-                                  ? GeneralArguments.defaultPlantImg
-                                  : FileImage(File(plantList
-                                      .getElemtByIndex(index)
-                                      .imagePath)),
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
+      body: SizedBox(
+        child: StreamBuilder<QuerySnapshot>(
+          stream: query.snapshots(),
+          builder: (BuildContext context, var snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Expanded(
+                  child: Center(child: CircularProgressIndicator()));
+            }
+            List<Plant> items = snapshot.data!.docs
+                .map((doc) => Plant.fromJson(
+                    (doc.data() as Map<String, dynamic>)..['id'] = doc.id))
+                .toList();
+            plantList.construct(items);
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      childAspectRatio: 1,
+                      crossAxisSpacing: 8,
+                      mainAxisSpacing: 8),
+                  itemCount: plantList.lenght(),
+                  itemBuilder: (BuildContext ctx, index) {
+                    return InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PlantScreen(
+                                      plantOverviewCallback: callback,
+                                      plant: plantList.getElemtByIndex(index),
+                                    )));
+                      },
+                      onLongPress: () => Dialogs.showSimpleDialog(
+                          context, plantList, index, callback),
+                      child: Stack(
+                        alignment: AlignmentDirectional.topEnd,
+                        children: [
+                          Column(
+                            children: [
+                              Expanded(
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(8),
+                                      topRight: Radius.circular(8)),
+                                  child: Image(
+                                    image: plantList
+                                            .getElemtByIndex(index)
+                                            .imagePath
+                                            .isEmpty
+                                        ? GeneralArguments.defaultPlantImg
+                                        : FileImage(File(plantList
+                                            .getElemtByIndex(index)
+                                            .imagePath)),
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade700,
+                                    borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(8),
+                                      bottomRight: Radius.circular(8),
+                                    )),
+                                child: Text(
+                                  plantList.getElemtByIndex(index).name,
+                                  textAlign: TextAlign.center,
+                                  maxLines: 1,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade700,
-                              borderRadius: const BorderRadius.only(
-                                bottomLeft: Radius.circular(8),
-                                bottomRight: Radius.circular(8),
-                              )),
-                          child: Text(
-                            plantList.getElemtByIndex(index).name,
-                            textAlign: TextAlign.center,
-                            maxLines: 1,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              ElevatedButton(
+                                  onPressed: () {
+                                    String message =
+                                        "${plantList.getElemtByIndex(index).name} wurde gegossen";
+                                    Utils.showSnackBar(context,
+                                        message: message, color: Colors.blue);
+                                    plantList
+                                        .getElemtByIndex(index)
+                                        .setLastWatering = DateTime.now();
+                                    //setState könnte später nötig werden
+                                  },
+                                  child: const Icon(
+                                    Entypo.droplet,
+                                    size: 20,
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    shape: const CircleBorder(),
+                                    padding: const EdgeInsets.all(10),
+                                    primary: Colors.blue,
+                                    minimumSize: Size.zero,
+                                  )),
+                              ElevatedButton(
+                                onPressed: () {
+                                  if (plantList.getElemtByIndex(index) !=
+                                      null) {
+                                    String message =
+                                        "${plantList.getElemtByIndex(index).name} wurde gedüngt";
+                                    Utils.showSnackBar(context,
+                                        message: message,
+                                        color: Colors.deepOrange);
+                                    plantList
+                                        .getElemtByIndex(index)
+                                        .fertilising!
+                                        .setLastFertilising = DateTime.now();
+                                    //setState könnte später vlt nötig werden
+                                  }
+                                },
+                                child: const Icon(
+                                  Entypo.leaf,
+                                  size: 20,
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  shape: const CircleBorder(),
+                                  padding: const EdgeInsets.all(10),
+                                  primary: Colors.deepOrange,
+                                  minimumSize: Size.zero,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        ElevatedButton(
-                            onPressed: () {
-                              String message =
-                                  "${plantList.getElemtByIndex(index).name} wurde gegossen";
-                              Utils.showSnackBar(context,
-                                  message: message, color: Colors.blue);
-                              plantList.getElemtByIndex(index).setLastWatering =
-                                  DateTime.now();
-                              //setState könnte später nötig werden
-                            },
-                            child: const Icon(
-                              Entypo.droplet,
-                              size: 20,
-                            ),
-                            style: ElevatedButton.styleFrom(
-                              shape: const CircleBorder(),
-                              padding: const EdgeInsets.all(10),
-                              primary: Colors.blue,
-                              minimumSize: Size.zero,
-                            )),
-                        ElevatedButton(
-                          onPressed: () {
-                            if (plantList.getElemtByIndex(index) != null) {
-                              String message =
-                                  "${plantList.getElemtByIndex(index).name} wurde gedüngt";
-                              Utils.showSnackBar(context,
-                                  message: message, color: Colors.deepOrange);
-                              plantList
-                                  .getElemtByIndex(index)
-                                  .fertilising!
-                                  .setLastFertilising = DateTime.now();
-                              //setState könnte später vlt nötig werden
-                            }
-                          },
-                          child: const Icon(
-                            Entypo.leaf,
-                            size: 20,
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            shape: const CircleBorder(),
-                            padding: const EdgeInsets.all(10),
-                            primary: Colors.deepOrange,
-                            minimumSize: Size.zero,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            }),
+                        ],
+                      ),
+                    );
+                  }),
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          PlantCreateSheet()
-              .showBottomSheetPlantCreate(context, callback, plantList, itemsRef);
+          PlantCreateSheet().showBottomSheetPlantCreate(
+              context, callback, plantList, itemsRef);
         },
         child: const Icon(Icons.add),
       ),

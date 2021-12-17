@@ -73,18 +73,20 @@ Teste -> video von ehlers
           Expanded(
               child: SizedBox(
             child: StreamBuilder<QuerySnapshot>(
-                stream: query.snapshots(),
-                builder: (BuildContext context, var snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  List<SproutItems> items = snapshot.data!.docs
-                      .map((doc) => SproutItems.fromJson(
-                          (doc.data() as Map<String, dynamic>)
-                            ..['id'] = doc.id))
-                      .toList();
-                  return ListView(children: _listTiles(itemsRef, items));
-                }),
+              stream: query.snapshots(),
+              builder: (BuildContext context, var snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                List<SproutItems> items = snapshot.data!.docs
+                    .map((doc) => SproutItems.fromJson(
+                        (doc.data() as Map<String, dynamic>)..['id'] = doc.id))
+                    .toList();
+                print(snapshot.data!.docs);
+
+                return ListView(children: _listTiles(itemsRef, items));
+              },
+            ),
           )),
           ElevatedButton(
               onPressed: () => _addItem(itemsRef), child: Icon(Icons.add)),
