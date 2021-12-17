@@ -58,9 +58,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FirebaseMessaging.instance
-        .getToken()
-        .then((token) => print('Device token = $token'));
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
         title: 'Route Demo',
@@ -77,6 +74,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+//For Push Notifications as Background
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   print('Received a background message.');
   // You can't update the app UI here!

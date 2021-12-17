@@ -34,9 +34,9 @@ class _SprossenRouteState extends State<SprossenRoute> {
   @override
   Widget build(BuildContext context) {
     //Gets the 'users' and the email that is logged in and their list of 'Sprossen'
-    CollectionReference itemsRef = FirebaseFirestore.instance
+    CollectionReference itemsRef = firestore
         .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.email.toString())
+        .doc(FirebaseAuth.instance.currentUser?.email.toString())
         .collection('sprossen');
 
     //Orders items by Name

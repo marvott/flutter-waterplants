@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:flutter_application_1/components/snackbar_dialog.dart';
+import 'package:path/path.dart';
 
 class SettingsRoute extends StatefulWidget {
   const SettingsRoute({Key? key}) : super(key: key);
@@ -14,6 +16,7 @@ class SettingsRoute extends StatefulWidget {
 
 class _MySettingsState extends State<SettingsRoute> {
   User? user;
+  String? cloudMsgToken;
 
   //Init firestore
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -26,13 +29,20 @@ class _MySettingsState extends State<SettingsRoute> {
   void initState() {
     super.initState();
 
+    //Listener if other User logs in: Updates Token in Firestore and reloads Build
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      _updateTokenForUser(firestore, cloudMsgToken);
       setState(() => this.user = user);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    //Gets Device Token for Cloud Messaging
+    FirebaseMessaging.instance.getToken().then((token) {
+      cloudMsgToken = token;
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
@@ -170,4 +180,18 @@ class _MySettingsState extends State<SettingsRoute> {
   }
 
   logout() => FirebaseAuth.instance.signOut();
+}
+
+//Adds the Device Token for Cloud Messaging to Firestore
+_updateTokenForUser(FirebaseFirestore firestore, String? cloudMsgToken) {
+  try {
+    DocumentReference? currentUserRef = firestore
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser?.email);
+    currentUserRef.update({'cloudMsgToken': cloudMsgToken}).catchError(
+        (error) => print("Could not update cloudMsgToken"));
+  } catch (e) {
+    String message = "Melde dich erst an";
+    Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
+  }
 }
