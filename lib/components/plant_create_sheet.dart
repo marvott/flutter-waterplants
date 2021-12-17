@@ -49,7 +49,7 @@ class PlantCreateSheet {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            "Bearbeiten:",
+                            "Hinzufügen:",
                             style: TextStyle(fontSize: 18),
                           ),
                           ElevatedButton(
@@ -68,6 +68,7 @@ class PlantCreateSheet {
                                         fertiliserInterval: fertiliserInterval,
                                         lastFertilising: lastFertilising),
                                     notes: notes);
+                                //  Neue Pflanze wird beim Klick auf Speichern der Pflanzenliste und der Datenbank hinzugefügt
                                 plantList.add(newPlant);
                                 itemsRef.add(newPlant.toJson());
                                 Navigator.pop(context);
