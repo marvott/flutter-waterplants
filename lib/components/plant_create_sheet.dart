@@ -1,11 +1,9 @@
-import 'dart:core';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fluttericon/entypo_icons.dart';
 
+import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/rpg_awesome_icons.dart';
 
@@ -25,8 +23,12 @@ class PlantCreateSheet {
   DateTime lastFertilising = DateTime.now();
   String notes = "";
 
-  showBottomSheetPlantCreate(BuildContext context, Function callback,
-      PlantList plantList, CollectionReference itemsRef) {
+  showBottomSheetPlantCreate(
+    BuildContext context,
+    Function callback,
+    PlantList plantList,
+    CollectionReference itemsRef,
+  ) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -70,7 +72,9 @@ class PlantCreateSheet {
                                     notes: notes);
                                 //  Neue Pflanze wird beim Klick auf Speichern der Pflanzenliste und der Datenbank hinzugefügt
                                 plantList.add(newPlant);
-                                itemsRef.add(newPlant.toJson());
+                                itemsRef.add(newPlant.toJson()).then((doc) =>
+                                    print(
+                                        'Added a new plant with id = ${doc.id}'));
                                 Navigator.pop(context);
                               }
                             },

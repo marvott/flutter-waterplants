@@ -82,7 +82,6 @@ Teste -> video von ehlers
                     .map((doc) => SproutItems.fromJson(
                         (doc.data() as Map<String, dynamic>)..['id'] = doc.id))
                     .toList();
-                print(snapshot.data!.docs);
 
                 return ListView(children: _listTiles(itemsRef, items));
               },

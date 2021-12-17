@@ -9,7 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:fluttericon/entypo_icons.dart';
 
-import 'package:flutter_application_1/components/delet_dialog.dart';
+import 'package:flutter_application_1/components/delete_dialog.dart';
 import 'package:flutter_application_1/components/plant_create_sheet.dart';
 import 'package:flutter_application_1/components/snackbar_dialog.dart';
 import '../models/plant_list.dart';
@@ -63,7 +63,8 @@ class _PlantOverviewState extends State<PlantOverview> {
       ),
 
       // Inhalt der Pflanzen-Seite
-      body: SizedBox(
+      body: Padding(
+        padding: const EdgeInsets.all(0),
         child: StreamBuilder<QuerySnapshot>(
           stream: query.snapshots(),
           builder: (BuildContext context, var snapshot) {
@@ -97,7 +98,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                                     )));
                       },
                       onLongPress: () => Dialogs.showSimpleDialog(
-                          context, plantList, index, callback),
+                          context, plantList, index, callback, itemsRef),
                       child: Stack(
                         alignment: AlignmentDirectional.topEnd,
                         children: [
