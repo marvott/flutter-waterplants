@@ -53,8 +53,6 @@ class _PlantOverviewState extends State<PlantOverview> {
         .doc(FirebaseAuth.instance.currentUser?.email.toString())
         .collection('pflanzen');
 
-    String? parentID = itemsRef.parent?.parent.id;
-    print("parent.parent ID = $parentID");
     //Orders items by Name
     Query query = itemsRef.orderBy('lastWatering');
 
