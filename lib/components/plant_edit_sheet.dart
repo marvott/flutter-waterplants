@@ -66,7 +66,11 @@ showBottomSheetPlantEdit(
                         labelText: "Name",
                         icon: Icon(RpgAwesome.wooden_sign),
                       ),
-                      onSaved: (String? value) => plant.setName = value!,
+                      onSaved: (String? value) {
+                        plant.setName = value!;
+                        itemsRef.doc(plant.id).update({'name': value}).then(
+                            (doc) => print('updated name}'));
+                      },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (String? value) {
                         return (value == null || value.isEmpty)
@@ -83,7 +87,11 @@ showBottomSheetPlantEdit(
                         labelText: "Spezies",
                         icon: Icon(RpgAwesome.flowers),
                       ),
-                      onSaved: (String? value) => plant.setSpecies = value!,
+                      onSaved: (String? value) {
+                        plant.setSpecies = value!;
+                        itemsRef.doc(plant.id).update({'species': value}).then(
+                            (doc) => print('updated species}'));
+                      },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (String? value) {
                         return (value == null || value.isEmpty)
@@ -100,7 +108,11 @@ showBottomSheetPlantEdit(
                         labelText: "Zimmer",
                         icon: Icon(FontAwesome5.house_user),
                       ),
-                      onSaved: (String? value) => plant.setRoomName = value!,
+                      onSaved: (String? value) {
+                        plant.setRoomName = value!;
+                        itemsRef.doc(plant.id).update({'roomName': value}).then(
+                            (doc) => print('updated roomName}'));
+                      },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (String? value) {
                         return (value == null || value.isEmpty)
