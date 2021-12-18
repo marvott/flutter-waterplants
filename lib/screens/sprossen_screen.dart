@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/sprouts';
+import 'package:flutter_application_1/models/sprouts.dart';
 
 class SprossenRoute extends StatefulWidget {
   const SprossenRoute({Key? key}) : super(key: key);
@@ -121,7 +121,7 @@ _addItem(CollectionReference itemsRef) {
   final keimdauer = 4;
   final menge = '1-2';
 
-  final item = SproutItems(name, keimdauer);
+  SproutItems item = SproutItems(name, keimdauer);
   itemsRef
       .add(item.toJson())
       .then((doc) => print('Added a new item with id = ${doc.id}'));

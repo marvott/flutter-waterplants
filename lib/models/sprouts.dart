@@ -16,10 +16,3 @@ class SproutItems {
         'Keimdauer (Tage)': keimdauer,
       };
 }
-
-class SproutList{
-  String name;
-  int keimdauer;
-  int menge;
-
-}
