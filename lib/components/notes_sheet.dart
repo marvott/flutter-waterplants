@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../models/plant.dart';
 
-//waterOrFertilize == true bedeutet Water, false ist Düngen
-//TODO: icons je nach wasser oder dünger anpassen, siehe Ende des Files
 class NotesSheet {
   BuildContext? context;
   Plant? plant;

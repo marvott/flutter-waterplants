@@ -18,8 +18,8 @@ class _MainScreenState extends State<MainScreen> {
 
   List<Widget> screens = [
     const PlantOverview(),
-    SprossenRoute(),
-    SettingsRoute(),
+    const SprossenRoute(),
+    const SettingsRoute(),
   ];
 
   void _onItemTapped(int index) {
