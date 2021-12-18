@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/models/sprouts.dart';
 import 'package:flutter_application_1/screens/settings_screen.dart';
+import 'package:fluttericon/entypo_icons.dart';
 import 'package:intl/intl.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -75,89 +76,107 @@ Teste -> video von ehlers
       appBar: AppBar(
         title: const Text("Sprossen"),
       ),
-      body: Center(
-          child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Expanded(
-              child: SizedBox(
-            child: StreamBuilder<QuerySnapshot>(
-              stream: query.snapshots(),
-              builder: (BuildContext context, var snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                List<SproutItems> items = snapshot.data!.docs
-                    .map((doc) => SproutItems.fromJson(
-                        (doc.data() as Map<String, dynamic>)..['id'] = doc.id))
-                    .toList();
-                return ListView(children: _listTiles(itemsRef, items));
-              },
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+                child: SizedBox(
+              child: StreamBuilder<QuerySnapshot>(
+                stream: query.snapshots(),
+                builder: (BuildContext context, var snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  List<SproutItems> items = snapshot.data!.docs
+                      .map((doc) => SproutItems.fromJson(
+                          (doc.data() as Map<String, dynamic>)
+                            ..['id'] = doc.id))
+                      .toList();
+                  //return ListView(children: _listTiles(itemsRef, items));
+                  return Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: ListView(
+                        children: _listTiles(context, itemsRef, items)),
+                  );
+                },
+              ),
+            )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                FloatingActionButton(
+                    onPressed: () => SproutDialog.showSimpleDialog(
+                        context, itemsRef, callback),
+                    child: const Icon(Icons.add)),
+              ],
             ),
-          )),
-          FloatingActionButton(
-              onPressed: () =>
-                  SproutDialog.showSimpleDialog(context, itemsRef, callback),
-              child: const Icon(Icons.add)),
-        ],
-      )),
+          ],
+        ),
+      ),
     );
   }
 }
 
 //Lists the items of 'Sprouts' as a Listview
-_listTiles(CollectionReference itemsRef, List<SproutItems> items) {
+_listTiles(BuildContext context, CollectionReference itemsRef,
+    List<SproutItems> items) {
   return items
       .map((i) => ListTile(
-          title: Text(i.name,
-              style:
-                  const TextStyle(fontWeight: FontWeight.w500, fontSize: 20)),
-          subtitle: Text("Keimdauer (Tage):" + i.keimdauer.toString()),
-          leading: Container(width: 40, height: 40, color: Colors.blue),
-          trailing: IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () => _deleteItem(itemsRef, i.id))))
+            title: Text(i.name,
+                style:
+                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 22)),
+            subtitle: Text("Keimdauer (Tage): " + i.keimdauer.toString()),
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Image.network(
+                'https://images.unsplash.com/photo-1587334274328-64186a80aeee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1762&q=80',
+                height: 50.0,
+                width: 50.0,
+              ),
+            ),
+            /* Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                ),
+                width: 50,
+                height: 50,
+                child: Image.network(
+                    'https://images.unsplash.com/photo-1587334274328-64186a80aeee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1762&q=80')), */
+            onLongPress: () => _showDeleteDialog(context, itemsRef, i.id),
+            trailing: ElevatedButton(
+                child: const Icon(Entypo.droplet, size: 20),
+                onPressed: () => print("test"),
+                style: ElevatedButton.styleFrom(
+                  shape: const CircleBorder(),
+                  padding: const EdgeInsets.all(10),
+                  primary: Colors.blue,
+                  minimumSize: Size.zero,
+                )),
+          ))
       .toList();
 }
 
-//Adds a new Item to the Collection
-_addItem(CollectionReference itemsRef, String name, int keimdauer) {
-  final item = SproutItems(name, keimdauer);
-  itemsRef
-      .add(item.toJson())
-      .then((doc) => print('Added a new item with id = ${doc.id}'));
-}
-
-//Deletes Item
-_deleteItem(CollectionReference itemsRef, String id) {
-  itemsRef.doc(id).delete().then((_) => print('Deleted item with id = $id'));
-}
-
-class SproutDialog {
-  static void showSimpleDialog(
-      BuildContext context, CollectionReference itemsRef, Function callback) {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return SimpleDialog(
-            title: Text("Which Sprouts do you want to grow?"),
-            children: <Widget>[
-              SimpleDialogOption(
-                  child: const Text("Alfalfa"),
-                  onPressed: () {
-                    _addItem(itemsRef, 'Alfalfa', 7);
-                    callback();
-                    Navigator.pop(context);
-                  }),
-              SimpleDialogOption(
-                  child: const Text("Brokkoli"),
-                  onPressed: () {
-                    _addItem(itemsRef, 'Brokkoli', 4);
-                    callback();
-                    Navigator.pop(context);
-                  }),
-            ],
-          );
-        });
-  }
+_showDeleteDialog(
+    BuildContext context, CollectionReference itemsRef, String id) {
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SimpleDialog(
+              children: <Widget>[
+                SimpleDialogOption(
+                    child: const Text("Sprosse entfernen"),
+                    onPressed: () {
+                      SproutItems.deleteItem(itemsRef, id);
+                      Navigator.pop(context);
+                    }),
+              ],
+            ),
+          ],
+        );
+      });
 }
