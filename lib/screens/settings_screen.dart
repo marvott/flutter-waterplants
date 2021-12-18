@@ -42,7 +42,6 @@ class _MySettingsState extends State<SettingsRoute> {
     FirebaseMessaging.instance.getToken().then((token) {
       cloudMsgToken = token;
     });
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("Settings"),
@@ -53,7 +52,7 @@ class _MySettingsState extends State<SettingsRoute> {
               children: [
             Container(child: userInfo()), //Message if user is signed in
             inputTextFields(), //Input for Email and Password
-            mySignInButtons(), //Sign-In, Sign-Up and Sign-Out Buttons
+            mySignInButtons(context), //Sign-In, Sign-Up and Sign-Out Buttons
           ])),
     );
   }
@@ -69,23 +68,21 @@ class _MySettingsState extends State<SettingsRoute> {
   }
 
   //Buttons
-  Widget mySignInButtons() {
+  Widget mySignInButtons(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       SignInButtonBuilder(
           key: Key('signInBtn'),
           icon: Icons.email_rounded,
           backgroundColor: Colors.green.shade400,
           text: "Mit Email anmelden",
-          onPressed: () => loginWithEmail(
-                _emailInput.text,
-                _passInput.text,
-              )),
+          onPressed: () =>
+              loginWithEmail(_emailInput.text, _passInput.text, context)),
       SignInButtonBuilder(
           key: Key('SignUpBtn'),
           text: 'Registrieren',
           icon: Icons.account_circle,
-          onPressed: () =>
-              createUserWithEmailAndPassword(_emailInput.text, _passInput.text),
+          onPressed: () => createUserWithEmailAndPassword(
+              _emailInput.text, _passInput.text, context),
           backgroundColor: Colors.blueGrey),
       SignInButtonBuilder(
           key: Key('SignOutBtn'),
@@ -117,7 +114,8 @@ class _MySettingsState extends State<SettingsRoute> {
 
   //Communication with Firebase when user logs in
   //Error-Handling and Message in Snackbar if user was not found or wrong pw
-  Future<UserCredential?> loginWithEmail(String email, String pass) async {
+  Future<UserCredential?> loginWithEmail(
+      String email, String pass, BuildContext context) async {
     try {
       return await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: pass);
@@ -139,7 +137,7 @@ class _MySettingsState extends State<SettingsRoute> {
   //Communication with Firebase when user is created
   //Error-Handling when the email is being used or weak pw
   Future<UserCredential?> createUserWithEmailAndPassword(
-      String email, String pass) async {
+      String email, String pass, BuildContext context) async {
     DateTime currentTime = DateTime.now();
     try {
       UserCredential userCredential = await FirebaseAuth.instance
@@ -186,6 +184,8 @@ _updateTokenForUser(FirebaseFirestore firestore, String? cloudMsgToken) {
         (error) => print("Could not update cloudMsgToken"));
   } catch (e) {
     String message = "Melde dich erst an";
-    Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
+    print(message);
+    // Snackbar an der Stelle nicht benutzbar da kein BuildContext in initState vorhanden ist
+    //Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
   }
 }
