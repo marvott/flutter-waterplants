@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/models/sprouts';
 
 class SprossenRoute extends StatefulWidget {
   const SprossenRoute({Key? key}) : super(key: key);
@@ -34,7 +35,7 @@ class _SprossenRouteState extends State<SprossenRoute> {
   @override
   Widget build(BuildContext context) {
     //Gets the 'users' and the email that is logged in and their list of 'Sprossen'
-    CollectionReference itemsRef = FirebaseFirestore.instance
+    CollectionReference itemsRef = firestore
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser?.email.toString())
         .collection('sprossen');
@@ -49,6 +50,9 @@ showModalBottomSheet(
     isScrollControlled: true,
     builder: (BuildContext context) {
       return Padding(
+
+1. hardgecodete liste von sprossen mit keimdauer
+2. showDialog wenn man auf + button klickt (von david abschauen)
 
 Der nutzer kann mit + seine eigenen sprossen aus der fixen sprossenliste hinzufügen
 
@@ -129,23 +133,7 @@ _deleteItem(CollectionReference itemsRef, String id) {
 }
 
 //Class of Sprouts
-class SproutItems {
-  late String id;
-  String name;
-  var keimdauer;
 
-  SproutItems(this.name, this.keimdauer);
-
-  SproutItems.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        name = json['name'],
-        keimdauer = json['Keimdauer (Tage)'];
-
-  Map<String, dynamic> toJson() => {
-        'name': name,
-        'Keimdauer (Tage)': keimdauer,
-      };
-}
 
 /*
 * ALTE IDEEN ABER ERSTMAL NOCH ALS BACKUP UND REFERENZ
