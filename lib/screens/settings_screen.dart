@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:flutter_application_1/components/snackbar_dialog.dart';
-import 'package:path/path.dart';
 
 class SettingsRoute extends StatefulWidget {
   const SettingsRoute({Key? key}) : super(key: key);
