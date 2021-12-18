@@ -156,12 +156,6 @@ class _MySettingsState extends State<SettingsRoute> {
         'Wasser gewechselt': currentTime
       });
 
-      _currentUser.collection('pflanzen').doc().set({
-        'name': '',
-        'Zuletzt gewässert': currentTime,
-        'Zuletzt gedüngt': currentTime,
-      });
-
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
