@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -54,6 +53,8 @@ class _PlantOverviewState extends State<PlantOverview> {
         .doc(FirebaseAuth.instance.currentUser?.email.toString())
         .collection('pflanzen');
 
+    String? parentID = itemsRef.parent?.parent.id;
+    print("parent.parent ID = $parentID");
     //Orders items by Name
     Query query = itemsRef.orderBy('lastWatering');
 

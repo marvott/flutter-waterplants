@@ -12,7 +12,6 @@ class WaterFertilizeSheet {
   Plant? plant;
   bool? waterOrFertilize;
   Function? callback;
-  Function? plantOverviewCallback;
   DateTime? pickedDate;
   String? initialIntervalValue;
   String? intervalLabel;
@@ -25,7 +24,6 @@ class WaterFertilizeSheet {
     Plant plant,
     bool waterOrFertilize,
     Function callback,
-    Function plantOverviewCallback,
     CollectionReference itemsRef,
   ) {
     DateTime initialLastDate;
@@ -83,7 +81,6 @@ class WaterFertilizeSheet {
                             if (isValid) {
                               formKey.currentState!.save();
                               callback();
-                              plantOverviewCallback();
                               Navigator.pop(context);
                             }
                           },
