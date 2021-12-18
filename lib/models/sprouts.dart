@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 //Class of Sprouts
 class SproutItems {
   late String id;
@@ -15,11 +17,4 @@ class SproutItems {
         'name': name,
         'Keimdauer (Tage)': keimdauer,
       };
-}
-
-class SproutList{
-  String name;
-  int keimdauer;
-  int menge;
-
 }
