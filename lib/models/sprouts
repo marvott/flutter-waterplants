@@ -2,7 +2,7 @@
 class SproutItems {
   late String id;
   String name;
-  var keimdauer;
+  int keimdauer;
 
   SproutItems(this.name, this.keimdauer);
 
@@ -15,4 +15,11 @@ class SproutItems {
         'name': name,
         'Keimdauer (Tage)': keimdauer,
       };
+}
+
+class SproutList{
+  String name;
+  int keimdauer;
+  int menge;
+
 }
