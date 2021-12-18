@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Utils {
-  static void showSnackBar(BuildContext context,
-          {required String message, Color? color}) =>
+  static void showSnackBar(context, {required String message, Color? color}) =>
       ScaffoldMessenger.of(context)
         ..removeCurrentSnackBar()
         ..showSnackBar(SnackBar(
