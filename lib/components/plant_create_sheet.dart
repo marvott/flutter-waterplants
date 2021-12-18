@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/models/plant_list.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/rpg_awesome_icons.dart';
 
+import 'package:flutter_application_1/models/plant_list.dart';
 import '../models/plant.dart';
 
 class PlantCreateSheet {
@@ -21,7 +24,11 @@ class PlantCreateSheet {
   String notes = "";
 
   showBottomSheetPlantCreate(
-      BuildContext context, Function callback, PlantList plantList) {
+    BuildContext context,
+    Function callback,
+    PlantList plantList,
+    CollectionReference itemsRef,
+  ) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -44,7 +51,7 @@ class PlantCreateSheet {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           const Text(
-                            "Bearbeiten:",
+                            "Hinzufügen:",
                             style: TextStyle(fontSize: 18),
                           ),
                           ElevatedButton(
@@ -52,8 +59,7 @@ class PlantCreateSheet {
                               final isValid = formKey.currentState!.validate();
                               if (isValid) {
                                 formKey.currentState!.save();
-                                callback();
-                                plantList.add(Plant(
+                                Plant newPlant = Plant(
                                     name: name,
                                     species: species,
                                     waterInterval: waterInterval,
@@ -62,7 +68,13 @@ class PlantCreateSheet {
                                     fertilising: Fertilising(
                                         fertiliserInterval: fertiliserInterval,
                                         lastFertilising: lastFertilising),
-                                    notes: notes));
+                                    notes: notes);
+                                //  Neue Pflanze wird beim Klick auf Speichern der Pflanzenliste und der Datenbank hinzugefügt
+                                plantList.add(newPlant);
+                                itemsRef.add(newPlant.toJson()).then((doc) =>
+                                    print(
+                                        'Added a new plant with id = ${doc.id}'));
+                                // callback();
                                 Navigator.pop(context);
                               }
                             },

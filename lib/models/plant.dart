@@ -12,6 +12,8 @@ auch null sein. Es muss sicher gestellt werden dass "fertiliserInterval" und
 "lastFertilising" beide null sind oder beide einen Wert haben. Daher die eigen Klasse
 und die Überprüfung dass in der settern nicht null Werte zugewiesen
 */
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Fertilising {
   //Die eigenschaften sind private uns starten deshalb mit _
   //Eigenschaften:
@@ -56,6 +58,7 @@ class Fertilising {
 
 class Plant {
   //Eigenschaften:
+  late String id;
   String name;
   String species;
   String roomName;
@@ -107,6 +110,31 @@ class Plant {
     }
     throw Exception('fertiliseInDays konnte nicht berechnet werden');
   }
+
+  Plant.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        name = json['name'],
+        species = json['species'],
+        roomName = json['roomName'],
+        lastWatering = (json['lastWatering'] as Timestamp).toDate(),
+        waterInterval = json['waterInterval'],
+        fertilising = Fertilising(
+          fertiliserInterval: json['fertiliserInterval'],
+          lastFertilising: (json['lastFertilising'] as Timestamp).toDate(),
+        ),
+        notes = json['notes'],
+        imagePath = "";
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'species': species,
+        'roomName': roomName,
+        'lastWatering': lastWatering,
+        'waterInterval': waterInterval,
+        'lastFertilising': fertilising!._lastFertilising,
+        'fertiliserInterval': fertilising!.fertiliserInterval,
+        'notes': notes,
+      };
 
   //TODO: nicht benötigten Boilerplatemüll entfernen
   //Setter können weg da nix private

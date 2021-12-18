@@ -36,7 +36,7 @@ class _SprossenRouteState extends State<SprossenRoute> {
     //Gets the 'users' and the email that is logged in and their list of 'Sprossen'
     CollectionReference itemsRef = FirebaseFirestore.instance
         .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.email.toString())
+        .doc(FirebaseAuth.instance.currentUser?.email.toString())
         .collection('sprossen');
 
     //Orders items by Name
@@ -73,18 +73,19 @@ Teste -> video von ehlers
           Expanded(
               child: SizedBox(
             child: StreamBuilder<QuerySnapshot>(
-                stream: query.snapshots(),
-                builder: (BuildContext context, var snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  List<SproutItems> items = snapshot.data!.docs
-                      .map((doc) => SproutItems.fromJson(
-                          (doc.data() as Map<String, dynamic>)
-                            ..['id'] = doc.id))
-                      .toList();
-                  return ListView(children: _listTiles(itemsRef, items));
-                }),
+              stream: query.snapshots(),
+              builder: (BuildContext context, var snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                List<SproutItems> items = snapshot.data!.docs
+                    .map((doc) => SproutItems.fromJson(
+                        (doc.data() as Map<String, dynamic>)..['id'] = doc.id))
+                    .toList();
+
+                return ListView(children: _listTiles(itemsRef, items));
+              },
+            ),
           )),
           ElevatedButton(
               onPressed: () => _addItem(itemsRef), child: Icon(Icons.add)),

@@ -1,10 +1,15 @@
 import 'dart:io';
+import 'dart:core';
+
 import 'package:flutter/material.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:fluttericon/entypo_icons.dart';
+
 import 'package:flutter_application_1/components/notes_sheet.dart';
 import 'package:flutter_application_1/components/plant_edit_sheet.dart';
 import 'package:flutter_application_1/components/water_fertilize_sheet.dart';
-import 'package:fluttericon/entypo_icons.dart';
-
 import 'package:flutter_application_1/components/snackbar_dialog.dart';
 import 'package:flutter_application_1/models/general.dart';
 import 'package:flutter_application_1/models/plant.dart';
@@ -12,10 +17,12 @@ import 'package:flutter_application_1/models/plant.dart';
 class PlantScreen extends StatefulWidget {
   final Function plantOverviewCallback;
   final Plant plant;
+  final CollectionReference itemsRef;
   const PlantScreen({
     Key? key,
     required this.plantOverviewCallback,
     required this.plant,
+    required this.itemsRef,
   }) : super(key: key);
 
   @override
@@ -23,10 +30,6 @@ class PlantScreen extends StatefulWidget {
 }
 
 class _PlantScreenState extends State<PlantScreen> {
-  // final formKeyPlantedit = GlobalKey<FormState>();
-  // final formKeyWatering = GlobalKey<FormState>();
-  // final formKeyFertilizing = GlobalKey<FormState>();
-
   //Farben der Listview, gehe sicher dass es die RICHTIGE LÄNGE HAT!
   final List myColors = <Color>[
     Colors.transparent,
@@ -127,7 +130,7 @@ class _PlantScreenState extends State<PlantScreen> {
               onPressed: () {
                 // showBottomSheetPlantEdit(context);
                 showBottomSheetPlantEdit(context, widget.plant, callback,
-                    widget.plantOverviewCallback);
+                    widget.plantOverviewCallback, widget.itemsRef);
               },
               child: const Icon(Icons.edit),
               style: ElevatedButton.styleFrom(
