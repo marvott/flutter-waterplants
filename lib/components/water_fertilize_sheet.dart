@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttericon/entypo_icons.dart';
@@ -25,6 +26,7 @@ class WaterFertilizeSheet {
     bool waterOrFertilize,
     Function callback,
     Function plantOverviewCallback,
+    CollectionReference itemsRef,
   ) {
     DateTime initialLastDate;
     String initialLastDateFormatted;
@@ -107,11 +109,20 @@ class WaterFertilizeSheet {
                           icon: intervalIcon,
                         ),
                         onSaved: (String? value) {
+                          int valueInt = int.parse(value!);
                           if (waterOrFertilize) {
-                            plant.setWaterInterval = int.parse(value!);
+                            plant.setWaterInterval = valueInt;
+                            itemsRef
+                                .doc(plant.id)
+                                .update({'waterInterval': valueInt}).then(
+                                    (doc) => print('updated waterInterval'));
                           } else {
-                            plant.fertilising!.setFertiliserInterval =
-                                int.parse(value!);
+                            plant.fertilising!.setFertiliserInterval = valueInt;
+                            itemsRef
+                                .doc(plant.id)
+                                .update({'fertiliserInterval': valueInt}).then(
+                                    (doc) =>
+                                        print('updated fertiliserInterval'));
                           }
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -141,9 +152,17 @@ class WaterFertilizeSheet {
                             if (pickedDate != null) {
                               if (waterOrFertilize) {
                                 plant.setLastWatering = pickedDate!;
+                                itemsRef
+                                    .doc(plant.id)
+                                    .update({'lastWatering': pickedDate}).then(
+                                        (doc) => print('updated lastWatering'));
                               } else {
                                 plant.fertilising!.setLastFertilising =
                                     pickedDate!;
+                                itemsRef.doc(plant.id).update({
+                                  'lastFertilising': pickedDate
+                                }).then(
+                                    (doc) => print('updated lastFertilising'));
                               }
                               pickedDate = null;
                             }

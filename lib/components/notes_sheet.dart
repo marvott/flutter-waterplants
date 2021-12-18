@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../models/plant.dart';
@@ -16,6 +17,7 @@ class NotesSheet {
     BuildContext context,
     Plant plant,
     Function callback,
+    CollectionReference itemsRef,
   ) {
     String initialnotesText = plant.notes;
 
@@ -76,6 +78,8 @@ class NotesSheet {
                           value = value.trim();
                         }
                         plant.setNotes = value!;
+                        itemsRef.doc(plant.id).update({'notes': value}).then(
+                            (doc) => print('updated notes'));
                       },
                       autovalidateMode: AutovalidateMode.disabled,
                     ),

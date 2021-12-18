@@ -69,7 +69,7 @@ showBottomSheetPlantEdit(
                       onSaved: (String? value) {
                         plant.setName = value!;
                         itemsRef.doc(plant.id).update({'name': value}).then(
-                            (doc) => print('updated name}'));
+                            (doc) => print('updated name'));
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (String? value) {
@@ -90,7 +90,7 @@ showBottomSheetPlantEdit(
                       onSaved: (String? value) {
                         plant.setSpecies = value!;
                         itemsRef.doc(plant.id).update({'species': value}).then(
-                            (doc) => print('updated species}'));
+                            (doc) => print('updated species'));
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (String? value) {
@@ -111,7 +111,7 @@ showBottomSheetPlantEdit(
                       onSaved: (String? value) {
                         plant.setRoomName = value!;
                         itemsRef.doc(plant.id).update({'roomName': value}).then(
-                            (doc) => print('updated roomName}'));
+                            (doc) => print('updated roomName'));
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (String? value) {

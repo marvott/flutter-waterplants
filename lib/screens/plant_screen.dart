@@ -154,7 +154,8 @@ class _PlantScreenState extends State<PlantScreen> {
                         widget.plant,
                         true,
                         callback,
-                        widget.plantOverviewCallback);
+                        widget.plantOverviewCallback,
+                        widget.itemsRef);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -210,11 +211,13 @@ class _PlantScreenState extends State<PlantScreen> {
                 child: InkWell(
                   onTap: () {
                     WaterFertilizeSheet().showBottomSheetWaterOrFertilize(
-                        context,
-                        widget.plant,
-                        false,
-                        callback,
-                        widget.plantOverviewCallback);
+                      context,
+                      widget.plant,
+                      false,
+                      callback,
+                      widget.plantOverviewCallback,
+                      widget.itemsRef,
+                    );
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -273,6 +276,7 @@ class _PlantScreenState extends State<PlantScreen> {
                 context,
                 widget.plant,
                 callback,
+                widget.itemsRef,
               );
             },
             child: Padding(
