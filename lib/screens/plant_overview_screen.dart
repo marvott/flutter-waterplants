@@ -156,6 +156,13 @@ class _PlantOverviewState extends State<PlantOverview> {
                                     plantList
                                         .getElemtByIndex(index)
                                         .setLastWatering = DateTime.now();
+                                    itemsRef
+                                        .doc(
+                                            plantList.getElemtByIndex(index).id)
+                                        .update({
+                                      'lastWatering': DateTime.now()
+                                    }).then((doc) =>
+                                            print('updated lastWatering'));
                                     //setState könnte später nötig werden
                                   },
                                   child: const Icon(
@@ -181,6 +188,13 @@ class _PlantOverviewState extends State<PlantOverview> {
                                         .getElemtByIndex(index)
                                         .fertilising!
                                         .setLastFertilising = DateTime.now();
+                                    itemsRef
+                                        .doc(
+                                            plantList.getElemtByIndex(index).id)
+                                        .update({
+                                      'lastFertilising': DateTime.now()
+                                    }).then((doc) =>
+                                            print('updated lastFertilising'));
                                     //setState könnte später vlt nötig werden
                                   }
                                 },

@@ -180,6 +180,9 @@ class _PlantScreenState extends State<PlantScreen> {
                               Utils.showSnackBar(context,
                                   message: message, color: Colors.blue);
                               widget.plant.setLastWatering = DateTime.now();
+                              widget.itemsRef.doc(widget.plant.id).update({
+                                'lastWatering': DateTime.now()
+                              }).then((doc) => print('updated lastWatering'));
                               setState(() {
                                 widget.plantOverviewCallback;
                               });
@@ -243,6 +246,9 @@ class _PlantScreenState extends State<PlantScreen> {
                                   message: message, color: Colors.deepOrange);
                               widget.plant.fertilising!.setLastFertilising =
                                   DateTime.now();
+                              widget.itemsRef.doc(widget.plant.id).update({
+                                'lastFertilising': DateTime.now()
+                              }).then((doc) => print('updated lastFertilising'));
                               setState(() {
                                 widget.plantOverviewCallback;
                               });
