@@ -18,6 +18,19 @@ pod init
 pod install
 */
 
+/*
+Error: CocoaPods's specs repository is too out-of-date to satisfy dependencies.
+
+Go to /ios folder inside your Project.
+Delete Podfile.lock
+
+cd ios
+pod install --repo-update
+cd ..
+flutter clean 
+flutter run
+*/
+
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_application_1/theme/style.dart';
