@@ -49,28 +49,6 @@ class _SprossenRouteState extends State<SprossenRoute> {
     //Orders items by Name
     Query query = itemsRef.orderBy('name');
 
-/*
-TODO1
-showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (BuildContext context) {
-      return Padding(
-
-1. hardgecodete liste von sprossen mit keimdauer
-2. showDialog wenn man auf + button klickt (von david abschauen)
-
-Der nutzer kann mit + seine eigenen sprossen aus der fixen sprossenliste hinzufügen
-
-TODO2:
-
-Der nutzer bekommt erinnerungen wenn gegossen und wasser gewechselt werden muss -> video ehlers
-
-TODO3:
-Teste -> video von ehlers
-
-*/
-
     //UI
     return Scaffold(
       appBar: AppBar(
@@ -136,14 +114,6 @@ _listTiles(BuildContext context, CollectionReference itemsRef,
                 width: 50.0,
               ),
             ),
-            /* Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                width: 50,
-                height: 50,
-                child: Image.network(
-                    'https://images.unsplash.com/photo-1587334274328-64186a80aeee?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1762&q=80')), */
             onLongPress: () => _showDeleteDialog(context, itemsRef, i.id),
             trailing: ElevatedButton(
                 child: const Icon(Entypo.droplet, size: 20),
@@ -158,6 +128,7 @@ _listTiles(BuildContext context, CollectionReference itemsRef,
       .toList();
 }
 
+//User can delete Sprout after a Long press on the ListTile
 _showDeleteDialog(
     BuildContext context, CollectionReference itemsRef, String id) {
   showDialog(

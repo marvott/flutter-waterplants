@@ -22,6 +22,7 @@ class SproutItems {
         'Keimdauer (Tage)': keimdauer,
       };
 
+  //Add Items
   static _addItem(CollectionReference itemsRef, String name, int keimdauer) {
     final item = SproutItems(name, keimdauer);
     itemsRef
@@ -35,6 +36,7 @@ class SproutItems {
   }
 }
 
+//User can choose which Sprout he/she wants
 class SproutDialog {
   static void showSimpleDialog(
       BuildContext context, CollectionReference itemsRef, Function callback) {
@@ -82,6 +84,3 @@ class SproutDialog {
         });
   }
 }
-
-//Adds a new Item to the Collection
-
