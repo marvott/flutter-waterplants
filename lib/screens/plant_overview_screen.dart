@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:fluttericon/entypo_icons.dart';
 
@@ -55,6 +56,7 @@ class _PlantOverviewState extends State<PlantOverview> {
 
     //Orders items by Name
     Query query = itemsRef.orderBy('lastWatering');
+    _loadImage();
 
     return Scaffold(
       appBar: AppBar(
@@ -227,5 +229,17 @@ class _PlantOverviewState extends State<PlantOverview> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  _loadImage() async {
+    try {
+      final ref = FirebaseStorage.instance
+          .ref()
+          .child("defaultPicture/")
+          .child("storagePlant.jpeg");
+      return await ref.getDownloadURL();
+    } on Exception catch (e) {
+      print("couldn't find picture");
+    }
   }
 }
