@@ -86,6 +86,9 @@ class _PlantScreenState extends State<PlantScreen> {
             Navigator.pushNamed(context, '/camera')
                 .then((imagePath) => setState(() {
                       widget.plant.setImagePath = imagePath;
+                      widget.itemsRef
+                          .doc(widget.plant.id)
+                          .update({'imagePath': imagePath});
                       widget.plantOverviewCallback();
                     }));
           }

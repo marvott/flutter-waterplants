@@ -123,7 +123,7 @@ class Plant {
           lastFertilising: (json['lastFertilising'] as Timestamp).toDate(),
         ),
         notes = json['notes'],
-        imagePath = ""; //json["imagePath"];
+        imagePath = json['imagePath'];
 
   Map<String, dynamic> toJson() => {
         'name': name,
