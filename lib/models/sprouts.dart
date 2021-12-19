@@ -1,25 +1,26 @@
-import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 //Class of Sprouts
 class SproutItems {
   late String id;
   String name;
-  int keimdauer;
+  late int keimdauer;
+  int wieoftgegossen = 2;
 
   SproutItems(this.name, this.keimdauer);
 
   SproutItems.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
-        keimdauer = json['Keimdauer (Tage)'];
+        keimdauer = json['Keimdauer'],
+        wieoftgegossen = json['wie oft gegossen'];
 
   Map<String, dynamic> toJson() => {
         'name': name,
-        'Keimdauer (Tage)': keimdauer,
+        'Keimdauer': keimdauer,
+        'wie oft gegossen': wieoftgegossen,
       };
 
   //Add Items
@@ -33,6 +34,12 @@ class SproutItems {
   //Deletes Item
   static deleteItem(CollectionReference itemsRef, String id) {
     itemsRef.doc(id).delete().then((_) => print('Deleted item with id = $id'));
+  }
+
+  static updateGegossen(
+      CollectionReference itemsRef, String id, int anzahlgegossen) {
+    anzahlgegossen--;
+    itemsRef.doc(id).update({'wie oft gegossen': anzahlgegossen});
   }
 }
 

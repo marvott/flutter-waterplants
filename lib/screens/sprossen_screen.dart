@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/models/sprouts.dart';
 
 class SprossenRoute extends StatefulWidget {
   const SprossenRoute({Key? key}) : super(key: key);
@@ -72,11 +71,10 @@ class _SprossenRouteState extends State<SprossenRoute> {
                           (doc.data() as Map<String, dynamic>)
                             ..['id'] = doc.id))
                       .toList();
-                  //return ListView(children: _listTiles(itemsRef, items));
                   return Padding(
                     padding: const EdgeInsets.all(8),
                     child: ListView(
-                        children: _listTiles(context, itemsRef, items)),
+                        children: _listTiles(context, itemsRef, items,callback)),
                   );
                 },
               ),
@@ -97,15 +95,28 @@ class _SprossenRouteState extends State<SprossenRoute> {
   }
 }
 
+//TODO: wasser gießen funktion implementieren -> anzeige wie bei david
+// Bilder in firebase hinterlegen
+// Bugfix: Exception wenn man neuen User registriert -> sollte gefixt sein
+//Was anzeigen, wenn kein user angemeldet und buttons ausblenden ->DAVID
+//string is not a subtype of int wenn neuer user hinzugefügt wird
+//snackbar beim settingsscreen ->David
+
 //Lists the items of 'Sprouts' as a Listview
 _listTiles(BuildContext context, CollectionReference itemsRef,
-    List<SproutItems> items) {
+    List<SproutItems> items, Function callback) {
   return items
       .map((i) => ListTile(
             title: Text(i.name,
                 style:
                     const TextStyle(fontWeight: FontWeight.w500, fontSize: 22)),
-            subtitle: Text("Keimdauer (Tage): " + i.keimdauer.toString()),
+            isThreeLine: true,
+            subtitle: Text("Keimdauer: " +
+                i.keimdauer.toString() +
+                " Tage\n" +
+                "Noch " +
+                i.wieoftgegossen.toString() +
+                "x gießen!"),
             leading: ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.network(
@@ -117,7 +128,10 @@ _listTiles(BuildContext context, CollectionReference itemsRef,
             onLongPress: () => _showDeleteDialog(context, itemsRef, i.id),
             trailing: ElevatedButton(
                 child: const Icon(Entypo.droplet, size: 20),
-                onPressed: () => print("test"),
+                onPressed: () {
+                  SproutItems.updateGegossen(itemsRef, i.id, i.wieoftgegossen);
+                  callback();
+                },
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),
                   padding: const EdgeInsets.all(10),

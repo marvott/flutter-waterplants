@@ -27,6 +27,7 @@ class _MySettingsState extends State<SettingsRoute> {
   @override
   void initState() {
     super.initState();
+    _updateTokenForUser(firestore, cloudMsgToken);
 
     //Listener if other User logs in: Updates Token in Firestore and reloads Build
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
@@ -41,6 +42,7 @@ class _MySettingsState extends State<SettingsRoute> {
     FirebaseMessaging.instance.getToken().then((token) {
       cloudMsgToken = token;
     });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Account"),
@@ -152,21 +154,9 @@ class _MySettingsState extends State<SettingsRoute> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: pass);
-
       //Adding the users email to the firestore collection 'users' with corresponding timestamp
       var _currentUser = firestore.collection('users').doc(email);
-
       _currentUser.set({'usercreated': currentTime});
-
-      _currentUser.collection('sprossen').doc().set({
-        'name': '',
-        'Keimdauer (Tage)': '',
-        'Wasser gewechselt': currentTime
-      });
-
-      String message = "Registrierung erflogreich";
-      Utils.showSnackBar(context, message: message, color: Colors.green);
-
       return userCredential;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -198,7 +188,5 @@ _updateTokenForUser(FirebaseFirestore firestore, String? cloudMsgToken) {
   } catch (e) {
     String message = "Melde dich erst an";
     print(message);
-    // Snackbar an der Stelle nicht benutzbar da kein BuildContext in initState vorhanden ist
-    //Utils.showSnackBar(context, message: message, color: Colors.blueGrey);
   }
 }
