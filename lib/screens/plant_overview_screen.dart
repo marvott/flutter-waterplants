@@ -98,7 +98,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                                     )));
                       },
                       onLongPress: () => Dialogs.showSimpleDialog(
-                          context, plantList, index, callback, itemsRef),
+                          context, plantList, index, itemsRef),
                       child: Stack(
                         alignment: AlignmentDirectional.topEnd,
                         children: [
@@ -219,6 +219,7 @@ class _PlantOverviewState extends State<PlantOverview> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "addPlants",
         onPressed: () {
           PlantCreateSheet().showBottomSheetPlantCreate(
               context, callback, plantList, itemsRef);
