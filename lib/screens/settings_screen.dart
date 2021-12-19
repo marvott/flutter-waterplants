@@ -21,8 +21,8 @@ class _MySettingsState extends State<SettingsRoute> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   //Example for Input-Fields
-  final _emailInput = TextEditingController(text: 'bob@example.com');
-  final _passInput = TextEditingController(text: 'passwort');
+  final _emailInput = TextEditingController();
+  final _passInput = TextEditingController();
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _MySettingsState extends State<SettingsRoute> {
     });
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Settings"),
+        title: const Text("Account"),
       ),
       body: Center(
           child: Column(
@@ -69,7 +69,7 @@ class _MySettingsState extends State<SettingsRoute> {
             if (user!.photoURL != null)
               Image.network(user!.photoURL!, width: 50),
             Text(
-                'Angemeldet als: ${user!.displayName != null ? user!.displayName! + ', ' : ''}${user!.email}.')
+                'Angemeldet als: ${user!.displayName != null ? user!.displayName! + ', ' : ''}${user!.email}')
           ]);
   }
 
