@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_1/components/no_user_widget.dart';
 
 import 'plant_overview_screen.dart';
 import 'settings_screen.dart';
