@@ -87,8 +87,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-//For Push Notifications as Background
+//For Push Notifications as Background Messages ->
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print('Received a background message.');
   // You can't update the app UI here!
 }

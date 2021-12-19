@@ -2,10 +2,7 @@ import 'dart:core';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_application_1/models/sprouts.dart';
-import 'package:flutter_application_1/screens/settings_screen.dart';
 import 'package:fluttericon/entypo_icons.dart';
-import 'package:intl/intl.dart';
-import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -33,6 +30,7 @@ class _SprossenRouteState extends State<SprossenRoute> {
     });
   }
 
+  //Callback-Function for reloading the build
   callback() {
     setState(() {});
   }
@@ -44,10 +42,8 @@ class _SprossenRouteState extends State<SprossenRoute> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser?.email.toString())
         .collection('sprossen');
-
     //Orders items by Name
     Query query = itemsRef.orderBy('name');
-
     //UI
     return Scaffold(
       appBar: AppBar(
@@ -74,11 +70,13 @@ class _SprossenRouteState extends State<SprossenRoute> {
                   return Padding(
                     padding: const EdgeInsets.all(8),
                     child: ListView(
-                        children: _listTiles(context, itemsRef, items,callback)),
+                        children:
+                            _listTiles(context, itemsRef, items, callback)),
                   );
                 },
               ),
             )),
+            //Button for adding new Sprouts
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -94,13 +92,6 @@ class _SprossenRouteState extends State<SprossenRoute> {
     );
   }
 }
-
-//TODO: wasser gießen funktion implementieren -> anzeige wie bei david
-// Bilder in firebase hinterlegen
-// Bugfix: Exception wenn man neuen User registriert -> sollte gefixt sein
-//Was anzeigen, wenn kein user angemeldet und buttons ausblenden ->DAVID
-//string is not a subtype of int wenn neuer user hinzugefügt wird
-//snackbar beim settingsscreen ->David
 
 //Lists the items of 'Sprouts' as a Listview
 _listTiles(BuildContext context, CollectionReference itemsRef,
