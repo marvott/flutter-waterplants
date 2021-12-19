@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter_application_1/models/plant_list.dart';
 
-//TODO: Beheben: "Exception caught by widgets library Incorrect use of ParentDataWidget. "
 class Dialogs {
   static void showSimpleDialog(
     BuildContext context,
@@ -22,7 +21,7 @@ class Dialogs {
           children: <Widget>[
             SimpleDialogOption(
               onPressed: () {
-                callback();
+                //callback();
                 plantList.remove(index);
                 itemsRef
                     .doc(id)
@@ -34,7 +33,7 @@ class Dialogs {
             ),
             SimpleDialogOption(
               onPressed: () {
-                callback();
+                //callback();
                 plantList.remove(index);
                 itemsRef
                     .doc(id)
