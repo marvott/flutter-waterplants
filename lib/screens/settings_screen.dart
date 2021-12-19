@@ -59,7 +59,12 @@ class _MySettingsState extends State<SettingsRoute> {
   //Status Message if User is logged in
   Widget userInfo() {
     return (user == null)
-        ? const Text('Nicht angemeldet.')
+        ? Column(
+            children: const [
+              Text('Nicht angemeldet'),
+              Text('Bitte anmelden oder registrieren'),
+            ],
+          )
         : Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             if (user!.photoURL != null)
               Image.network(user!.photoURL!, width: 50),
@@ -119,7 +124,11 @@ class _MySettingsState extends State<SettingsRoute> {
       String email, String pass, BuildContext context) async {
     try {
       return await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: pass);
+          .signInWithEmailAndPassword(email: email, password: pass)
+          .then((value) {
+        String message = "Anmeldung erflogreich";
+        Utils.showSnackBar(context, message: message, color: Colors.green);
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         String message = "Nutzer muss erst registriert werden.";
@@ -154,6 +163,9 @@ class _MySettingsState extends State<SettingsRoute> {
         'Keimdauer (Tage)': '',
         'Wasser gewechselt': currentTime
       });
+
+      String message = "Registrierung erflogreich";
+      Utils.showSnackBar(context, message: message, color: Colors.green);
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
