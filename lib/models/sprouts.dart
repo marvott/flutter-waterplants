@@ -25,14 +25,12 @@ class SproutItems {
   //Add Items
   static _addItem(CollectionReference itemsRef, String name, int keimdauer) {
     final item = SproutItems(name, keimdauer);
-    itemsRef
-        .add(item.toJson())
-        .then((doc) => print('Added a new item with id = ${doc.id}'));
+    itemsRef.add(item.toJson());
   }
 
   //Deletes Item
   static deleteItem(CollectionReference itemsRef, String id) {
-    itemsRef.doc(id).delete().then((_) => print('Deleted item with id = $id'));
+    itemsRef.doc(id).delete();
   }
 
   static updateGegossen(
@@ -55,7 +53,7 @@ class SproutDialog {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SimpleDialog(
-                title: Text("Wähle deine Sprosse:"),
+                title: const Text("Wähle deine Sprosse:"),
                 children: <Widget>[
                   SimpleDialogOption(
                       child: const Text("Alfalfa"),
