@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -38,8 +37,10 @@ class SproutItems {
 
   static updateGegossen(
       CollectionReference itemsRef, String id, int anzahlgegossen) {
-    anzahlgegossen--;
-    itemsRef.doc(id).update({'wie oft gegossen': anzahlgegossen});
+    if (anzahlgegossen > 0) {
+      anzahlgegossen--;
+      itemsRef.doc(id).update({'wie oft gegossen': anzahlgegossen});
+    }
   }
 }
 
