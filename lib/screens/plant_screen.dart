@@ -4,6 +4,7 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_1/components/get_image.dart';
 
 import 'package:fluttericon/entypo_icons.dart';
 
@@ -100,9 +101,7 @@ class _PlantScreenState extends State<PlantScreen> {
         ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(8)),
             child: Image(
-              image: widget.plant.imagePath.isEmpty
-                  ? GeneralArguments.defaultPlantImg
-                  : FileImage(File(widget.plant.imagePath)),
+              image: getImage(widget.plant.imagePath),
               height: 400,
               fit: BoxFit.fitWidth,
             )),

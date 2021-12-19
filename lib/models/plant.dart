@@ -123,7 +123,7 @@ class Plant {
           lastFertilising: (json['lastFertilising'] as Timestamp).toDate(),
         ),
         notes = json['notes'],
-        imagePath = "";
+        imagePath = ""; //json["imagePath"];
 
   Map<String, dynamic> toJson() => {
         'name': name,
@@ -134,6 +134,7 @@ class Plant {
         'lastFertilising': fertilising!._lastFertilising,
         'fertiliserInterval': fertilising!.fertiliserInterval,
         'notes': notes,
+        'imagePath': imagePath,
       };
 
   //TODO: nicht benötigten Boilerplatemüll entfernen
