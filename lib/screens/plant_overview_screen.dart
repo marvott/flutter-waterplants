@@ -26,18 +26,18 @@ class PlantOverview extends StatefulWidget {
 }
 
 class _PlantOverviewState extends State<PlantOverview> {
-  //Init firestore
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  @override
-  void initState() {
-    super.initState();
+  // @override
+  // void initState() {
+  //   super.initState();
 
-    //Listens for Changes in Authentification State -> Other user logs in
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      setState(() {});
-    });
-  }
+  //   //Listens for Changes in Authentification State -> Other user logs in
+  //   FirebaseAuth.instance.authStateChanges().listen((User? user) {
+  //     // print("current user: $user");
+  //     setState(() {});
+  //   });
+  // }
 
   callback() {
     setState(() {});
@@ -48,7 +48,7 @@ class _PlantOverviewState extends State<PlantOverview> {
   @override
   Widget build(BuildContext context) {
     //Gets the 'users' and the email that is logged in and their list of 'Sprossen'
-    CollectionReference itemsRef = FirebaseFirestore.instance
+    CollectionReference itemsRef = firestore
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser?.email.toString())
         .collection('pflanzen');
