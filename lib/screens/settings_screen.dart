@@ -58,12 +58,14 @@ class _MySettingsState extends State<SettingsRoute> {
 
   //Status Message if User is logged in
   Widget userInfo() {
-    if (user == null) return const Text('Nicht angemeldet.');
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      if (user!.photoURL != null) Image.network(user!.photoURL!, width: 50),
-      Text(
-          'Angemeldet als: ${user!.displayName != null ? user!.displayName! + ', ' : ''}${user!.email}.')
-    ]);
+    return (user == null)
+        ? const Text('Nicht angemeldet.')
+        : Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            if (user!.photoURL != null)
+              Image.network(user!.photoURL!, width: 50),
+            Text(
+                'Angemeldet als: ${user!.displayName != null ? user!.displayName! + ', ' : ''}${user!.email}.')
+          ]);
   }
 
   //Buttons
