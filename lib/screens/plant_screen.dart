@@ -78,6 +78,7 @@ class _PlantScreenState extends State<PlantScreen> {
       ),
       // Foto der Pflanze ändern
       floatingActionButton: FloatingActionButton(
+        heroTag: "addPicture",
         onPressed: () {
           if (GeneralArguments.cameraName != 'fake') {
             // damit das Foto direkt angezeigt wird, werden alle betroffenen Widgets neu gerendert

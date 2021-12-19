@@ -9,7 +9,6 @@ class Dialogs {
     BuildContext context,
     PlantList plantList,
     int index,
-    Function callback,
     CollectionReference itemsRef,
   ) {
     String id = plantList.getElemtByIndex(index).id;
@@ -21,7 +20,6 @@ class Dialogs {
           children: <Widget>[
             SimpleDialogOption(
               onPressed: () {
-                callback();
                 plantList.remove(index);
                 itemsRef
                     .doc(id)
@@ -33,7 +31,6 @@ class Dialogs {
             ),
             SimpleDialogOption(
               onPressed: () {
-                callback();
                 plantList.remove(index);
                 itemsRef
                     .doc(id)

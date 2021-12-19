@@ -21,8 +21,8 @@ class _MySettingsState extends State<SettingsRoute> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   //Example for Input-Fields
-  final _emailInput = TextEditingController(text: 'bob@example.com');
-  final _passInput = TextEditingController(text: 'passwort');
+  final _emailInput = TextEditingController();
+  final _passInput = TextEditingController();
 
   @override
   void initState() {
@@ -45,7 +45,7 @@ class _MySettingsState extends State<SettingsRoute> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Settings"),
+        title: const Text("Account"),
       ),
       body: Center(
           child: Column(
@@ -60,12 +60,19 @@ class _MySettingsState extends State<SettingsRoute> {
 
   //Status Message if User is logged in
   Widget userInfo() {
-    if (user == null) return const Text('Nicht angemeldet.');
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      if (user!.photoURL != null) Image.network(user!.photoURL!, width: 50),
-      Text(
-          'Angemeldet als: ${user!.displayName != null ? user!.displayName! : ''}${user!.email}.')
-    ]);
+    return (user == null)
+        ? Column(
+            children: const [
+              Text('Nicht angemeldet'),
+              Text('Bitte anmelden oder registrieren'),
+            ],
+          )
+        : Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            if (user!.photoURL != null)
+              Image.network(user!.photoURL!, width: 50),
+            Text(
+                'Angemeldet als: ${user!.displayName != null ? user!.displayName! + ', ' : ''}${user!.email}')
+          ]);
   }
 
   //Buttons
@@ -119,7 +126,11 @@ class _MySettingsState extends State<SettingsRoute> {
       String email, String pass, BuildContext context) async {
     try {
       return await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: pass);
+          .signInWithEmailAndPassword(email: email, password: pass)
+          .then((value) {
+        String message = "Anmeldung erflogreich";
+        Utils.showSnackBar(context, message: message, color: Colors.green);
+      });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         String message = "Nutzer muss erst registriert werden.";
