@@ -1,10 +1,12 @@
-import 'dart:async';
+import 'package:flutter/material.dart';
+
+import 'package:flutter_signin_button/flutter_signin_button.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:flutter_application_1/components/snackbar_dialog.dart';
+
+import '../components/snackbar_dialog.dart';
 
 class SettingsRoute extends StatefulWidget {
   const SettingsRoute({Key? key}) : super(key: key);
@@ -79,21 +81,21 @@ class _MySettingsState extends State<SettingsRoute> {
   Widget mySignInButtons(BuildContext context) {
     return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       SignInButtonBuilder(
-          key: Key('signInBtn'),
+          key: const Key('signInBtn'),
           icon: Icons.email_rounded,
           backgroundColor: Colors.green.shade400,
           text: "Mit Email anmelden",
           onPressed: () =>
               loginWithEmail(_emailInput.text, _passInput.text, context)),
       SignInButtonBuilder(
-          key: Key('SignUpBtn'),
+          key: const Key('SignUpBtn'),
           text: 'Registrieren',
           icon: Icons.account_circle,
           onPressed: () => createUserWithEmailAndPassword(
               _emailInput.text, _passInput.text, context),
           backgroundColor: Colors.blueGrey),
       SignInButtonBuilder(
-          key: Key('SignOutBtn'),
+          key: const Key('SignOutBtn'),
           text: 'Abmelden',
           icon: Icons.logout_rounded,
           onPressed: () => user != null ? logout() : null,
@@ -105,13 +107,13 @@ class _MySettingsState extends State<SettingsRoute> {
   Widget inputTextFields() {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       SizedBox(
-          key: Key("emailInput"),
+          key: const Key("emailInput"),
           width: 150,
           child: TextField(
               controller: _emailInput,
               decoration: const InputDecoration(hintText: 'Email'))),
       SizedBox(
-          key: Key("pwInput"),
+          key: const Key("pwInput"),
           width: 150,
           child: TextField(
               controller: _passInput,
@@ -184,9 +186,9 @@ _updateTokenForUser(FirebaseFirestore firestore, String? cloudMsgToken) {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser?.email);
     currentUserRef.update({'cloudMsgToken': cloudMsgToken}).catchError(
-        (error) => print("Could not update cloudMsgToken"));
+        (error) => ("Could not update cloudMsgToken"));
   } catch (e) {
-    String message = "Melde dich erst an";
-    print(message);
+    //String message = "Melde dich erst an";
+    // print(message);
   }
 }

@@ -7,6 +7,7 @@ import 'package:fluttericon/rpg_awesome_icons.dart';
 
 import '../models/plant.dart';
 
+// ModalBottomSheet für das Ändern vom Pflanzennamen / Zimmer / Spezies
 showBottomSheetPlantEdit(
   BuildContext context,
   Plant plant,
@@ -22,6 +23,7 @@ showBottomSheetPlantEdit(
         key: formKeyPlantedit,
         child: Padding(
           padding: EdgeInsets.only(
+            // Abstand zur Tastatur
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Padding(
@@ -67,8 +69,7 @@ showBottomSheetPlantEdit(
                       ),
                       onSaved: (String? value) {
                         plant.setName = value!;
-                        itemsRef.doc(plant.id).update({'name': value}).then(
-                            (doc) => print('updated name'));
+                        itemsRef.doc(plant.id).update({'name': value});
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (String? value) {
@@ -88,8 +89,7 @@ showBottomSheetPlantEdit(
                       ),
                       onSaved: (String? value) {
                         plant.setSpecies = value!;
-                        itemsRef.doc(plant.id).update({'species': value}).then(
-                            (doc) => print('updated species'));
+                        itemsRef.doc(plant.id).update({'species': value});
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (String? value) {
@@ -109,8 +109,7 @@ showBottomSheetPlantEdit(
                       ),
                       onSaved: (String? value) {
                         plant.setRoomName = value!;
-                        itemsRef.doc(plant.id).update({'roomName': value}).then(
-                            (doc) => print('updated roomName'));
+                        itemsRef.doc(plant.id).update({'roomName': value});
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (String? value) {

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:flutter_application_1/models/plant_list.dart';
+import '../models/plant_list.dart';
 
+// Dialog zum löschen von Pflanzen
+// Begraben und löschen haben die selbe Funktion
 class Dialogs {
   static void showSimpleDialog(
     BuildContext context,
@@ -21,10 +23,7 @@ class Dialogs {
             SimpleDialogOption(
               onPressed: () {
                 plantList.remove(index);
-                itemsRef
-                    .doc(id)
-                    .delete()
-                    .then((_) => print('Deleted plant with id = $id'));
+                itemsRef.doc(id).delete();
                 Navigator.pop(context);
               },
               child: const Text('Pflanze begraben'),
@@ -32,10 +31,7 @@ class Dialogs {
             SimpleDialogOption(
               onPressed: () {
                 plantList.remove(index);
-                itemsRef
-                    .doc(id)
-                    .delete()
-                    .then((_) => print('Deleted plant with id = $id'));
+                itemsRef.doc(id).delete();
                 Navigator.pop(context);
               },
               child: const Text('Pflanze löschen'),

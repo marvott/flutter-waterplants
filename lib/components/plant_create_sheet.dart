@@ -7,9 +7,10 @@ import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/rpg_awesome_icons.dart';
 
-import 'package:flutter_application_1/models/plant_list.dart';
+import '../models/plant_list.dart';
 import '../models/plant.dart';
 
+// ModalBottomSheet für das Hinzufügen von neuen Pflanzen mit allen Infos auser Notizen
 class PlantCreateSheet {
   final formKey = GlobalKey<FormState>();
   final TextEditingController _dateController = TextEditingController();
@@ -36,6 +37,7 @@ class PlantCreateSheet {
             key: formKey,
             child: Padding(
               padding: EdgeInsets.only(
+                // Abstand zur Tastatur
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
               child: Padding(
@@ -69,9 +71,7 @@ class PlantCreateSheet {
                                     notes: notes);
                                 //  Neue Pflanze wird beim Klick auf Speichern der Pflanzenliste und der Datenbank hinzugefügt
                                 plantList.add(newPlant);
-                                itemsRef.add(newPlant.toJson()).then((doc) =>
-                                    print(
-                                        'Added a new plant with id = ${doc.id}'));
+                                itemsRef.add(newPlant.toJson());
                                 Navigator.pop(context);
                               }
                             },
