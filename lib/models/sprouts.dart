@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -26,20 +25,20 @@ class SproutItems {
   //Add Items
   static _addItem(CollectionReference itemsRef, String name, int keimdauer) {
     final item = SproutItems(name, keimdauer);
-    itemsRef
-        .add(item.toJson())
-        .then((doc) => print('Added a new item with id = ${doc.id}'));
+    itemsRef.add(item.toJson());
   }
 
   //Deletes Item
   static deleteItem(CollectionReference itemsRef, String id) {
-    itemsRef.doc(id).delete().then((_) => print('Deleted item with id = $id'));
+    itemsRef.doc(id).delete();
   }
 
   static updateGegossen(
       CollectionReference itemsRef, String id, int anzahlgegossen) {
-    anzahlgegossen--;
-    itemsRef.doc(id).update({'wie oft gegossen': anzahlgegossen});
+    if (anzahlgegossen > 0) {
+      anzahlgegossen--;
+      itemsRef.doc(id).update({'wie oft gegossen': anzahlgegossen});
+    }
   }
 }
 
@@ -54,7 +53,7 @@ class SproutDialog {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               SimpleDialog(
-                title: Text("Wähle deine Sprosse:"),
+                title: const Text("Wähle deine Sprosse:"),
                 children: <Widget>[
                   SimpleDialogOption(
                       child: const Text("Alfalfa"),
