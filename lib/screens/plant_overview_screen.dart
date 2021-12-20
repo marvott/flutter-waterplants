@@ -1,19 +1,16 @@
-import 'dart:io';
-import 'dart:core';
-
 import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_application_1/components/get_image.dart';
 
 import 'package:fluttericon/entypo_icons.dart';
 
-import 'package:flutter_application_1/components/delete_dialog.dart';
-import 'package:flutter_application_1/components/plant_create_sheet.dart';
-import 'package:flutter_application_1/components/snackbar_dialog.dart';
+import '../components/delete_dialog.dart';
+import '../components/plant_create_sheet.dart';
+import '../components/snackbar_dialog.dart';
 import '../models/plant_list.dart';
 import '../models/plant.dart';
-import '../models/general.dart';
 import 'plant_screen.dart';
 
 class PlantOverview extends StatefulWidget {
@@ -28,21 +25,6 @@ class PlantOverview extends StatefulWidget {
 class _PlantOverviewState extends State<PlantOverview> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   //Listens for Changes in Authentification State -> Other user logs in
-  //   FirebaseAuth.instance.authStateChanges().listen((User? user) {
-  //     // print("current user: $user");
-  //     setState(() {});
-  //   });
-  // }
-
-  callback() {
-    setState(() {});
-  }
-
   PlantList plantList = PlantList();
 
   @override
@@ -53,7 +35,7 @@ class _PlantOverviewState extends State<PlantOverview> {
         .doc(FirebaseAuth.instance.currentUser?.email.toString())
         .collection('pflanzen');
 
-    //Orders items by Name
+    //Orders items by last watering
     Query query = itemsRef.orderBy('lastWatering');
 
     return Scaffold(
@@ -71,6 +53,7 @@ class _PlantOverviewState extends State<PlantOverview> {
               return const Expanded(
                   child: Center(child: CircularProgressIndicator()));
             }
+            // Zieht sich Daten aus der DB
             List<Plant> items = snapshot.data!.docs
                 .map((doc) => Plant.fromJson(
                     (doc.data() as Map<String, dynamic>)..['id'] = doc.id))
@@ -91,12 +74,13 @@ class _PlantOverviewState extends State<PlantOverview> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
+                                // Öffnen der angeklickten Pflanze
                                 builder: (context) => PlantScreen(
-                                      plantOverviewCallback: callback,
                                       plant: plantList.getElemtByIndex(index),
                                       itemsRef: itemsRef,
                                     )));
                       },
+                      // Dialog zum begraben/löschen der ausgewählten Pflanze
                       onLongPress: () => Dialogs.showSimpleDialog(
                           context, plantList, index, itemsRef),
                       child: Stack(
@@ -109,15 +93,11 @@ class _PlantOverviewState extends State<PlantOverview> {
                                   borderRadius: const BorderRadius.only(
                                       topLeft: Radius.circular(8),
                                       topRight: Radius.circular(8)),
+                                  // Bild der Pflanze
                                   child: Image(
-                                    image: plantList
-                                            .getElemtByIndex(index)
-                                            .imagePath
-                                            .isEmpty
-                                        ? GeneralArguments.defaultPlantImg
-                                        : FileImage(File(plantList
-                                            .getElemtByIndex(index)
-                                            .imagePath)),
+                                    image: getImage(plantList
+                                        .getElemtByIndex(index)
+                                        .imagePath),
                                     width: double.infinity,
                                     fit: BoxFit.cover,
                                   ),
@@ -131,6 +111,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                                       bottomLeft: Radius.circular(8),
                                       bottomRight: Radius.circular(8),
                                     )),
+                                // Name der Pflanze
                                 child: Text(
                                   plantList.getElemtByIndex(index).name,
                                   textAlign: TextAlign.center,
@@ -146,6 +127,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
+                              // Button zum gießen
                               ElevatedButton(
                                   onPressed: () {
                                     String message =
@@ -158,11 +140,8 @@ class _PlantOverviewState extends State<PlantOverview> {
                                     itemsRef
                                         .doc(
                                             plantList.getElemtByIndex(index).id)
-                                        .update({
-                                      'lastWatering': DateTime.now()
-                                    }).then((doc) =>
-                                            print('updated lastWatering'));
-                                    //setState könnte später nötig werden
+                                        .update(
+                                            {'lastWatering': DateTime.now()});
                                   },
                                   child: const Icon(
                                     Entypo.droplet,
@@ -174,6 +153,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                                     primary: Colors.blue,
                                     minimumSize: Size.zero,
                                   )),
+                              // Button zum düngen
                               ElevatedButton(
                                 onPressed: () {
                                   if (plantList.getElemtByIndex(index) !=
@@ -192,9 +172,7 @@ class _PlantOverviewState extends State<PlantOverview> {
                                             plantList.getElemtByIndex(index).id)
                                         .update({
                                       'lastFertilising': DateTime.now()
-                                    }).then((doc) =>
-                                            print('updated lastFertilising'));
-                                    //setState könnte später vlt nötig werden
+                                    });
                                   }
                                 },
                                 child: const Icon(
@@ -218,11 +196,12 @@ class _PlantOverviewState extends State<PlantOverview> {
           },
         ),
       ),
+      // Button zum hinzufügen neuer Pflanzen
       floatingActionButton: FloatingActionButton(
         heroTag: "addPlants",
         onPressed: () {
-          PlantCreateSheet().showBottomSheetPlantCreate(
-              context, callback, plantList, itemsRef);
+          PlantCreateSheet()
+              .showBottomSheetPlantCreate(context, plantList, itemsRef);
         },
         child: const Icon(Icons.add),
       ),
