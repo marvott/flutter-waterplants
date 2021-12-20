@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../components/get_image.dart';
 
 import 'package:fluttericon/entypo_icons.dart';
 
 import '../components/delete_dialog.dart';
 import '../components/plant_create_sheet.dart';
 import '../components/snackbar_dialog.dart';
+import '../components/get_image.dart';
 import '../models/plant_list.dart';
 import '../models/plant.dart';
 import 'plant_screen.dart';
