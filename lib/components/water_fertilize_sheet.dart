@@ -5,8 +5,7 @@ import 'package:fluttericon/entypo_icons.dart';
 
 import '../models/plant.dart';
 
-//waterOrFertilize == true bedeutet Water, false ist Düngen
-//TODO: icons je nach wasser oder dünger anpassen, siehe Ende des Files
+// ModalBottomSheet für das Ändern der Gieß/Düng-Eigenschaften der Pflanze
 class WaterFertilizeSheet {
   BuildContext? context;
   Plant? plant;
@@ -31,6 +30,7 @@ class WaterFertilizeSheet {
     String lastLabel;
     Icon intervalIcon;
 
+    //waterOrFertilize == true bedeutet Gießen, false ist Düngen
     if (waterOrFertilize) {
       initialIntervalValue = "${plant.waterInterval}";
       intervalLabel = "Gieß-Interwall in Tagen";

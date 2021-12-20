@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../models/plant.dart';
 
+//ModalBottomSheet zum ändern/Hinzufügen von Notizen der Pflanzen
 class NotesSheet {
   BuildContext? context;
   Plant? plant;
@@ -27,6 +28,7 @@ class NotesSheet {
           key: formKey,
           child: Padding(
             padding: EdgeInsets.only(
+              // Abstand zur Tastatur
               bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
             child: Padding(
@@ -65,7 +67,6 @@ class NotesSheet {
                     child: TextFormField(
                       minLines: 3,
                       maxLines: 10,
-                      // keyboardType: TextInputType.text,
                       initialValue: initialnotesText,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
@@ -76,8 +77,7 @@ class NotesSheet {
                           value = value.trim();
                         }
                         plant.setNotes = value!;
-                        itemsRef.doc(plant.id).update({'notes': value}).then(
-                            (doc) => print('updated notes'));
+                        itemsRef.doc(plant.id).update({'notes': value});
                       },
                       autovalidateMode: AutovalidateMode.disabled,
                     ),

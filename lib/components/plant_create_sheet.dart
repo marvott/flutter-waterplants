@@ -10,6 +10,7 @@ import 'package:fluttericon/rpg_awesome_icons.dart';
 import '../models/plant_list.dart';
 import '../models/plant.dart';
 
+// ModalBottomSheet für das Hinzufügen von neuen Pflanzen mit allen Infos auser Notizen
 class PlantCreateSheet {
   final formKey = GlobalKey<FormState>();
   final TextEditingController _dateController = TextEditingController();
@@ -36,6 +37,7 @@ class PlantCreateSheet {
             key: formKey,
             child: Padding(
               padding: EdgeInsets.only(
+                // Abstand zur Tastatur
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
               child: Padding(

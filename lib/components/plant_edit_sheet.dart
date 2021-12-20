@@ -7,6 +7,7 @@ import 'package:fluttericon/rpg_awesome_icons.dart';
 
 import '../models/plant.dart';
 
+// ModalBottomSheet für das Ändern vom Pflanzennamen / Zimmer / Spezies
 showBottomSheetPlantEdit(
   BuildContext context,
   Plant plant,
@@ -22,6 +23,7 @@ showBottomSheetPlantEdit(
         key: formKeyPlantedit,
         child: Padding(
           padding: EdgeInsets.only(
+            // Abstand zur Tastatur
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Padding(

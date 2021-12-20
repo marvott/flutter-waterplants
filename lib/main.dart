@@ -32,16 +32,17 @@ flutter run
 */
 
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
-import '../theme/style.dart';
-import 'screens/camera.dart';
 import 'package:flutter/services.dart';
 
-import 'models/general.dart';
-import 'screens/main_screen.dart';
+import 'package:camera/camera.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+
+import 'models/general.dart';
+import 'screens/main_screen.dart';
+import 'screens/camera.dart';
+import '../theme/style.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

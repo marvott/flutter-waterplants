@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/plant_list.dart';
 
+// Dialog zum löschen von Pflanzen
+// Begraben und löschen haben die selbe Funktion
 class Dialogs {
   static void showSimpleDialog(
     BuildContext context,
