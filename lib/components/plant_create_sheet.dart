@@ -71,9 +71,7 @@ class PlantCreateSheet {
                                     notes: notes);
                                 //  Neue Pflanze wird beim Klick auf Speichern der Pflanzenliste und der Datenbank hinzugefügt
                                 plantList.add(newPlant);
-                                itemsRef.add(newPlant.toJson()).then((doc) =>
-                                    print(
-                                        'Added a new plant with id = ${doc.id}'));
+                                itemsRef.add(newPlant.toJson());
                                 Navigator.pop(context);
                               }
                             },

@@ -111,15 +111,12 @@ class WaterFertilizeSheet {
                             plant.setWaterInterval = valueInt;
                             itemsRef
                                 .doc(plant.id)
-                                .update({'waterInterval': valueInt}).then(
-                                    (doc) => print('updated waterInterval'));
+                                .update({'waterInterval': valueInt});
                           } else {
                             plant.fertilising!.setFertiliserInterval = valueInt;
                             itemsRef
                                 .doc(plant.id)
-                                .update({'fertiliserInterval': valueInt}).then(
-                                    (doc) =>
-                                        print('updated fertiliserInterval'));
+                                .update({'fertiliserInterval': valueInt});
                           }
                         },
                         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -151,15 +148,13 @@ class WaterFertilizeSheet {
                                 plant.setLastWatering = pickedDate!;
                                 itemsRef
                                     .doc(plant.id)
-                                    .update({'lastWatering': pickedDate}).then(
-                                        (doc) => print('updated lastWatering'));
+                                    .update({'lastWatering': pickedDate});
                               } else {
                                 plant.fertilising!.setLastFertilising =
                                     pickedDate!;
                                 itemsRef.doc(plant.id).update({
                                   'lastFertilising': pickedDate
-                                }).then(
-                                    (doc) => print('updated lastFertilising'));
+                                });
                               }
                               pickedDate = null;
                             }

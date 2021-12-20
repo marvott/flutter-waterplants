@@ -50,6 +50,7 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   final cameras = await availableCameras();
   final CameraDescription firstCamera;
+  // im iOs Simulator die Kamerafunktion unterbinden
   if (cameras.isNotEmpty) {
     firstCamera = cameras.first;
   } else {
