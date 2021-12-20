@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:flutter_application_1/models/plant_list.dart';
+import '../models/plant_list.dart';
 
 class Dialogs {
   static void showSimpleDialog(
@@ -21,10 +21,7 @@ class Dialogs {
             SimpleDialogOption(
               onPressed: () {
                 plantList.remove(index);
-                itemsRef
-                    .doc(id)
-                    .delete()
-                    .then((_) => print('Deleted plant with id = $id'));
+                itemsRef.doc(id).delete();
                 Navigator.pop(context);
               },
               child: const Text('Pflanze begraben'),
@@ -32,10 +29,7 @@ class Dialogs {
             SimpleDialogOption(
               onPressed: () {
                 plantList.remove(index);
-                itemsRef
-                    .doc(id)
-                    .delete()
-                    .then((_) => print('Deleted plant with id = $id'));
+                itemsRef.doc(id).delete();
                 Navigator.pop(context);
               },
               child: const Text('Pflanze löschen'),

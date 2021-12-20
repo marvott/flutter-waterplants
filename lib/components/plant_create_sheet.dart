@@ -7,7 +7,7 @@ import 'package:fluttericon/entypo_icons.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/rpg_awesome_icons.dart';
 
-import 'package:flutter_application_1/models/plant_list.dart';
+import '../models/plant_list.dart';
 import '../models/plant.dart';
 
 class PlantCreateSheet {

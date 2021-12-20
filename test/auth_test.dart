@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter_application_1/main.dart';
+import '../main.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_application_1/screens/settings_screen.dart';
+import '../screens/settings_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() {

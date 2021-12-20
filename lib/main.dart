@@ -33,7 +33,7 @@ flutter run
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter_application_1/theme/style.dart';
+import '../theme/style.dart';
 import 'screens/camera.dart';
 import 'package:flutter/services.dart';
 

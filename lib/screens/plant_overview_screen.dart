@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_1/components/get_image.dart';
+import '../components/get_image.dart';
 
 import 'package:fluttericon/entypo_icons.dart';
 
