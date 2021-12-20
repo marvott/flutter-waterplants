@@ -139,9 +139,6 @@ class Plant {
         'imagePath': imagePath,
       };
 
-  //TODO: nicht benötigten Boilerplatemüll entfernen
-  //Setter können weg da nix private
-  //Getters, Setters:
 
   set setName(String name) => this.name = name;
 

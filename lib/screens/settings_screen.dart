@@ -130,7 +130,7 @@ class _MySettingsState extends State<SettingsRoute> {
       return await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: pass)
           .then((value) {
-        String message = "Anmeldung erflogreich";
+        String message = "Anmeldung erfolgreich";
         Utils.showSnackBar(context, message: message, color: Colors.green);
       });
     } on FirebaseAuthException catch (e) {
