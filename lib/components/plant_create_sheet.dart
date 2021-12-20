@@ -11,7 +11,6 @@ import 'package:flutter_application_1/models/plant_list.dart';
 import '../models/plant.dart';
 
 class PlantCreateSheet {
-  Function? callback;
   final formKey = GlobalKey<FormState>();
   final TextEditingController _dateController = TextEditingController();
   String name = "Mein Name";
@@ -25,7 +24,6 @@ class PlantCreateSheet {
 
   showBottomSheetPlantCreate(
     BuildContext context,
-    Function callback,
     PlantList plantList,
     CollectionReference itemsRef,
   ) {
@@ -74,7 +72,6 @@ class PlantCreateSheet {
                                 itemsRef.add(newPlant.toJson()).then((doc) =>
                                     print(
                                         'Added a new plant with id = ${doc.id}'));
-                                // callback();
                                 Navigator.pop(context);
                               }
                             },

@@ -56,7 +56,7 @@ Future<void> main() async {
         name: "fake",
         lensDirection: CameraLensDirection.back,
         sensorOrientation: 90);
-    GeneralArguments.cameraName = 'fake';
+    IosSimulatorCameraHandler.cameraName = 'fake';
   }
 
   runApp(MyApp(
@@ -89,6 +89,6 @@ class MyApp extends StatelessWidget {
 
 //For Push Notifications as Background
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print('Received a background message.');
+  // print('Received a background message.');
   // You can't update the app UI here!
 }

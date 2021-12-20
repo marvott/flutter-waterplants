@@ -7,6 +7,7 @@ import 'plant_overview_screen.dart';
 import 'settings_screen.dart';
 import 'sprossen_screen.dart';
 
+//
 class MainScreen extends StatefulWidget {
   final String imagePath;
 
@@ -27,11 +28,11 @@ class _MainScreenState extends State<MainScreen> {
 
     //Listens for Changes in Authentification State -> Other user logs in
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      print("current user: $user");
       setState(() => this.user = user);
     });
   }
 
+  //Liste der 3 Screen zwischen denen mit der Bottom Bar navigiert wird
   List<Widget> screens = [
     const PlantOverview(),
     const SprossenRoute(),

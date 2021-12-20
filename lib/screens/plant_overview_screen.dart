@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:core';
 
 import 'package:flutter/material.dart';
@@ -9,12 +8,11 @@ import 'package:flutter_application_1/components/get_image.dart';
 
 import 'package:fluttericon/entypo_icons.dart';
 
-import 'package:flutter_application_1/components/delete_dialog.dart';
-import 'package:flutter_application_1/components/plant_create_sheet.dart';
-import 'package:flutter_application_1/components/snackbar_dialog.dart';
+import '../components/delete_dialog.dart';
+import '../components/plant_create_sheet.dart';
+import '../components/snackbar_dialog.dart';
 import '../models/plant_list.dart';
 import '../models/plant.dart';
-import '../models/general.dart';
 import 'plant_screen.dart';
 
 class PlantOverview extends StatefulWidget {
@@ -28,21 +26,6 @@ class PlantOverview extends StatefulWidget {
 
 class _PlantOverviewState extends State<PlantOverview> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-
-  //   //Listens for Changes in Authentification State -> Other user logs in
-  //   FirebaseAuth.instance.authStateChanges().listen((User? user) {
-  //     // print("current user: $user");
-  //     setState(() {});
-  //   });
-  // }
-
-  callback() {
-    setState(() {});
-  }
 
   PlantList plantList = PlantList();
 
@@ -93,7 +76,6 @@ class _PlantOverviewState extends State<PlantOverview> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => PlantScreen(
-                                      plantOverviewCallback: callback,
                                       plant: plantList.getElemtByIndex(index),
                                       itemsRef: itemsRef,
                                     )));
@@ -217,8 +199,8 @@ class _PlantOverviewState extends State<PlantOverview> {
       floatingActionButton: FloatingActionButton(
         heroTag: "addPlants",
         onPressed: () {
-          PlantCreateSheet().showBottomSheetPlantCreate(
-              context, callback, plantList, itemsRef);
+          PlantCreateSheet()
+              .showBottomSheetPlantCreate(context, plantList, itemsRef);
         },
         child: const Icon(Icons.add),
       ),

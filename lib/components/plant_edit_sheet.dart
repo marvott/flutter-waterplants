@@ -11,7 +11,6 @@ showBottomSheetPlantEdit(
   BuildContext context,
   Plant plant,
   Function callback,
-  Function plantOverviewCallback,
   CollectionReference itemsRef,
 ) {
   final formKeyPlantedit = GlobalKey<FormState>();

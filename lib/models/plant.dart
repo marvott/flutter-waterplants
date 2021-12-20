@@ -111,6 +111,7 @@ class Plant {
     throw Exception('fertiliseInDays konnte nicht berechnet werden');
   }
 
+  //Konstruktor für Daten aus der DB
   Plant.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
@@ -125,6 +126,7 @@ class Plant {
         notes = json['notes'],
         imagePath = json['imagePath'];
 
+  //Formatiert die Klasse für das Hochladen in die DB
   Map<String, dynamic> toJson() => {
         'name': name,
         'species': species,

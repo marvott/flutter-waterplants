@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:core';
 
 import 'package:flutter/material.dart';
@@ -16,12 +15,10 @@ import 'package:flutter_application_1/models/general.dart';
 import 'package:flutter_application_1/models/plant.dart';
 
 class PlantScreen extends StatefulWidget {
-  final Function plantOverviewCallback;
   final Plant plant;
   final CollectionReference itemsRef;
   const PlantScreen({
     Key? key,
-    required this.plantOverviewCallback,
     required this.plant,
     required this.itemsRef,
   }) : super(key: key);
@@ -81,15 +78,14 @@ class _PlantScreenState extends State<PlantScreen> {
       floatingActionButton: FloatingActionButton(
         heroTag: "addPicture",
         onPressed: () {
-          if (GeneralArguments.cameraName != 'fake') {
-            // damit das Foto direkt angezeigt wird, werden alle betroffenen Widgets neu gerendert
+          // Abfrage für den iOS Simulator, dieser stellt keine Kamerafunktion zur verfügung
+          if (IosSimulatorCameraHandler.cameraName != 'fake') {
             Navigator.pushNamed(context, '/camera')
                 .then((imagePath) => setState(() {
                       widget.plant.setImagePath = imagePath;
                       widget.itemsRef
                           .doc(widget.plant.id)
                           .update({'imagePath': imagePath});
-                      widget.plantOverviewCallback();
                     }));
           }
         },
@@ -132,8 +128,8 @@ class _PlantScreenState extends State<PlantScreen> {
             ElevatedButton(
               onPressed: () {
                 // showBottomSheetPlantEdit(context);
-                showBottomSheetPlantEdit(context, widget.plant, callback,
-                    widget.plantOverviewCallback, widget.itemsRef);
+                showBottomSheetPlantEdit(
+                    context, widget.plant, callback, widget.itemsRef);
               },
               child: const Icon(Icons.edit),
               style: ElevatedButton.styleFrom(
@@ -181,9 +177,7 @@ class _PlantScreenState extends State<PlantScreen> {
                               widget.itemsRef.doc(widget.plant.id).update({
                                 'lastWatering': DateTime.now()
                               }).then((doc) => print('updated lastWatering'));
-                              setState(() {
-                                widget.plantOverviewCallback;
-                              });
+                              setState(() {});
                             },
                             child: const Icon(
                               Entypo.droplet,
@@ -247,9 +241,7 @@ class _PlantScreenState extends State<PlantScreen> {
                                 'lastFertilising': DateTime.now()
                               }).then(
                                   (doc) => print('updated lastFertilising'));
-                              setState(() {
-                                widget.plantOverviewCallback;
-                              });
+                              setState(() {});
                             },
                             child: const Icon(
                               Entypo.leaf,
