@@ -1,19 +1,65 @@
-//to open xcode run this in terminal:
-//open ios/Runner.xcworkspace
+/* 
+# open xcode:
+open ios/Runner.xcworkspace
+
+# after changing branch, when imports fail:
+flutter pub get
+
+# after flutter upgrade:
+flutter clean
+flutter pub get
+flutter pub upgrade
+
+# fix ios build errors:
+cd ios
+rm Podfile.lock
+rm Podfile
+pod init
+pod install
+*/
+
+/*
+Error: CocoaPods's specs repository is too out-of-date to satisfy dependencies.
+
+Go to /ios folder inside your Project.
+Delete Podfile.lock
+
+cd ios
+pod install --repo-update
+cd ..
+flutter clean 
+flutter run
+*/
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:camera/camera.dart';
 
-import 'plant_route.dart';
-import 'settings_route.dart';
-import 'sprossen_route.dart';
-import 'camera.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+import 'models/general.dart';
+import 'screens/main_screen.dart';
+import 'screens/camera.dart';
+import '../theme/style.dart';
 
 Future<void> main() async {
-  // Kamera initialisieren
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   final cameras = await availableCameras();
-  final firstCamera = cameras.first;
+  final CameraDescription firstCamera;
+  // im iOs Simulator die Kamerafunktion unterbinden
+  if (cameras.isNotEmpty) {
+    firstCamera = cameras.first;
+  } else {
+    firstCamera = CameraDescription(
+        name: "fake",
+        lensDirection: CameraLensDirection.back,
+        sensorOrientation: 90);
+    IosSimulatorCameraHandler.cameraName = 'fake';
+  }
 
   runApp(MyApp(
     camera: firstCamera,
@@ -27,23 +73,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return MaterialApp(
-      title: 'Route Demo',
-      initialRoute: '/',
-      onUnknownRoute: (settings) => MaterialPageRoute(
-          builder: (context) => const Scaffold(
-                body: Center(child: Text('Not found')),
-              )),
-      routes: {
-        // Routen für den App-Drawer
-        '/': (context) => const PlantRoute(),
-        '/sprossen': (context) => const SprossenRoute(),
-        '/settings': (context) => const SettingsRoute(),
-        '/camera': (context) => TakePictureScreen(camera: camera),
-      },
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-    );
+        title: 'Route Demo',
+        theme: appTheme(),
+        initialRoute: '/',
+        onUnknownRoute: (settings) => MaterialPageRoute(
+            builder: (context) => const Scaffold(
+                  body: Center(child: Text('Route Not found')),
+                )),
+        routes: {
+          '/': (context) => const MainScreen(),
+          '/camera': (context) => TakePictureScreen(camera: camera),
+        });
   }
+}
+
+//For Push Notifications as Background Messages ->
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // print('Received a background message.');
+  // You can't update the app UI here!
 }

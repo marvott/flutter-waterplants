@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>884740183307-u11fhl1vbi9e9gai9noo50dl394eg74j.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.884740183307-u11fhl1vbi9e9gai9noo50dl394eg74j</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDrj8vd5FEfjwZaec6uEmK5dn6IFpWx7qg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>884740183307</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.mob.PlantUs</string>
+	<key>PROJECT_ID</key>
+	<string>mob-madav</string>
+	<key>STORAGE_BUCKET</key>
+	<string>mob-madav.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false/>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false/>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true/>
+	<key>IS_GCM_ENABLED</key>
+	<true/>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true/>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:884740183307:ios:3eb63dd2462440f5ecfe0e</string>
+	<key>DATABASE_URL</key>
+	<string>https://mob-madav-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>
