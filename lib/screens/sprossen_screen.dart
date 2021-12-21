@@ -31,11 +31,6 @@ class _SprossenRouteState extends State<SprossenRoute> {
     });
   }
 
-  //Callback-Function for reloading the build
-  callback() {
-    setState(() {});
-  }
-
   @override
   Widget build(BuildContext context) {
     //Gets the 'users' and the email that is logged in and their list of 'Sprossen'
@@ -71,32 +66,25 @@ class _SprossenRouteState extends State<SprossenRoute> {
                   return Padding(
                     padding: const EdgeInsets.all(8),
                     child: ListView(
-                        children:
-                            _listTiles(context, itemsRef, items, callback)),
+                        children: _listTiles(context, itemsRef, items)),
                   );
                 },
               ),
             )),
-            //Button for adding new Sprouts
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                FloatingActionButton(
-                    onPressed: () => SproutDialog.showSimpleDialog(
-                        context, itemsRef, callback),
-                    child: const Icon(Icons.add)),
-              ],
-            ),
           ],
         ),
       ),
+      //Button for adding new Sprouts
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => SproutDialog.showSimpleDialog(context, itemsRef),
+          child: const Icon(Icons.add)),
     );
   }
 }
 
 //Lists the items of 'Sprouts' as a Listview
 _listTiles(BuildContext context, CollectionReference itemsRef,
-    List<SproutItems> items, Function callback) {
+    List<SproutItems> items) {
   return items
       .map((i) => ListTile(
             title: Text(i.name,
@@ -122,7 +110,6 @@ _listTiles(BuildContext context, CollectionReference itemsRef,
                 child: const Icon(Entypo.droplet, size: 20),
                 onPressed: () {
                   SproutItems.updateGegossen(itemsRef, i.id, i.wieoftgegossen);
-                  callback();
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const CircleBorder(),

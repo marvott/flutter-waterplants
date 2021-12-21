@@ -45,7 +45,7 @@ class SproutItems {
 //User can choose which Sprout he/she wants
 class SproutDialog {
   static void showSimpleDialog(
-      BuildContext context, CollectionReference itemsRef, Function callback) {
+      BuildContext context, CollectionReference itemsRef) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -59,28 +59,24 @@ class SproutDialog {
                       child: const Text("Alfalfa"),
                       onPressed: () {
                         SproutItems._addItem(itemsRef, 'Alfalfa', 7);
-                        callback();
                         Navigator.pop(context);
                       }),
                   SimpleDialogOption(
                       child: const Text("Brokkoli"),
                       onPressed: () {
                         SproutItems._addItem(itemsRef, 'Brokkoli', 4);
-                        callback();
                         Navigator.pop(context);
                       }),
                   SimpleDialogOption(
                       child: const Text("Linsen"),
                       onPressed: () {
                         SproutItems._addItem(itemsRef, 'Linsen', 4);
-                        callback();
                         Navigator.pop(context);
                       }),
                   SimpleDialogOption(
                       child: const Text("Mungobohne"),
                       onPressed: () {
                         SproutItems._addItem(itemsRef, 'Mungobohne', 4);
-                        callback();
                         Navigator.pop(context);
                       }),
                 ],
