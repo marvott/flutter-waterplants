@@ -35,8 +35,8 @@ class _MainScreenState extends State<MainScreen> {
   //Liste der 3 Screen zwischen denen mit der Bottom Bar navigiert wird
   List<Widget> screens = [
     const PlantOverview(),
-    const SprossenRoute(),
-    const SettingsRoute(),
+    const SprossenScreen(),
+    const SettingsScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -48,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return (user == null)
-        ? const SettingsRoute()
+        ? const SettingsScreen()
         : Scaffold(
             //So bleiben die Screens im Widgettree, ist mit der geringen Anzahl an Screens vertretbar und performant
             body: IndexedStack(

@@ -14,7 +14,7 @@ void main() {
 
     //execute the test
     Firebase.initializeApp();
-    await tester.pumpWidget(SettingsRoute());
+    await tester.pumpWidget(SettingsScreen());
 
     //find widgets we need
     final emailField = find.byKey(const ValueKey('emailInput'));

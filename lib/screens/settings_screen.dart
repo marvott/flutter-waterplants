@@ -8,14 +8,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../components/snackbar_dialog.dart';
 
-class SettingsRoute extends StatefulWidget {
-  const SettingsRoute({Key? key}) : super(key: key);
+class SettingsScreen extends StatefulWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   _MySettingsState createState() => _MySettingsState();
 }
 
-class _MySettingsState extends State<SettingsRoute> {
+class _MySettingsState extends State<SettingsScreen> {
   User? user;
   String? cloudMsgToken;
 

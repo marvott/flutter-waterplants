@@ -7,14 +7,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/sprouts.dart';
 
-class SprossenRoute extends StatefulWidget {
-  const SprossenRoute({Key? key}) : super(key: key);
+class SprossenScreen extends StatefulWidget {
+  const SprossenScreen({Key? key}) : super(key: key);
 
   @override
-  State<SprossenRoute> createState() => _SprossenRouteState();
+  State<SprossenScreen> createState() => _SprossenScreenState();
 }
 
-class _SprossenRouteState extends State<SprossenRoute> {
+class _SprossenScreenState extends State<SprossenScreen> {
   //Variables
   double fontsize = 16;
 
