@@ -1,6 +1,10 @@
 # PlantUs
 Doku zur Pflanzen-App von Marvin u David
 
+## Teamarbeit
+Die Arbeit im Team hat bei uns gut funktioniert und die Arbeit mit GitLab hat die Zusammenarbeit nochmal deutlich erleichtert.
+David hat alles Rund um die Pflanzen und den "components" geschrieben, diese konnte dann Marvin an mehreren stellen nutzen.
+Marvin hat die Sprossenseite und die Anmeldung geschrieben, sich dabei mit Firebase auseinandergesetzt und implementiert. David hat Teile von Firebase übernommen und für die Pflanzen angewendet.
 ## Benutzung der App / Screens
 
 ### Account - Anmeldung
