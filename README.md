@@ -1,9 +1,9 @@
 # PlantUs
-Pflanzen App von Marvin u David
+Daku zur Pflanzen-App von Marvin u David
 
 ## Benutzung der App / Screens
 
-### Account / Anmeldung
+### Account - Anmeldung
 Um die App zu benutzen muss der User sich erst registrieren oder mit einem bestehenden Account anmelden.
 Bei erfolgreicher Anmeldung kann der User auf die Seiten für Pflanzen und Sprossen zugreifen.
 Meldet sich der User ab werden die anderen Sreens wieder ausgeblendet.
