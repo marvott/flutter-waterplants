@@ -22,16 +22,6 @@ class _SprossenScreenState extends State<SprossenScreen> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
-  void initState() {
-    super.initState();
-
-    //Listens for Changes in Authentification State -> Other user logs in
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      setState(() {});
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     //Gets the 'users' and the email that is logged in and their list of 'Sprossen'
     CollectionReference itemsRef = firestore
