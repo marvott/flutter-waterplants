@@ -33,7 +33,7 @@ Nur die Bilder werden noch lokal auf dem Gerät gespeichert, andere User sehen d
 
 ## Roadmap
 ### Notifications
-Auf Android können wir bereits über Firebase Custom-Benachrichtigungen senden. Ziel ist es dass alle User Benachrichtigungen zum Gießen und Düngen erhalten und eine die Essreife von Sprossen.
+Auf Android können wir bereits über Firebase Custom-Benachrichtigungen senden. Ziel ist es dass alle User Benachrichtigungen zum Gießen und Düngen und eine der Essreife von Sprossen erhalten.‚
 
 ### Sprossen
 Es soll noch eine Erklärung zur richtigen Zucht von Sprossen hinzugefügt werden.
