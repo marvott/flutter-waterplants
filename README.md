@@ -1,5 +1,5 @@
 # PlantUs
-Daku zur Pflanzen-App von Marvin u David
+Doku zur Pflanzen-App von Marvin u David
 
 ## Benutzung der App / Screens
 
@@ -12,7 +12,7 @@ Auf diesem Screen findet man eine Liste von Sprossen, deren Keimdauer und wie h�
 Mit den Plus-Button kann der User aus einer Liste Sprossen auswählen und hinzufügen.
 Über den das blaue Icon kann man die Sprossen gießen.
 Mit einem Long-Press kann der User Sprossen wieder löschen.
-## Pflanzen
+### Pflanzen
 Hier wird eine Liste von Pflanzen mit deren Bild und Name angezeigt, diese sind nach dem letzen Gießdatum sortiert.
 Bei jeder Pflanze werden 2 Icons angezeigt über die der User die Pflanze gießen (blau) und düngen (orange) kann.
 Über den Plus-Button kann man neue Pflanzen hinzufügen, dabei legt der User verschiedene Eigenschaften der Pflanze fest.
@@ -28,7 +28,7 @@ https://medium.com/flutter-community/flutter-code-organization-revised-b09ad5cef
 In der Main werden Firebase und andere Sache initialisiert und Routen festgelegt.
 In screens/main_screen.dart wird die Bottom-Bar aufgebaut und die 3 Screens in einem IndexedStack angezeit, der sorgt dafür dass der Status der Widgets erhalten bleibt.
 
-Wir haben versucht mit dem Flutter-Package "provider" die in Flutter umständlicher "States" zu managen, das war für unsere Anwendung mit den veränderbaren Instanzen der Pflanzen leider nicht passend und wurde wiedr verworfen, siehe unseren Branch "plant_state_provider". Firebase hat uns mit dem Listener diese Arbeit abgenommen und zwischenzeitlich umständlich implementierte callbacks ersetzt. Der Listener von Firebase reagiert auf jede Änderung in der Datenbank, dabei ändern sich auch unsere Screens und werden neu gerendert, so werden auf verschiedenen Geräten allen Nutzern die mit dem selben Account angemeldet sind Änderungen sofort angezeigt.
+Wir haben versucht mit dem Flutter-Package "provider" die in Flutter umständlicher "States" zu managen, das war für unsere Anwendung mit den veränderbaren Instanzen der Pflanzen leider nicht passend und wurde wieder verworfen, siehe unseren Branch "plant_state_provider". Firebase hat uns mit dem Listener diese Arbeit abgenommen und zwischenzeitlich umständlich implementierte callbacks ersetzt. Der Listener von Firebase reagiert auf jede Änderung in der Datenbank, dabei ändern sich auch unsere Screens und werden neu gerendert, so werden auf verschiedenen Geräten allen Nutzern die mit dem selben Account angemeldet sind Änderungen sofort angezeigt.
 Nur die Bilder werden noch lokal auf dem Gerät gespeichert, andere User sehen dann das Standart-Bild.
 
 ## Roadmap
